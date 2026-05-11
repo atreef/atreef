@@ -1,0 +1,508 @@
+<!-- ═══════════════════════════════════════════════════════════════
+     AtReef Hero Section v2 — paste into Squarespace Code Block
+     Couples therapy · dreamy path · deep glassmorphism · 5-star
+     Design tokens: sage #354D43 · gold #D4A843 · ink #1A1917
+═══════════════════════════════════════════════════════════════ -->
+
+<style>
+/* ── Scope reset ─────────────────────────────────────────────── */
+#atreef-hero,
+#atreef-hero * {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ── Entrance & scroll animations ───────────────────────────── */
+@keyframes ah-rise {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes ah-bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50%       { transform: translateX(-50%) translateY(7px); }
+}
+
+/* ── Wrapper — full-bleed breakout ───────────────────────────── */
+#atreef-hero {
+  position: relative;
+  width: 100vw;
+  min-height: 100vh;
+  min-height: 100svh;
+  margin-left: calc(50% - 50vw);
+  background: #071a0d; /* deep dark-green behind video */
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  font-family: inherit;
+}
+
+/* ── Video — 100% opacity · autoplay · loop · muted ──────────── */
+#atreef-hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 1;
+  z-index: 0;
+}
+
+/* ════════════════════════════════════════════════════════════
+   OVERLAY — three stacked gradient layers for dreamy depth
+   Left edge: ~60% dark opacity · fades transparent at 67%
+   Plus soft top/bottom vignette for cinematic feel
+════════════════════════════════════════════════════════════ */
+#atreef-hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    /* Top vignette — blends sky into frame */
+    linear-gradient(
+      to bottom,
+      rgba(5, 18, 10, 0.42) 0%,
+      rgba(5, 18, 10, 0.00) 22%
+    ),
+    /* Bottom vignette — grounds the content */
+    linear-gradient(
+      to top,
+      rgba(5, 18, 10, 0.55) 0%,
+      rgba(5, 18, 10, 0.00) 30%
+    ),
+    /* Main left-to-right: 60% dark → transparent at 67% */
+    linear-gradient(
+      103deg,
+      rgba(5, 18, 10, 0.62) 0%,
+      rgba(5, 18, 10, 0.58) 10%,
+      rgba(5, 18, 10, 0.44) 30%,
+      rgba(5, 18, 10, 0.18) 52%,
+      rgba(5, 18, 10, 0.00) 67%
+    );
+}
+
+/* ── Content column ──────────────────────────────────────────── */
+#atreef-hero-content {
+  position: relative;
+  z-index: 2;
+  padding: 10vh 60px 10vh 8vw;
+  max-width: min(680px, 58vw);
+  animation: ah-rise 1.0s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both;
+}
+
+/* Dreamy ambient sage glow behind the text column */
+#atreef-hero-content::before {
+  content: '';
+  position: absolute;
+  inset: -50% -35%;
+  background: radial-gradient(
+    ellipse at 28% 52%,
+    rgba(53, 77, 67, 0.30) 0%,
+    rgba(53, 77, 67, 0.10) 42%,
+    transparent 68%
+  );
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* ── Eyebrow ─────────────────────────────────────────────────── */
+.ah-eyebrow {
+  display: block;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.48);
+  margin-bottom: 16px;
+  font-family: inherit;
+}
+
+/* ════════════════════════════════════════════════════════════
+   SOCIAL PROOF TAG — top element
+   5% white bg · blur(32px) · 10% white border · drop shadow
+   Contents: ★★★★★ | divider | avatars | "5.0 · 200+ clients"
+════════════════════════════════════════════════════════════ */
+#atreef-social-proof {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  padding: 8px 16px 8px 10px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(32px) saturate(1.6);
+  -webkit-backdrop-filter: blur(32px) saturate(1.6);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 999px;
+  box-shadow:
+    0 4px 28px rgba(0, 0, 0, 0.26),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  margin-bottom: 20px; /* exactly 20px before the main heading */
+}
+
+/* 5 gold stars */
+.ah-stars {
+  display: flex;
+  align-items: center;
+  gap: 1.5px;
+  margin-right: 9px;
+}
+
+.ah-stars svg {
+  width: 11px;
+  height: 11px;
+  flex-shrink: 0;
+}
+
+/* Thin separator */
+.ah-sep {
+  width: 1px;
+  height: 22px;
+  background: rgba(255, 255, 255, 0.14);
+  margin: 0 10px;
+  flex-shrink: 0;
+}
+
+/* Overlapping circular avatars */
+.ah-avatars {
+  display: flex;
+  align-items: center;
+  margin-right: 9px;
+}
+
+.ah-avatars img {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.30);
+  object-fit: cover;
+  display: block;
+  flex-shrink: 0;
+}
+
+.ah-avatars img + img { margin-left: -8px; }
+
+/* Extra-small · medium weight · 80% white opacity */
+.ah-sp-text {
+  font-size: 11.5px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: rgba(255, 255, 255, 0.80);
+  line-height: 1.2;
+  white-space: nowrap;
+  font-family: inherit;
+}
+
+.ah-sp-text strong {
+  color: rgba(255, 255, 255, 0.96);
+  font-weight: 600;
+}
+
+/* ════════════════════════════════════════════════════════════
+   MAIN HEADING — tight tracking · couples-therapy · dreamy path
+════════════════════════════════════════════════════════════ */
+#atreef-hero h1 {
+  font-weight: 400;
+  font-size: clamp(48px, 5.8vw, 90px);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  color: #ffffff;
+  margin-bottom: 22px;
+  font-family: inherit;
+}
+
+/* ════════════════════════════════════════════════════════════
+   BODY TEXT — loose tracking · evocative · couples-focused
+════════════════════════════════════════════════════════════ */
+#atreef-hero-body {
+  font-size: 16.5px;
+  font-weight: 300;
+  line-height: 1.84;
+  letter-spacing: 0.022em;
+  color: rgba(255, 255, 255, 0.72);
+  max-width: 420px;
+  margin-bottom: 42px;
+  font-family: inherit;
+}
+
+/* ════════════════════════════════════════════════════════════
+   CTA BUTTONS
+   Primary: sage green + warm glow
+   Secondary: deep glassmorphism
+════════════════════════════════════════════════════════════ */
+#atreef-hero-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+#atreef-hero-ctas a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 52px;
+  padding: 0 30px;
+  border-radius: 5px;
+  font-size: 14.5px;
+  font-weight: 400;
+  text-decoration: none !important;
+  letter-spacing: 0.01em;
+  font-family: inherit;
+  transition:
+    background   0.15s ease,
+    border-color 0.15s ease,
+    color        0.15s ease,
+    box-shadow   0.15s ease,
+    transform    0.08s ease;
+}
+
+#atreef-hero-ctas a:active { transform: scale(0.98); }
+
+#atreef-hero-ctas a:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.55);
+  outline-offset: 3px;
+}
+
+/* Primary — sage green with warm sage glow */
+.ah-cta-primary {
+  background: #354D43;
+  border: 1px solid #354D43;
+  color: #ffffff !important;
+  box-shadow:
+    0 2px 18px rgba(53, 77, 67, 0.50),
+    inset 0 1px 0 rgba(255, 255, 255, 0.10);
+}
+
+.ah-cta-primary:hover {
+  background: #2C4038;
+  border-color: #2C4038;
+  color: #ffffff !important;
+  box-shadow:
+    0 4px 24px rgba(53, 77, 67, 0.60),
+    inset 0 1px 0 rgba(255, 255, 255, 0.10);
+}
+
+/* Secondary — deep glassmorphism */
+.ah-cta-secondary {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(20px) saturate(1.4);
+  -webkit-backdrop-filter: blur(20px) saturate(1.4);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: rgba(255, 255, 255, 0.88) !important;
+  box-shadow:
+    0 2px 14px rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.ah-cta-secondary:hover {
+  background: rgba(255, 255, 255, 0.11);
+  border-color: rgba(255, 255, 255, 0.26);
+  color: #ffffff !important;
+  box-shadow:
+    0 4px 18px rgba(0, 0, 0, 0.20),
+    inset 0 1px 0 rgba(255, 255, 255, 0.10);
+}
+
+/* ── Trust line ──────────────────────────────────────────────── */
+.ah-trust {
+  font-size: 10.5px;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  color: rgba(255, 255, 255, 0.36);
+  font-family: inherit;
+}
+
+/* ── Scroll indicator — bottom-center, bouncing ─────────────── */
+#atreef-scroll {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  opacity: 0.38;
+  animation: ah-bounce 2.6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+#atreef-scroll span {
+  font-size: 8.5px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #ffffff;
+  font-family: inherit;
+}
+
+#atreef-scroll svg {
+  width: 16px;
+  height: 16px;
+  color: #ffffff;
+}
+
+/* ── Mobile ──────────────────────────────────────────────────── */
+@media (max-width: 767px) {
+  #atreef-hero { align-items: flex-end; }
+
+  #atreef-hero-overlay {
+    background:
+      linear-gradient(
+        to top,
+        rgba(5, 18, 10, 0.82) 0%,
+        rgba(5, 18, 10, 0.50) 40%,
+        rgba(5, 18, 10, 0.12) 100%
+      ),
+      linear-gradient(
+        to right,
+        rgba(5, 18, 10, 0.42) 0%,
+        transparent 100%
+      );
+  }
+
+  #atreef-hero-content {
+    padding: 0 22px 68px;
+    max-width: 100%;
+  }
+
+  .ah-eyebrow { letter-spacing: 0.16em; }
+
+  .ah-sp-text { font-size: 11px; }
+
+  #atreef-hero h1 {
+    font-size: clamp(36px, 11vw, 52px);
+  }
+
+  #atreef-hero-body {
+    font-size: 15.5px;
+    max-width: 100%;
+  }
+
+  #atreef-hero-ctas { flex-direction: column; }
+  #atreef-hero-ctas a { width: 100%; }
+
+  #atreef-scroll { display: none; }
+}
+</style>
+
+<div id="atreef-hero" role="banner">
+
+  <!-- VIDEO — 100% opacity · autoplay · loop · muted · playsinline -->
+  <video id="atreef-hero-video"
+         autoplay
+         loop
+         muted
+         playsinline
+         aria-hidden="true">
+    <source src="https://cdn.sceneai.art/Hero%20Section%20Video/c897580b-e301-4c46-94e3-3f2c975e1773.mp4"
+            type="video/mp4">
+  </video>
+
+  <!-- OVERLAY LAYERS — dreamy vignette + left gradient -->
+  <div id="atreef-hero-overlay" aria-hidden="true"></div>
+
+  <!-- CONTENT -->
+  <div id="atreef-hero-content">
+
+    <!-- Eyebrow -->
+    <span class="ah-eyebrow">Couples &amp; Individual Therapy &nbsp;·&nbsp; Online &nbsp;·&nbsp; Massachusetts</span>
+
+    <!-- SOCIAL PROOF TAG — top element, 20px gap before heading -->
+    <div id="atreef-social-proof">
+
+      <!-- 5 gold stars -->
+      <div class="ah-stars" aria-label="5 out of 5 stars">
+        <svg viewBox="0 0 24 24" fill="#D4A843" aria-hidden="true">
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+        </svg>
+        <svg viewBox="0 0 24 24" fill="#D4A843" aria-hidden="true">
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+        </svg>
+        <svg viewBox="0 0 24 24" fill="#D4A843" aria-hidden="true">
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+        </svg>
+        <svg viewBox="0 0 24 24" fill="#D4A843" aria-hidden="true">
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+        </svg>
+        <svg viewBox="0 0 24 24" fill="#D4A843" aria-hidden="true">
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+        </svg>
+      </div>
+
+      <!-- Divider -->
+      <div class="ah-sep" aria-hidden="true"></div>
+
+      <!-- Overlapping circular avatars (pravatar.cc) -->
+      <div class="ah-avatars" aria-hidden="true">
+        <img src="https://i.pravatar.cc/56?img=47" alt="" width="28" height="28">
+        <img src="https://i.pravatar.cc/56?img=23" alt="" width="28" height="28">
+        <img src="https://i.pravatar.cc/56?img=55" alt="" width="28" height="28">
+      </div>
+
+      <!-- Text -->
+      <span class="ah-sp-text"><strong>5.0</strong> &nbsp;·&nbsp; Trusted by 200+ clients</span>
+
+    </div><!-- /social-proof -->
+
+    <!-- MAIN HEADING — 20px below social proof tag -->
+    <h1>Find Your Way<br>Back to Each Other.</h1>
+
+    <!-- BODY -->
+    <p id="atreef-hero-body">
+      Expert online couples therapy for partners ready to understand what keeps them apart — and walk a new path forward together. Private, research-informed, and rooted in real change.
+    </p>
+
+    <!-- CTA BUTTONS -->
+    <div id="atreef-hero-ctas">
+      <a class="ah-cta-primary"
+         href="https://atreef.clientsecure.me"
+         rel="noopener">Begin Your Journey</a>
+      <a class="ah-cta-secondary"
+         href="/couples-therapy">Explore Couples Therapy</a>
+    </div>
+
+    <!-- Trust line -->
+    <p class="ah-trust">Free consultation &nbsp;·&nbsp; No commitment required</p>
+
+  </div><!-- /content -->
+
+  <!-- SCROLL INDICATOR — animated bounce, hidden on mobile -->
+  <div id="atreef-scroll" aria-hidden="true">
+    <span>Scroll</span>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+         stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="6 9 12 15 18 9"/>
+    </svg>
+  </div>
+
+</div><!-- /atreef-hero -->
+
+<script>
+/* Strip Squarespace section padding so hero bleeds edge-to-edge */
+(function () {
+  'use strict';
+  function stripPadding() {
+    var hero = document.getElementById('atreef-hero');
+    if (!hero) return;
+    [
+      hero.parentElement,
+      hero.closest('[data-section-id]'),
+      hero.closest('[data-controller="SectionWrapperController"]'),
+      hero.closest('.page-section'),
+      hero.closest('section'),
+    ].forEach(function (el) {
+      if (el && el !== hero) {
+        el.style.cssText += ';padding:0!important;margin:0!important;';
+      }
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', stripPadding);
+  } else {
+    stripPadding();
+  }
+}());
+</script>
