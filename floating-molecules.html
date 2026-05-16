@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Floating Molecules — Embed Demo</title>
+  <style>
+    /* ═══════════════════════════════════════════════════════════════
+       DEMO PAGE STYLES — remove these when embedding in your site
+       ═══════════════════════════════════════════════════════════════ */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      min-height: 300vh; /* tall page so scrolling works in the demo */
+      background: linear-gradient(160deg, #0d0d1a 0%, #1a1040 50%, #0d1a2a 100%);
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      color: #fff;
+    }
+
+    .demo-hero {
+      padding: clamp(80px, 15vw, 160px) 40px clamp(60px, 10vw, 100px);
+      text-align: center;
+      position: relative;
+      z-index: 10; /* text sits above canvas */
+    }
+
+    .demo-hero h1 {
+      font-size: clamp(2.4rem, 8vw, 5.5rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      background: linear-gradient(135deg, #ffffff 0%, #c4b5fd 40%, #67e8f9 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .demo-hero p {
+      margin-top: 20px;
+      font-size: clamp(1rem, 2.5vw, 1.25rem);
+      color: rgba(255, 255, 255, 0.45);
+      letter-spacing: 0.01em;
+    }
+
+    .demo-hint {
+      position: fixed;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 100px;
+      padding: 12px 24px;
+      font-size: 0.875rem;
+      color: rgba(255, 255, 255, 0.7);
+      z-index: 9999;
+      pointer-events: none;
+      white-space: nowrap;
+      animation: hintFade 1s ease 3s forwards;
+    }
+
+    @keyframes hintFade {
+      to { opacity: 0; transform: translateX(-50%) translateY(10px); }
+    }
+    /* ═══════════════════════════════════════════════════════════════
+       END DEMO STYLES
+       ═══════════════════════════════════════════════════════════════ */
+
+
+    /* ╔═══════════════════════════════════════════════════════════════╗
+       ║  COPY THIS CSS INTO YOUR SITE                                ║
+       ╚═══════════════════════════════════════════════════════════════╝ */
+    #molecules-canvas {
+      /* Fixed overlay — covers the entire viewport, sits on top of everything */
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none; /* clicks / taps pass straight through to your page */
+      z-index: 100;
+
+      /* ── Header-only variant ──────────────────────────────────────
+         If you only want molecules in your <header>, put the canvas
+         INSIDE your header element and switch to:
+
+           position: absolute;
+           top: 0; left: 0; width: 100%; height: 100%;
+           pointer-events: none;
+
+         and add  position: relative;  to your header.
+         ─────────────────────────────────────────────────────────── */
+    }
+    /* ╚═══════════════════════════════════════════════════════════════╝ */
+  </style>
+</head>
+<body>
+
+  <!-- DEMO CONTENT — remove when embedding -->
+  <div class="demo-hero">
+    <h1>Your Website<br>Heading</h1>
+    <p>Scroll · Swipe · Move your mouse to interact</p>
+  </div>
+  <div class="demo-hint">↕&nbsp; Scroll to push &nbsp;·&nbsp; Mouse to repel</div>
+  <!-- END DEMO CONTENT -->
+
+
+  <!-- ╔═══════════════════════════════════════════════════════════════╗
+       ║  COPY THIS <canvas> TAG INTO YOUR SITE                       ║
+       ╚═══════════════════════════════════════════════════════════════╝ -->
+  <canvas id="molecules-canvas"></canvas>
+  <!-- ╚═══════════════════════════════════════════════════════════════╝ -->
+
+
+  <!-- ╔═══════════════════════════════════════════════════════════════╗
+       ║  COPY THIS <script> BLOCK INTO YOUR SITE                     ║
+       ╚═══════════════════════════════════════════════════════════════╝ -->
+  <script>
+  (function () {
+    'use strict';
+
+    /* ── Canvas setup ───────────────────────────────────────────── */
+    const canvas = document.getElementById('molecules-canvas');
+    const ctx    = canvas.getContext('2d');
+    let W = 0, H = 0;
+
+    function resize() {
+      W = canvas.width  = canvas.offsetWidth  || window.innerWidth;
+      H = canvas.height = canvas.offsetHeight || window.innerHeight;
+    }
+
+    const ro = new ResizeObserver(resize);
+    ro.observe(canvas);
+    resize();
+
+    /* ── Input tracking ─────────────────────────────────────────── */
+    const mouse = { x: -9999, y: -9999 };
+    window.addEventListener('mousemove',  e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+    window.addEventListener('mouseleave', ()  => { mouse.x = -9999;   mouse.y = -9999; });
+
+    let scrollImpulse = 0;
+    let lastTouchY    = null;
+
+    /* wheel (desktop/trackpad) */
+    window.addEventListener('wheel', e => {
+      scrollImpulse += e.deltaY * 0.06;
+    }, { passive: true });
+
+    /* touch (mobile swipe) */
+    window.addEventListener('touchstart', e => {
+      lastTouchY = e.touches[0].clientY;
+    }, { passive: true });
+
+    window.addEventListener('touchmove', e => {
+      if (lastTouchY !== null) {
+        scrollImpulse += (lastTouchY - e.touches[0].clientY) * 0.22;
+        lastTouchY = e.touches[0].clientY;
+      }
+    }, { passive: true });
+
+    window.addEventListener('touchend', () => { lastTouchY = null; }, { passive: true });
+
+    /* ── Colour helpers ─────────────────────────────────────────── */
+    function hexRgb(hex) {
+      return [
+        parseInt(hex.slice(1, 3), 16),
+        parseInt(hex.slice(3, 5), 16),
+        parseInt(hex.slice(5, 7), 16),
+      ];
+    }
+
+    function darken(hex, amt) {
+      const clamp = v => Math.max(0, Math.min(255, v - amt));
+      const [r, g, b] = hexRgb(hex);
+      return `rgb(${clamp(r)},${clamp(g)},${clamp(b)})`;
+    }
+
+    /* ── Molecule templates ─────────────────────────────────────── */
+    // atoms: ox/oy = offset from centre (px), r = radius, c = hex colour
+    // bonds: [atomA, atomB, order]  order: 1=single  2=double  3=triple
+    const TEMPLATES = [
+
+      /* Water  H₂O */
+      { atoms: [
+          { ox:  0,   oy: -9,  r: 14, c: '#ff6b6b' }, // O
+          { ox: -19,  oy: 11,  r:  8, c: '#74b9ff' }, // H
+          { ox:  19,  oy: 11,  r:  8, c: '#74b9ff' }, // H
+        ], bonds: [[0,1,1],[0,2,1]] },
+
+      /* Oxygen  O₂ */
+      { atoms: [
+          { ox: -15, oy: 0, r: 13, c: '#ff6b6b' },
+          { ox:  15, oy: 0, r: 13, c: '#ff6b6b' },
+        ], bonds: [[0,1,2]] },
+
+      /* Carbon dioxide  CO₂ */
+      { atoms: [
+          { ox: -29, oy: 0, r: 13, c: '#ff6b6b' },
+          { ox:   0, oy: 0, r: 10, c: '#b2bec3' },
+          { ox:  29, oy: 0, r: 13, c: '#ff6b6b' },
+        ], bonds: [[0,1,2],[1,2,2]] },
+
+      /* Nitrogen  N₂ */
+      { atoms: [
+          { ox: -13, oy: 0, r: 12, c: '#a29bfe' },
+          { ox:  13, oy: 0, r: 12, c: '#a29bfe' },
+        ], bonds: [[0,1,3]] },
+
+      /* Methane  CH₄ */
+      { atoms: [
+          { ox:   0, oy:   0, r: 11, c: '#b2bec3' },
+          { ox:   0, oy: -23, r:  7, c: '#74b9ff' },
+          { ox:  23, oy:   0, r:  7, c: '#74b9ff' },
+          { ox:   0, oy:  23, r:  7, c: '#74b9ff' },
+          { ox: -23, oy:   0, r:  7, c: '#74b9ff' },
+        ], bonds: [[0,1,1],[0,2,1],[0,3,1],[0,4,1]] },
+
+      /* Ammonia  NH₃ */
+      { atoms: [
+          { ox:   0, oy:  -6, r: 13, c: '#a29bfe' },
+          { ox: -18, oy:  12, r:  7, c: '#74b9ff' },
+          { ox:  18, oy:  12, r:  7, c: '#74b9ff' },
+          { ox:   0, oy:  23, r:  7, c: '#74b9ff' },
+        ], bonds: [[0,1,1],[0,2,1],[0,3,1]] },
+
+      /* Benzene  C₆H₆ */
+      { atoms: (function () {
+          const a = [];
+          for (let i = 0; i < 6; i++) {
+            const ang = (i / 6) * Math.PI * 2 - Math.PI / 2;
+            a.push({ ox: Math.cos(ang) * 22, oy: Math.sin(ang) * 22, r: 10, c: '#55efc4' });
+          }
+          return a;
+        }()),
+        bonds: (function () {
+          const b = [];
+          for (let i = 0; i < 6; i++) b.push([i, (i + 1) % 6, i % 2 ? 1 : 2]);
+          return b;
+        }()) },
+
+      /* Ethanol  C₂H₅OH (simplified) */
+      { atoms: [
+          { ox: -20, oy:   0, r: 10, c: '#b2bec3' }, // C
+          { ox:   8, oy:   0, r: 10, c: '#b2bec3' }, // C
+          { ox:  26, oy:   0, r: 12, c: '#ff6b6b' }, // O
+          { ox: -30, oy:  13, r:  7, c: '#74b9ff' }, // H
+          { ox: -30, oy: -13, r:  7, c: '#74b9ff' }, // H
+          { ox: -20, oy:  15, r:  7, c: '#74b9ff' }, // H
+          { ox:   8, oy:  15, r:  7, c: '#74b9ff' }, // H
+          { ox:   8, oy: -15, r:  7, c: '#74b9ff' }, // H
+          { ox:  38, oy:   9, r:  7, c: '#74b9ff' }, // H (on O)
+        ], bonds: [[0,1,1],[1,2,1],[0,3,1],[0,4,1],[0,5,1],[1,6,1],[1,7,1],[2,8,1]] },
+
+      /* Phosphate group (DNA backbone feel) */
+      { atoms: [
+          { ox:   0, oy:   0, r: 13, c: '#fdcb6e' }, // P
+          { ox:  24, oy:   0, r: 11, c: '#ff6b6b' }, // O
+          { ox: -24, oy:   0, r: 11, c: '#ff6b6b' }, // O
+          { ox:   0, oy:  24, r: 11, c: '#ff6b6b' }, // O
+          { ox:   0, oy: -24, r: 11, c: '#ff6b6b' }, // O
+        ], bonds: [[0,1,2],[0,2,1],[0,3,1],[0,4,2]] },
+
+    ];
+
+    /* ── Molecule class ─────────────────────────────────────────── */
+    class Molecule {
+      constructor() {
+        const t        = TEMPLATES[Math.floor(Math.random() * TEMPLATES.length)];
+        this.atoms     = t.atoms;
+        this.bonds     = t.bonds;
+
+        this.x         = Math.random() * W;
+        this.y         = Math.random() * H;
+        this.vx        = (Math.random() - 0.5) * 0.5;
+        this.vy        = (Math.random() - 0.5) * 0.5;
+        this.angle     = Math.random() * Math.PI * 2;
+        this.av        = (Math.random() - 0.5) * 0.009; // angular velocity
+
+        this.scale     = 0.55 + Math.random() * 0.8;
+        this.alpha     = 0;                               // starts invisible, fades in
+        this.maxAlpha  = 0.42 + Math.random() * 0.45;
+
+        this.phase     = Math.random() * Math.PI * 2;
+        this.freq      = 0.00035 + Math.random() * 0.0007;
+        this.MOUSE_R   = 140;
+      }
+
+      update(tick) {
+        /* Fade in on load */
+        if (this.alpha < this.maxAlpha) this.alpha = Math.min(this.maxAlpha, this.alpha + 0.008);
+
+        /* Gentle sinusoidal drift */
+        this.vy += Math.sin(tick * this.freq       + this.phase      ) * 0.007;
+        this.vx += Math.cos(tick * this.freq * 0.7 + this.phase + 1.6) * 0.005;
+
+        /* Scroll / swipe impulse */
+        this.vy += scrollImpulse * 0.075;
+
+        /* Mouse repulsion */
+        const dx    = this.x - mouse.x;
+        const dy    = this.y - mouse.y;
+        const dist2 = dx * dx + dy * dy;
+        const R     = this.MOUSE_R;
+        if (dist2 < R * R && dist2 > 0.01) {
+          const dist   = Math.sqrt(dist2);
+          const force  = ((R - dist) / R) * 0.65;
+          this.vx     += (dx / dist) * force;
+          this.vy     += (dy / dist) * force;
+        }
+
+        /* Damping */
+        this.vx *= 0.975;
+        this.vy *= 0.975;
+
+        /* Speed cap */
+        const spd = Math.hypot(this.vx, this.vy);
+        if (spd > 6) { this.vx *= 6 / spd; this.vy *= 6 / spd; }
+
+        this.x     += this.vx;
+        this.y     += this.vy;
+        this.angle += this.av;
+
+        /* Wrap around viewport edges */
+        const pad = 90 * this.scale;
+        if (this.x < -pad)     this.x = W + pad;
+        if (this.x > W + pad)  this.x = -pad;
+        if (this.y < -pad)     this.y = H + pad;
+        if (this.y > H + pad)  this.y = -pad;
+      }
+
+      draw() {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.angle);
+        ctx.scale(this.scale, this.scale);
+        ctx.globalAlpha = this.alpha;
+
+        /* — Bonds — */
+        ctx.lineCap     = 'round';
+        ctx.lineWidth   = 2.5;
+        ctx.strokeStyle = 'rgba(255,255,255,0.3)';
+
+        for (const [ai, bi, order] of this.bonds) {
+          const A   = this.atoms[ai];
+          const B   = this.atoms[bi];
+          const ax  = A.ox || 0, ay = A.oy || 0;
+          const bx  = B.ox || 0, by = B.oy || 0;
+          const ang = Math.atan2(by - ay, bx - ax);
+          const px  = Math.sin(ang), py = -Math.cos(ang);
+
+          /* offset lines for double / triple bonds */
+          const offsets = order === 1 ? [0] : order === 2 ? [-3.5, 3.5] : [-4.5, 0, 4.5];
+          for (const off of offsets) {
+            ctx.beginPath();
+            ctx.moveTo(ax + px * off, ay + py * off);
+            ctx.lineTo(bx + px * off, by + py * off);
+            ctx.stroke();
+          }
+        }
+
+        /* — Atoms — */
+        for (const atom of this.atoms) {
+          const ax = atom.ox || 0;
+          const ay = atom.oy || 0;
+
+          /* soft outer glow */
+          const glow = ctx.createRadialGradient(ax, ay, 0, ax, ay, atom.r * 3);
+          glow.addColorStop(0,   atom.c + '50');
+          glow.addColorStop(0.5, atom.c + '18');
+          glow.addColorStop(1,   atom.c + '00');
+          ctx.fillStyle = glow;
+          ctx.beginPath();
+          ctx.arc(ax, ay, atom.r * 3, 0, Math.PI * 2);
+          ctx.fill();
+
+          /* sphere gradient (lit from upper-left) */
+          const sphere = ctx.createRadialGradient(
+            ax - atom.r * 0.32, ay - atom.r * 0.32, atom.r * 0.05,
+            ax,                  ay,                  atom.r
+          );
+          sphere.addColorStop(0,    '#ffffff');
+          sphere.addColorStop(0.28, atom.c);
+          sphere.addColorStop(1,    darken(atom.c, 60));
+          ctx.fillStyle = sphere;
+          ctx.beginPath();
+          ctx.arc(ax, ay, atom.r, 0, Math.PI * 2);
+          ctx.fill();
+
+          /* thin rim highlight */
+          ctx.strokeStyle = 'rgba(255,255,255,0.18)';
+          ctx.lineWidth   = 1;
+          ctx.stroke();
+        }
+
+        ctx.restore();
+      }
+    }
+
+    /* ── Spawn molecules ────────────────────────────────────────── */
+    const COUNT     = window.innerWidth < 600 ? 12 : window.innerWidth < 1024 ? 18 : 24;
+    const molecules = Array.from({ length: COUNT }, () => new Molecule());
+
+    /* ── Animation loop ─────────────────────────────────────────── */
+    let tick = 0;
+
+    function frame() {
+      requestAnimationFrame(frame);
+      ctx.clearRect(0, 0, W, H); /* fully transparent each frame */
+
+      scrollImpulse *= 0.88; /* decay impulse */
+      tick++;
+
+      for (const m of molecules) {
+        m.update(tick);
+        m.draw();
+      }
+    }
+
+    frame();
+
+  }());
+  </script>
+  <!-- ╚═══════════════════════════════════════════════════════════════╝ -->
+
+</body>
+</html>
