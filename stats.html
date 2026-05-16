@@ -1,0 +1,193 @@
+<section id="atreef-stats" class="atreef-stats" aria-label="Achievements and testimonial">
+
+  <ul class="stats-grid" role="list">
+    <li class="stat-card" role="listitem">
+      <span class="stat-number" aria-label="2">2</span>
+      <span class="stat-label">Patents Filed</span>
+    </li>
+    <li class="stat-card" role="listitem">
+      <span class="stat-number" aria-label="3 or more">3+</span>
+      <span class="stat-label">Publications</span>
+    </li>
+    <li class="stat-card" role="listitem">
+      <span class="stat-number" aria-label="50 or more">50+</span>
+      <span class="stat-label">Molecules Designed</span>
+    </li>
+    <li class="stat-card" role="listitem">
+      <span class="stat-number" aria-label="6">6</span>
+      <span class="stat-label">Collaborations</span>
+    </li>
+  </ul>
+
+  <figure class="testimonial-card">
+    <span class="testimonial-deco" aria-hidden="true">&ldquo;</span>
+    <div class="testimonial-stars" aria-label="5 out of 5 stars">
+      <span aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+    </div>
+    <blockquote class="testimonial-text">
+      <p>"Shirin is a highly independent and detail-oriented scientist who would be an asset to any team. Shirin's greatest strength is her ability to listen and execute tasks and projects without hand-holding. She always knew the right questions to ask the first time around so she could complete her work efficiently and effectively. She also brought a calming presence to the lab each day. I highly recommend Shirin if you need to get a project moving quickly and end up with results that you can trust."</p>
+    </blockquote>
+    <figcaption class="testimonial-author">
+      <p class="testimonial-name">Melissa LaBonty, PhD</p>
+      <p class="testimonial-role">Colleague, University of Houston</p>
+    </figcaption>
+  </figure>
+
+</section>
+
+<style>
+/* ── AtReef Stats & Testimonial ───────────────────────── */
+#atreef-stats.atreef-stats {
+  --card-bg:    #0D1627;
+  --cyan:       #22D3EE;
+  --star:       #22C55E;
+  --label:      rgba(255, 255, 255, 0.75);
+  --text:       rgba(255, 255, 255, 0.88);
+  --muted:      rgba(255, 255, 255, 0.45);
+  --deco:       rgba(255, 255, 255, 0.04);
+  --radius:     14px;
+  --gap:        10px;
+
+  background: none;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+#atreef-stats,
+#atreef-stats * { box-sizing: border-box; }
+
+/* ── Stats grid ───────────────────────────────────────── */
+#atreef-stats .stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+#atreef-stats .stat-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 28px 24px 24px;
+  min-height: 130px;
+}
+
+#atreef-stats .stat-number {
+  display: block;
+  font-size: clamp(40px, 8vw, 60px);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--cyan);
+  margin-bottom: 10px;
+}
+
+#atreef-stats .stat-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--label);
+  line-height: 1.4;
+}
+
+/* ── Testimonial card ─────────────────────────────────── */
+#atreef-stats .testimonial-card {
+  position: relative;
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 36px 28px 32px;
+  margin: var(--gap) 0 0;
+  overflow: hidden;
+}
+
+#atreef-stats .testimonial-deco {
+  position: absolute;
+  top: -10px;
+  left: 16px;
+  font-size: 140px;
+  line-height: 1;
+  color: var(--deco);
+  font-family: Georgia, serif;
+  pointer-events: none;
+  user-select: none;
+}
+
+#atreef-stats .testimonial-stars {
+  position: relative;
+  font-size: 20px;
+  color: var(--star);
+  letter-spacing: 2px;
+  margin-bottom: 18px;
+}
+
+#atreef-stats .testimonial-text {
+  position: relative;
+  margin: 0 0 24px;
+  padding: 0;
+  border: none;
+}
+
+#atreef-stats .testimonial-text p {
+  font-size: clamp(14px, 3.5vw, 16px);
+  font-style: italic;
+  font-weight: 300;
+  line-height: 1.80;
+  color: var(--text);
+  margin: 0;
+}
+
+#atreef-stats .testimonial-author {
+  position: relative;
+}
+
+#atreef-stats .testimonial-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 4px;
+  font-style: normal;
+}
+
+#atreef-stats .testimonial-role {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--muted);
+  margin: 0;
+  font-family: monospace;
+  letter-spacing: 0.02em;
+}
+
+/* ── Tablet (≥ 600px) ─────────────────────────────────── */
+@media (min-width: 600px) {
+  #atreef-stats .stat-card {
+    padding: 32px 28px 28px;
+    min-height: 150px;
+  }
+
+  #atreef-stats .testimonial-card {
+    padding: 44px 40px 40px;
+  }
+
+  #atreef-stats .testimonial-deco {
+    font-size: 180px;
+    top: -20px;
+    left: 20px;
+  }
+}
+
+/* ── Desktop (≥ 960px): keep 2-col stats ─────────────── */
+@media (min-width: 960px) {
+  #atreef-stats .stat-card {
+    padding: 36px 32px 32px;
+    min-height: 170px;
+  }
+}
+</style>
