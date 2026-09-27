@@ -1,7 +1,7 @@
 # AtReef Therapy: Squarespace 7.1 AI Coding Standards
 
-**Version 3.2**  
-**AtReef design system:** v8.3  
+**Version 3.3**  
+**AtReef design system:** v8.4  
 **Website:** `https://www.atreef.com`  
 **Platform:** Squarespace 7.1, Fluid Engine  
 **Updated:** September 28, 2026
@@ -379,7 +379,7 @@ Measured with the WCAG 2.x formula. Text needs 4.5:1 (3:1 at 24px, or 18.66px bo
 - Do not change theme colors while solving a layout-only problem.
 - Do not add a border to a solid surface unless the component system calls for it.
 - Gold on light surfaces is a fill, never a foreground. When gold meaning must appear as a mark on a light surface, use `--ar-gold-ink`.
-- Do not introduce a color outside this palette (for example, a blue verification badge or a multicolor calendar icon).
+- Do not introduce a new color outside this palette. The owner-approved brand decorations in §59b (the verified badge, the colored calendar, and the pill icons) are the only exceptions, and they must never be removed or recolored.
 
 ---
 
@@ -902,7 +902,7 @@ Characteristics:
 - slight hover lift
 - gold-hover background on press
 
-The chip icon is always a monochrome `ar-btn__icon` utility. Do not place a colored image or emoji in the chip.
+The chip holds either a monochrome `ar-btn__icon` or an owner-approved colored image (`<img class="ar-btn__image" src="/s/calendar.svg" alt="">`). Consultation CTAs use the colored calendar. Do not use emoji.
 
 Do not combine the split pieces into one generic button without a design request.
 
@@ -1235,7 +1235,7 @@ Pill label:
 
 At `380px` and below, the pill may wrap.
 
-Use one eyebrow per heading. A pill label and an eyebrow stacked over the same heading is one label too many.
+A pill eyebrow may sit above a plain label when each has its own job: the pill names who (brand), the label names what or where (topic, location). Keep the spacing 16px pill to label, 12px label to heading.
 
 When an icon is decorative:
 
@@ -1243,7 +1243,7 @@ When an icon is decorative:
 <img src="/s/icon.svg" alt="" aria-hidden="true">
 ```
 
-Do not use a checkmark badge, seal, or "verified" mark unless a named third party actually issues that verification.
+The hero pill uses the owner's `verified.svg` badge. Keep it as supplied.
 
 ---
 
@@ -1260,6 +1260,27 @@ Do not use a checkmark badge, seal, or "verified" mark unless a named third part
 | `ar-hl--script` | script-font gold highlight for one phrase in a display headline; use with `ar-hl` |
 
 `--ar-heading` defaults to `--ar-text`. Set it to `var(--ar-teal)` in one place to make every light-section title teal.
+
+---
+
+## 59b. Brand decorations
+
+Decorations are part of the brand, not clutter. Never remove, recolor, or swap them during a code task. Keep them consistent instead.
+
+| Decoration | Where | Purpose |
+|---|---|---|
+| Pill eyebrow with icon (`ar-label ar-label--pill` + `ar-label__icon`) | hero (`/s/verified.svg`), conversation (`/s/landscape.svg`), FAQ (`/s/Streamline-Ultimate.svg`) | opens a major light section and names who or what it is about |
+| Colored calendar (`/s/calendar.svg` in `ar-btn__image`) | every consultation CTA chip | signals "book a time" at a glance |
+| Script highlight (`ar-hl ar-hl--script`) | hero headline only | one emotional phrase per page |
+| Gold band highlight (`ar-hl`) | one phrase in a section title | emphasis, at most once per section |
+| Icon tiles (`ar-tile`, `ar-tile--ghost`, `ar-tile--sm`) | card headers and lists | scannable markers |
+
+Consistency rules:
+
+- Pill: 32px tall, 16px icon, 8px icon gap, 5px radius, soft two-layer shadow. Defined once in global CSS; never restyled locally.
+- Button images: 20px, centered in the chip, slight scale on hover (off under reduced motion).
+- Pills sit only on light surfaces. On dark sections use a plain `ar-label--on-dark`.
+- One pill per section at most.
 
 ---
 
@@ -2397,6 +2418,13 @@ Paste the CSS first. The new blocks depend on v8.3 classes and look wrong on v8.
 - Light-section text color rule now skips `ar-` components and anything inside dark cards or `ar-surface-dark` (it was forcing ink text onto dark cards)
 - All nine homepage blocks rewritten on the shared system (`squarespace/blocks/`); they require v8.3
 
+## 127b. v8.4 changes from v8.3
+
+- Restored the owner's brand decorations: hero pill with verified badge, colored calendar in consultation CTAs
+- Pill eyebrow refined: 32px height, fixed 16px icon, softer layered shadow
+- Button images get a smooth hover scale (disabled under reduced motion)
+- New §59b documents every decoration and its purpose
+
 ---
 
 # Part XXIV: Class Reference
@@ -2539,14 +2567,14 @@ Status after the v8.3 block release (September 28, 2026). "Fixed in files" means
 | Site Styles | primary and secondary button letter-spacing differ | §77 | open (editor) |
 | `#ar-couples-hero` | H1 was the eyebrow; display headline was a `<p>` | §100 | fixed in files |
 | `#ar-couples-hero` | mobile gap under the text after moving the photo below | §34 | open (Fluid Engine, see blocks README) |
-| `#ar-couples-hero` | blue verified badge; colored calendar icon | §15, §41 | fixed in files |
+| `#ar-couples-hero` | verified badge and colored calendar | §59b | kept by owner decision; refined in v8.4 |
 | `#ar-services` | duplicate grid, gold-on-cream stars, "Schedule" CTA, no dark-surface hook | §35, §62, §49, §63 | fixed in files |
 | `#ar-about` | narrow title cap; Karla heading override | §28, §25 | fixed in files |
 | `#ar-approach` | Karla heading override; hardcoded colors | §25, §15 | fixed in files |
 | `#ar-telehealth` | narrow caps; Karla override; wide-card dead space; aria-label differs from visible label | §28, §25, §18, §97 | fixed in files |
 | `#ar-client-proof` | 12.5px quotes; Title Case; blocked vertical page swipe; no way for mouse users to reach card three | §22, §27, §92 | fixed in files |
 | `#ar-client-proof` | outcome language in testimonials; consent not documented here | §107 | open (user decision) |
-| `#ar-final-cta` | narrow title cap; non-standard CTA label; colored icon | §28, §49, §41 | fixed in files |
+| `#ar-final-cta` | narrow title cap; non-standard CTA label | §28, §49 | fixed in files |
 | `#ar-final-cta` | links to the booking portal while the hero links to `/consultation` | §49 | open (user decision) |
 | `#ar-home-faq` | invalid `calc(--meta-font-font-size)`; script group titles at 14px | §24, §22 | fixed in files |
 | Footer | legal row in scaled text with `&nbsp;` runs; "Good Faith Estimat" link split | §22, §38, §76 | open |

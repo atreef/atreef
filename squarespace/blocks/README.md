@@ -1,4 +1,4 @@
-# AtReef homepage blocks (v8.3)
+# AtReef homepage blocks (v8.4)
 
 ## Order of work
 
@@ -25,8 +25,8 @@ Applies to every section: no block sets its own fonts anymore. Headings use your
 
 **1. Hero**
 - The big headline is now the H1. "Couples therapy in Cambridge, Massachusetts" sits inside it as the small label.
-- Removed the "AtReef Therapy, PLLC" pill with the blue verified badge.
-- The calendar icon is now the standard monochrome icon.
+- Kept the "AtReef Therapy, PLLC" pill with the verified badge, now on the refined global pill style.
+- Kept the colored calendar icon in the button chip.
 
 **2. Conversation**
 - The eyebrow uses the global pill label.
@@ -63,7 +63,7 @@ Applies to every section: no block sets its own fonts anymore. Headings use your
 
 **8. Final CTA**
 - Removed the 18ch title cap.
-- Standard button label, and the icon is monochrome.
+- Standard button label, with the colored calendar in the chip.
 - The copy no longer repeats the button.
 - The link announces that it opens a new tab.
 
