@@ -1,24 +1,40 @@
 # AtReef Therapy: Squarespace 7.1 AI Coding Standards
 
-**Version 3.0**  
-**AtReef design system:** v8.1  
+**Version 3.1**  
+**AtReef design system:** v8.2  
 **Website:** `https://www.atreef.com`  
 **Platform:** Squarespace 7.1, Fluid Engine  
-**Updated:** September 26, 2026
+**Updated:** September 27, 2026
 
 ---
 
-## Purpose
+## How to use this document
 
-This document is the default instruction set for any AI that creates, revises, debugs, cleans, optimizes, or reviews custom code for the AtReef Therapy Squarespace 7.1 website.
+This document has two layers:
 
-It is specific to the current AtReef website and its global CSS system. It is not a generic Squarespace style guide.
+1. **Part 0: Operating Contract.** One page. These rules are always in force and win over anything in the reference layer.
+2. **Parts I to XXVI: Reference.** Tokens, components, compiler rules, and checklists. Consult the part that matches the task.
 
-The governing rule is:
+If time or context is limited, read Part 0, the token tables (Part III), and the Known Violations Register (Part XXV) before writing code.
+
+---
+
+# Part 0: Operating Contract
 
 > **Preserve first. Change only what is necessary. Use the existing AtReef and Squarespace systems before creating new local styling or behavior.**
 
-The output must be production-ready, compatible with Squarespace 7.1, consistent with the current AtReef design system, accessible, responsive, maintainable, and ready to paste into Squarespace.
+1. **Scope.** Change only what the user asked for. Preserve copy, URLs, assets, classes, IDs, ARIA, behavior, and breakpoints outside that scope.
+2. **System first.** Before writing local CSS, check Site Styles, then global AtReef CSS, then an existing component class. Do not create a second design system inside a section.
+3. **Full section output.** Return the complete revised section code, ready to paste, unless the user asks for a snippet.
+4. **Production only.** No placeholders, TODOs, fake URLs, or conversational comments in code.
+5. **Accessibility floor.** WCAG 2.2 AA. Every color pair must appear in the Verified Contrast Pairs table (§15) or be measured before use. Focus must stay visible on every surface.
+6. **Readable sizes.** No reading text below 14px. 12px is allowed only for uppercase labels and eyebrows (§22).
+7. **Targets.** Interactive controls are 44px tall when they stand alone. Inline links need at least a 24px hit area (§92).
+8. **Headings.** The largest text on a page is the H1. Headings never get a narrow `ch` cap unless the design names it. Section titles use the Site Styles heading font (§25).
+9. **Case.** Sentence case everywhere. Uppercase comes only from CSS on label classes, never from typed capitals (§27).
+10. **Compiler.** In Design > Custom CSS, escape arithmetic, avoid numeric slash syntax, never use `@container`, and use full asset URLs (Part XII).
+11. **Regression.** Before returning code, compare against the original and revert any unrequested change.
+12. **Known violations.** If the section you are editing appears in the Known Violations Register (Part XXV), fix only the entries that fall inside the requested scope, and report the others in one line after the code.
 
 ---
 
@@ -38,6 +54,8 @@ When sources conflict, use this order:
 Do not use an older section or an older standard to overwrite a newer implementation.
 
 If a value is already defined in current code, do not guess a replacement from memory.
+
+Exception: a current value that violates Part 0 (for example, a color pair below AA) is not protected by this order. Flag it, and fix it when it falls inside the requested scope.
 
 ---
 
@@ -86,6 +104,8 @@ Do not return only a selector, one declaration, or instructions such as "replace
 
 The default result must be ready to paste directly into the Squarespace Code Block.
 
+When the change is to **Design > Custom CSS**, return the entire stylesheet unless the user asks for a patch.
+
 ---
 
 ## 5. Production code only
@@ -128,7 +148,7 @@ Never write comments such as:
 /* New improved version */
 ```
 
-Do not include reasoning, changelog notes, or conversation history inside code.
+Do not include reasoning, changelog notes, or conversation history inside code. The single exception is the version marker on the first line of the global stylesheet, for example `/* AtReef v8.2 */`.
 
 ---
 
@@ -158,9 +178,21 @@ If an unrelated change was introduced, revert it.
 
 ---
 
+## 8. Reporting after the code
+
+After the code, add at most five short lines:
+
+- what changed
+- anything from Part XXV noticed but left alone
+- any Site Styles or editor setting the user must change by hand
+
+Do not repeat the code or explain standard practice.
+
+---
+
 # Part II: AtReef Site Baseline
 
-## 8. Platform
+## 9. Platform
 
 The website uses:
 
@@ -174,9 +206,7 @@ Do not write code as though this were a standalone React, Webflow, WordPress, or
 
 ---
 
-## 9. Site layout baseline
-
-The current site assumes:
+## 10. Site layout baseline
 
 | Setting | Standard |
 |---|---|
@@ -190,6 +220,7 @@ The current site assumes:
 | Standard column gap | `clamp(32px,5.25vw,64px)` |
 | Default radius | `5px` |
 | Scroll offset | `88px` |
+| Minimum supported width | `320px` |
 
 Do not create arbitrary section widths that fight the 1220px Squarespace content width.
 
@@ -197,7 +228,7 @@ Do not add a second custom page container unless a design specifically requires 
 
 ---
 
-## 10. Section rhythm
+## 11. Section rhythm
 
 The global CSS applies vertical section padding to Fluid Engine content wrappers:
 
@@ -210,7 +241,7 @@ The global CSS applies vertical section padding to Fluid Engine content wrappers
 
 Footer sections use `--ar-section-y-footer`.
 
-A specific current section with ID `6a9b4790514b3a068eb2b930` is intentionally exempted with zero top and bottom padding.
+One section, `data-section-id="6a9b4790514b3a068eb2b930"`, is intentionally exempted with zero top and bottom padding. If that section is rebuilt or duplicated, the ID changes and the exemption silently stops working. Check it after any edit to that page.
 
 Do not add local section top or bottom padding unless:
 
@@ -221,7 +252,7 @@ If a section appears too tall, first inspect Fluid Engine block height and secti
 
 ---
 
-## 11. Section dividers
+## 12. Section dividers
 
 Global AtReef CSS draws the default section divider:
 
@@ -237,9 +268,9 @@ Do not enable a second Squarespace section divider unless the design intentional
 
 ---
 
-## 12. Content visibility
+## 13. Content visibility
 
-The global CSS currently enables `content-visibility:auto` for major homepage sections including:
+The global CSS enables `content-visibility:auto` for these homepage sections:
 
 - `#ar-services`
 - `#ar-about`
@@ -257,11 +288,13 @@ Preserve this unless there is a demonstrated rendering or accessibility problem.
 
 Do not apply `content-visibility` indiscriminately to every section.
 
+Testing note: full-page screenshots in headless browsers render these sections blank. That is a capture artifact, not a site bug. Scroll each section into view before capturing it.
+
 ---
 
 # Part III: Canonical Tokens
 
-## 13. Token rule
+## 14. Token rule
 
 Global AtReef tokens are the source of truth for repeated values.
 
@@ -279,7 +312,7 @@ Do not redefine canonical global tokens inside a section unless the section inte
 
 ---
 
-## 14. Color tokens
+## 15. Color tokens
 
 | Token | Value | Use |
 |---|---:|---|
@@ -288,14 +321,17 @@ Do not redefine canonical global tokens inside a section unless the section inte
 | `--ar-body` | `var(--ar-text)` | body text |
 | `--ar-muted` | `#53635F` | muted text |
 | `--ar-ink` | `var(--ar-text)` | ink alias |
-| `--ar-gold` | `#FEDA6A` | primary gold accent |
-| `--ar-gold-hover` | `#F6D366` | gold hover |
+| `--ar-gold` | `#FEDA6A` | primary gold accent, fills, and gold marks on dark surfaces |
+| `--ar-gold-hover` | `#F6D366` | gold hover and pressed state |
 | `--ar-gold-wash` | `rgba(254,218,106,.22)` | light gold state |
+| `--ar-gold-border` | `#E8CB68` | gold hover border |
+| `--ar-gold-ink` | `#8A6A00` | gold meaning on light surfaces (stars, small gold marks) |
 | `--ar-paper` | `#FDFAF7` | paper surface |
 | `--ar-cream` | `#F5F0EA` | cream surface |
 | `--ar-gold-tint` | `#FFF9EA` | pale gold surface |
 | `--ar-white` | `#FFFFFF` | white surface |
-| `--ar-border` | `#D6DFDA` | standard neutral border |
+| `--ar-border` | `#D6DFDA` | decorative neutral border (cards, dividers) |
+| `--ar-field-border` | `#6F857E` | form field and control boundaries |
 | `--ar-surface-hover` | `#EEF3F0` | light hover surface |
 | `--ar-on-dark` | `#FAFAFA` | primary text on dark surfaces |
 | `--ar-on-dark-muted` | `rgba(250,250,250,.74)` | muted dark-surface text |
@@ -304,8 +340,35 @@ Do not redefine canonical global tokens inside a section unless the section inte
 | `--ar-line-dark` | `rgba(255,255,255,.14)` | dark-surface hairline |
 | `--ar-divider` | `rgba(0,70,67,.08)` | section divider |
 | `--ar-divider-dark` | `rgba(255,255,255,.08)` | dark section divider |
-| `--ar-focus` | `rgba(0,70,67,.45)` | focus outline |
-| `--ar-focus-dark` | `rgba(254,218,106,.75)` | dark focus outline |
+| `--ar-focus` | `#004643` | focus outline on light surfaces |
+| `--ar-focus-dark` | `#FEDA6A` | focus outline on dark surfaces |
+
+### Verified contrast pairs
+
+Measured with the WCAG 2.x formula. Text needs 4.5:1 (3:1 at 24px, or 18.66px bold). Control boundaries, focus rings, and meaningful icons need 3:1.
+
+| Foreground | Background | Ratio | Allowed for |
+|---|---|---:|---|
+| `--ar-text` | page `#FAFAFA` | 17.7 | all text |
+| `--ar-text` | `--ar-gold` | 13.6 | button labels on gold |
+| `--ar-teal` | page, paper, white | 10.3 | text, focus ring, icons |
+| `--ar-muted` | page, paper | 6.1 | muted body text |
+| `--ar-muted` | `--ar-gold-tint` | 6.0 | muted body text |
+| `--ar-muted` | `--ar-cream` | 5.6 | muted body text |
+| `--ar-on-dark` | `--ar-teal` | 10.3 | text on dark |
+| `--ar-on-dark-muted` | `--ar-teal` | 6.4 | muted text on dark |
+| `--ar-gold` | `--ar-teal` | 7.9 | labels, focus ring, stars on dark |
+| `--ar-gold-ink` | white | 5.1 | stars, gold marks on light |
+| `--ar-gold-ink` | `--ar-cream` | 4.47 | stars and icons only (non-text, 3:1); not for small text |
+| `--ar-field-border` | white | 3.9 | field boundaries |
+
+### Pairs that fail and must not carry meaning
+
+| Foreground | Background | Ratio | Rule |
+|---|---|---:|---|
+| `--ar-gold` | any light surface | 1.2 to 1.4 | never as text, icon, star, or focus ring on light |
+| `--ar-border` | white or page | 1.3 to 1.4 | decoration only, never a field boundary |
+| `rgba(0,70,67,.45)` | page | 2.4 | retired focus value; do not reintroduce |
 
 ### Color rules
 
@@ -315,16 +378,21 @@ Do not redefine canonical global tokens inside a section unless the section inte
 - Use section themes and global tokens before local background colors.
 - Do not change theme colors while solving a layout-only problem.
 - Do not add a border to a solid surface unless the component system calls for it.
+- Gold on light surfaces is a fill, never a foreground. When gold meaning must appear as a mark on a light surface, use `--ar-gold-ink`.
+- Do not introduce a color outside this palette (for example, a blue verification badge or a multicolor calendar icon).
 
 ---
 
-## 15. Typography tokens
+## 16. Typography tokens
 
 | Token | Current value |
 |---|---|
 | `--ar-fs-label` | `12px` |
 | `--ar-fs-small` | `14px` |
+| `--ar-fs-note` | `14px` |
 | `--ar-fs-body` | `16px` |
+| `--ar-lh-small` | `22px` |
+| `--ar-lh-body` | `28px` |
 | `--ar-fs-lead` | `clamp(1.125rem,1.068rem + .242vw,1.25rem)` |
 | `--ar-fs-h4` | `clamp(1.25rem,1.193rem + .242vw,1.375rem)` |
 | `--ar-fs-h3` | `clamp(1.375rem,1.204rem + .727vw,1.75rem)` |
@@ -338,7 +406,7 @@ Do not retype these formulas inside Code Blocks when the token exists.
 
 ---
 
-## 16. Spacing tokens
+## 17. Spacing tokens
 
 | Token | Value |
 |---|---:|
@@ -377,21 +445,23 @@ Do not create one-off values such as `27px`, `37px`, or `53px` unless the layout
 
 ---
 
-## 17. Measure tokens
+## 18. Measure tokens
 
 | Token | Value | Use |
 |---|---:|---|
 | `--ar-measure` | `64ch` | readable body measure |
-| `--ar-measure-tight` | `46ch` | compact body measure |
+| `--ar-measure-tight` | `46ch` | compact body measure in narrow cards |
 | `--ar-measure-heading` | `20ch` | intentionally constrained headings |
 
 `--ar-measure-heading` is **not** a default maximum width for every heading.
 
 Do not constrain a heading to `20ch`, `18ch`, or another character measure unless the design intentionally needs wrapping.
 
+In a card wider than about 480px, a `46ch` copy cap leaves dead space on the right. Use `ar-card__copy--wide` (64ch) there.
+
 ---
 
-## 18. Shape and depth tokens
+## 19. Shape, depth, and target tokens
 
 | Token | Value |
 |---|---|
@@ -400,6 +470,8 @@ Do not constrain a heading to `20ch`, `18ch`, or another character measure unles
 | `--ar-tile` | `40px` |
 | `--ar-tile-sm` | `24px` |
 | `--ar-band` | `48px` |
+| `--ar-target` | `44px` |
+| `--ar-target-min` | `24px` |
 | `--ar-shadow` | `0 8px 24px rgba(0,70,67,.05)` |
 | `--ar-shadow-hover` | `0 12px 32px rgba(0,70,67,.065)` |
 | `--ar-shadow-lift` | `0 16px 32px rgba(0,70,67,.08)` |
@@ -411,7 +483,7 @@ Use the site radius and shadows consistently. Do not introduce large rounded car
 
 ---
 
-## 19. Wave backgrounds
+## 20. Wave backgrounds
 
 The global CSS provides:
 
@@ -429,18 +501,9 @@ Use `background-color` and `background-image` separately when preserving a wave.
 
 # Part IV: Typography and Site Styles
 
-## 20. Native typography first
+## 21. Native typography first
 
 Use semantic HTML and allow Squarespace Site Styles to control typography when the design does not intentionally depart from native styles.
-
-Use:
-
-```html
-<h1>...</h1>
-<h2>...</h2>
-<h3>...</h3>
-<h4>...</h4>
-```
 
 Use heading levels for document structure and SEO, not merely for visual size.
 
@@ -448,7 +511,24 @@ Do not change a heading level only because another level looks larger or smaller
 
 ---
 
-## 21. Paragraph styles
+## 22. Type size floor
+
+| Text | Minimum |
+|---|---|
+| Body, card copy, answers, testimonials | `16px` |
+| Notes, captions, footer links, legal links, cookie text | `14px` |
+| Uppercase labels and eyebrows (with tracking) | `12px` |
+| Anything else | not allowed below `14px` |
+
+Rules:
+
+- Do not use Squarespace **scaled text** for body copy, links, or legal text. It shrinks text to fit and can drop it below 11px.
+- Do not solve a fit problem by reducing font size. Let the text wrap.
+- Testimonials are persuasive content. They use body size, never small text.
+
+---
+
+## 23. Paragraph styles
 
 ### Paragraph 1
 
@@ -468,13 +548,15 @@ Do not change a heading level only because another level looks larger or smaller
 <p class="sqsrte-small">...</p>
 ```
 
+Paragraph 3 must render at 14px or larger. In Site Styles, set Paragraph 3 to at least `0.875rem`. The global CSS guards the footer only.
+
 When using native paragraph styles, avoid local font family, size, weight, line height, and letter spacing unless the design requires a deliberate exception.
 
 ---
 
-## 22. Miscellaneous / meta typography
+## 24. Miscellaneous / meta typography
 
-When a component must follow Squarespace's Miscellaneous typography, do not hardcode the same typography locally.
+The Miscellaneous font on this site is a script face (`lovely-r6xgg0`). Use it only where a script accent is intended.
 
 If only the font family is needed:
 
@@ -504,7 +586,13 @@ Do not set `font-family` from Miscellaneous while separately hardcoding every ot
 
 ---
 
-## 23. Brand fonts
+## 25. Brand fonts and heading font rule
+
+Site Styles currently set:
+
+- heading font: `pogonia-q6ye39`
+- body font: `Karla`
+- Miscellaneous font: `lovely-r6xgg0`
 
 The global CSS defines:
 
@@ -516,17 +604,23 @@ The global CSS defines:
 
 `AR Autumn` is loaded through `@font-face` from the existing Squarespace CDN URL.
 
-Rules:
+### Heading font rule
+
+- **H1 and H2 section titles** use the Site Styles heading font. Code Blocks must not set `font-family` on them.
+- **H3 and H4 inside components** (card titles, list titles) use the body font through system classes such as `ar-card__title`, which inherit.
+- A section title that renders in Karla is a violation of this rule, even if it looks acceptable in isolation.
+
+### Brand font rules
 
 - Preserve the current font file URL.
 - Do not share or expose font files outside the website.
 - Do not replace brand fonts with generic substitutes unless requested.
-- Do not use the script font for body copy.
+- Do not use the script font for body copy, links, or anything a person must read to act.
 - Use display or script typography sparingly and intentionally.
 
 ---
 
-## 24. Global text behavior
+## 26. Global text behavior
 
 The global CSS applies:
 
@@ -541,7 +635,16 @@ Do not fight `text-wrap:balance` with arbitrary narrow widths.
 
 ---
 
-## 25. Heading wrapping rules
+## 27. Case and capitalization
+
+- Use sentence case for headings, buttons, labels, card titles, and navigation: "Free consultation", not "Free Consultation".
+- Proper nouns keep their capitals: "Gottman Method", "Cambridge", "AtReef Therapy".
+- Uppercase is a style, not content. Type labels in sentence case and let `ar-label` apply `text-transform:uppercase`. Never type "START HERE".
+- Do not use uppercase for anything longer than about five words.
+
+---
+
+## 28. Heading wrapping rules
 
 A repeated AtReef issue has been headings wrapping too early because local code adds narrow values such as:
 
@@ -560,7 +663,7 @@ Rules:
 
 ---
 
-## 26. Typography and layout separation
+## 29. Typography and layout separation
 
 Typography classes and layout classes serve different jobs.
 
@@ -572,7 +675,7 @@ Do not hardcode typography into a class whose purpose is only alignment, grid pl
 
 # Part V: Layout and Responsive Behavior
 
-## 27. Fluid Engine placement
+## 30. Fluid Engine placement
 
 When building a section:
 
@@ -581,10 +684,11 @@ When building a section:
 - Let global section padding create section rhythm.
 - Keep block height tight to its content.
 - Do not use absolute positioning to solve a normal layout problem.
+- Text blocks must not extend past the content edge. Check the right edge of right-aligned blocks at 1024px and 1440px.
 
 ---
 
-## 28. Section scoping
+## 31. Section scoping
 
 Every custom section should have one unique root ID:
 
@@ -610,7 +714,7 @@ unless the change is intentionally global and belongs in Custom CSS.
 
 ---
 
-## 29. Box sizing
+## 32. Box sizing
 
 A section may safely normalize box sizing inside its scope:
 
@@ -627,7 +731,7 @@ Do not create a site-wide reset inside a Code Block.
 
 ---
 
-## 30. Responsive strategy
+## 33. Responsive strategy
 
 Use this order:
 
@@ -643,11 +747,19 @@ The component should respond to the space it actually has whenever possible.
 
 ---
 
-## 31. Card-grid standard
+## 34. Mobile content order
 
-The AtReef card-grid system should respond to available width rather than a fixed viewport breakpoint.
+On narrow screens, the first viewport must show what the page offers and how to act on it.
 
-Current intended global rules:
+- In a hero, the order on mobile is: eyebrow, H1, lead, primary CTA, then the image.
+- A portrait or decorative image may lead only if it is 280px tall or less on a 390px wide screen.
+- Test at 390×844. The primary CTA of the hero should start above 844px with the cookie banner dismissed.
+
+---
+
+## 35. Card-grid standard
+
+The AtReef card-grid system responds to available width rather than a fixed viewport breakpoint.
 
 ```css
 .ar-card-grid{
@@ -679,11 +791,9 @@ Current intended global rules:
 
 ---
 
-## 32. Container queries
+## 36. Container queries
 
 Container queries are preferred for section-local layout when a component must respond to its own available width.
-
-Example:
 
 ```css
 #ar-example{
@@ -701,9 +811,9 @@ Important: container queries belong in Code Block `<style>` tags, not in Design 
 
 ---
 
-## 33. Breakpoints currently used globally
+## 37. Breakpoints currently used globally
 
-The current global CSS uses viewport media queries primarily at:
+The global CSS uses viewport media queries primarily at:
 
 - `380px`
 - `640px`
@@ -715,7 +825,7 @@ Section-local container breakpoints do not need to match these viewport values.
 
 ---
 
-## 34. Minimum widths and overflow
+## 38. Minimum widths and overflow
 
 Use `min-width:0` on grid and flex children when text or nested content could otherwise force overflow.
 
@@ -723,11 +833,13 @@ Do not solve overflow by hiding it unless the content is intentionally clipped.
 
 Avoid fixed widths for text cards.
 
+Do not join inline items with `&nbsp;` runs. They cannot wrap and will overflow at narrow widths. Use a list with `gap`.
+
 ---
 
 # Part VI: AtReef Button System
 
-## 35. Button architecture
+## 39. Button architecture
 
 The global button system uses:
 
@@ -745,9 +857,7 @@ Do not rebuild buttons locally if one of these variants fits the job.
 
 ---
 
-## 36. Button tokens
-
-Core button values:
+## 40. Button tokens
 
 | Token | Value |
 |---|---|
@@ -763,13 +873,13 @@ Core button values:
 
 The base button uses `width:fit-content`, inherits font family, and keeps a maximum width of 100%.
 
+Labels stay on one line above 640px and wrap below it.
+
 ---
 
-## 37. Primary button
+## 41. Primary button
 
 `ar-btn--primary` is the split gold button.
-
-Structure:
 
 ```html
 <a class="ar-btn ar-btn--primary" href="...">
@@ -787,12 +897,15 @@ Characteristics:
 - 5px radius
 - subtle border and shadow
 - slight hover lift
+- gold-hover background on press
+
+The chip icon is always a monochrome `ar-btn__icon` utility. Do not place a colored image or emoji in the chip.
 
 Do not combine the split pieces into one generic button without a design request.
 
 ---
 
-## 38. Secondary button
+## 42. Secondary button
 
 `ar-btn--secondary` uses a bordered teal-tinted surface with a separate right chip area.
 
@@ -800,7 +913,7 @@ Use it for strong secondary navigation and especially on dark surfaces with `ar-
 
 ---
 
-## 39. Tertiary button
+## 43. Tertiary button
 
 `ar-btn--tertiary` is the low-emphasis text link with:
 
@@ -815,7 +928,7 @@ Do not add an extra circle around the whole button.
 
 ---
 
-## 40. Compact button
+## 44. Compact button
 
 `ar-btn--compact` is a compact gold control with a dark circular icon chip.
 
@@ -823,7 +936,7 @@ It supports block width with `ar-btn--block`.
 
 ---
 
-## 41. Icon utilities
+## 45. Icon utilities
 
 Current icon utilities:
 
@@ -841,7 +954,7 @@ Do not introduce a new icon system for a single section when an existing utility
 
 ---
 
-## 42. Button width utilities
+## 46. Button width utilities
 
 - `ar-btn--block` makes a button full width.
 - `ar-btn--hug` keeps content width.
@@ -850,12 +963,12 @@ The element name is intentionally included in global CSS selectors such as `a.ar
 
 ---
 
-## 43. Button states
+## 47. Button states
 
 Preserve:
 
 - visible keyboard focus
-- active scale
+- active scale and pressed background
 - disabled state
 - busy spinner
 - pointer and touch behavior
@@ -863,11 +976,13 @@ Preserve:
 - reduced-motion override
 - forced-colors support
 
+The pressed background exists because `-webkit-tap-highlight-color:transparent` removes the browser's default touch feedback, and reduced motion removes the scale. Do not remove either without replacing the feedback.
+
 Do not add hover-only information that is required to understand the action.
 
 ---
 
-## 44. Button groups and notes
+## 48. Button groups and notes
 
 `ar-btn-group`:
 
@@ -879,21 +994,40 @@ Do not add hover-only information that is required to understand the action.
 `ar-btn-note`:
 
 - maximum `52ch`
-- `13px` size
-- `20px` line-height
+- `14px` size
+- `22px` line-height
 - muted text
 
 Do not use `ar-btn-note` as a substitute for normal body copy.
 
 ---
 
+## 49. CTA label standard
+
+One action has one name across the site.
+
+| Context | Label |
+|---|---|
+| Primary consultation CTA, full width available | "Book a free 30-minute consultation" |
+| Primary consultation CTA, tight space (cards, footer, menu) | "Book a free consultation" |
+| Service navigation | the service name in sentence case, for example "Couples therapy" |
+| Low-priority continuation | a descriptive phrase, for example "More questions answered" |
+
+Rules:
+
+- Do not introduce new verbs ("Schedule", "Start", "Get") for the consultation CTA.
+- Do not use Title Case on button labels.
+- Link text must describe the destination. Never "Click here" or "Learn more" alone.
+
+The user owns final wording. If they choose a different canonical label, update this table and use it everywhere.
+
+---
+
 # Part VII: Selection and Disclosure Controls
 
-## 45. Control tokens
+## 50. Control tokens
 
 The control system uses the `--arc-*` namespace.
-
-Core values:
 
 | Token | Value |
 |---|---|
@@ -903,13 +1037,13 @@ Core values:
 | `--arc-px` | `12px` |
 | `--arc-py` | `8px` |
 | `--arc-dot` | `7px` |
-| `--arc-fs` | `13px` |
+| `--arc-fs` | `14px` |
 | `--arc-fs-seg` | `14px` |
 | `--arc-fw` | `600` |
 
 ---
 
-## 46. Pills
+## 51. Pills
 
 Classes:
 
@@ -929,7 +1063,7 @@ Do not rewrite these controls as JavaScript tabs unless the interaction requires
 
 ---
 
-## 47. Segmented controls
+## 52. Segmented controls
 
 Classes:
 
@@ -944,7 +1078,7 @@ At `380px` and below, segmented controls become one column.
 
 ---
 
-## 48. Disclosure / FAQ controls
+## 53. Disclosure / FAQ controls
 
 Classes:
 
@@ -969,7 +1103,7 @@ Do not replace native disclosure behavior with JavaScript solely for animation.
 
 # Part VIII: Card and Container System
 
-## 49. Container namespace
+## 54. Container namespace
 
 The container system uses `--ark-*` compatibility aliases that point back to canonical `--ar-*` values.
 
@@ -979,7 +1113,7 @@ Do not duplicate the old standalone container-system stylesheet on top of the cu
 
 ---
 
-## 50. Base card
+## 55. Base card
 
 `.ar-card`:
 
@@ -997,7 +1131,7 @@ At `380px` and below, base card padding becomes `16px`.
 
 ---
 
-## 51. Card surface modifiers
+## 56. Card surface modifiers
 
 Available surfaces:
 
@@ -1025,12 +1159,13 @@ Important:
 - use `ar-card--auto` when the card should size to its content
 - `ar-card--white` uses a stronger line and standard shadow
 - `ar-card--flat` removes the wave background image
+- dark cards (`--green`, `--green-alt`, `--translucent`) automatically switch `ar-card__title` and `ar-card__copy` to light text, and switch focus rings to gold
 
 Do not recreate these properties in section CSS when a modifier already exists.
 
 ---
 
-## 52. Card band and body
+## 57. Card band and body
 
 Classes:
 
@@ -1044,7 +1179,7 @@ Use these for true labeled or staged card structures, not as decorative stripes.
 
 ---
 
-## 53. Tiles
+## 58. Tiles
 
 Classes:
 
@@ -1062,7 +1197,7 @@ Use tiles for compact icon emphasis. Do not place every icon inside a tile autom
 
 ---
 
-## 54. Labels and eyebrows
+## 59. Labels and eyebrows
 
 Classes:
 
@@ -1097,15 +1232,19 @@ Pill label:
 
 At `380px` and below, the pill may wrap.
 
+Use one eyebrow per heading. A pill label and an eyebrow stacked over the same heading is one label too many.
+
 When an icon is decorative:
 
 ```html
 <img src="/s/icon.svg" alt="" aria-hidden="true">
 ```
 
+Do not use a checkmark badge, seal, or "verified" mark unless a named third party actually issues that verification.
+
 ---
 
-## 55. Card typography
+## 60. Card typography
 
 `.ar-card__title`:
 
@@ -1117,6 +1256,8 @@ When an icon is decorative:
 
 `ar-card__title--lead` uses `--ar-fs-h3`.
 
+`ar-card__title--wide` removes the `24ch` cap.
+
 `.ar-card__copy`:
 
 - maximum `--ar-measure-tight` / `46ch`
@@ -1125,15 +1266,17 @@ When an icon is decorative:
 - line-height `28px`
 - pretty wrapping
 
+`ar-card__copy--wide` raises the cap to `--ar-measure` / `64ch`.
+
 `.ar-card__footer` uses automatic top margin with `32px` top padding.
 
 Use these classes rather than locally retyping the same card styles.
 
 ---
 
-## 56. Card grids
+## 61. Card grids
 
-See Section 31.
+See Section 35.
 
 A section that uses system cards should generally use the system grid as well.
 
@@ -1141,9 +1284,40 @@ Do not define a local `.section__grid` with identical behavior unless the sectio
 
 ---
 
+## 62. Ratings
+
+Classes:
+
+- `ar-stars`
+- `ar-stars--on-dark`
+
+```html
+<span class="ar-stars" role="img" aria-label="Rated 5 out of 5">★★★★★</span>
+```
+
+Rules:
+
+- On light surfaces stars use `--ar-gold-ink`. On dark surfaces use `ar-stars--on-dark`.
+- `aria-label` on a plain `<span>` is ignored by many screen readers. Always add `role="img"`.
+- Show the rating source next to the stars in text ("5.0 on Grow Therapy").
+
+---
+
+## 63. Dark local surfaces
+
+When a local component has a dark background and does not use a system dark card, add `ar-surface-dark` to its root:
+
+```html
+<article class="ar-services__card ar-services__card--green ar-surface-dark">
+```
+
+This switches focus rings inside it to gold. The global two-color focus ring keeps focus visible even when this class is missing, but the class gives the intended brand treatment.
+
+---
+
 # Part IX: Heading and Utility Classes
 
-## 57. Highlight
+## 64. Highlight
 
 `.ar-hl` creates the gold band highlight behind part of a heading.
 
@@ -1153,7 +1327,7 @@ Do not replace it with `<mark>` unless the semantics actually mean highlighted o
 
 ---
 
-## 58. Forced line break
+## 65. Forced line break
 
 `.ar-line` becomes block at `768px` and wider.
 
@@ -1163,7 +1337,7 @@ Do not use it to repair a heading that is wrapping because of an unnecessary max
 
 ---
 
-## 59. Scroll controls
+## 66. Scroll controls
 
 Classes:
 
@@ -1179,11 +1353,11 @@ The scroll button is:
 - 5px radius
 - keyboard focus visible
 
-Use these for previous/next controls in horizontal content.
+Use these for previous/next controls in horizontal content. Every scroll button needs an `aria-label` ("Previous step", "Next step").
 
 ---
 
-## 60. Measure utilities
+## 67. Measure utilities
 
 - `ar-measure`: `64ch`
 - `ar-measure--tight`: `46ch`
@@ -1195,7 +1369,7 @@ Use `ar-sr` for accessible labels that should not be visually displayed.
 
 # Part X: Site-wide Squarespace Overrides
 
-## 61. Platform cleanup
+## 68. Platform cleanup
 
 The global CSS hides Squarespace block-status and removed-script UI artifacts:
 
@@ -1208,7 +1382,7 @@ Do not remove these without checking the editor and live site.
 
 ---
 
-## 62. Smooth scrolling
+## 69. Smooth scrolling
 
 Smooth scrolling is enabled only when reduced motion is not requested:
 
@@ -1224,50 +1398,68 @@ Preserve this behavior when adding anchor targets.
 
 ---
 
-## 63. Forms
+## 70. Squarespace site animations
 
-Form fields and textareas currently use:
+Site Styles > Animations applies a fade or slide to every block, currently about `0.8s` with a stagger. That is slower than the AtReef `--ar-reveal` token (`320ms`) and hides content until JavaScript runs.
+
+Rules:
+
+- Keep Site Styles > Animations set to **None**, or to the shortest fade available.
+- The global CSS forces `.preFade`, `.preSlide`, `.preScale`, `.preClip`, and `.preFlex` to their final visible state under `prefers-reduced-motion:reduce`. Preserve that guard.
+- Do not add a second entrance animation inside a Code Block.
+
+---
+
+## 71. Forms
+
+Form fields and textareas use:
 
 - white background
-- `1px` `--ar-border`
+- `1px` `--ar-field-border`
+- `5px` radius
+- `44px` minimum height
 - `12px 16px` padding
-- stronger border plus accessible outline on focus
+- teal border plus the global focus ring on focus
+
+Every field needs a visible label. Placeholder text is not a label.
 
 Do not style individual forms differently unless the form has a deliberate special design.
 
 ---
 
-## 64. Blog
+## 72. Blog
 
-The global blog system currently includes:
+The global blog system includes:
 
 - gold `.blog-more-link`
-- teal text
+- ink text
 - 5px radius
 - 44px minimum height
 - 24px horizontal padding
-- responsive hover color
+- hover color on hover-capable devices, pressed color on touch
 - 5px radius on supported blog image wrappers
 
 Do not locally rebuild the read-more button on individual posts.
 
 ---
 
-## 65. Mobile menu
+## 73. Mobile menu
 
-Current global mobile menu behavior includes:
+Current global mobile menu behavior:
 
 - CTA width `86vw`
 - CTA max width `420px`
 - nav item font size `18px`
 - nav item weight `700`
-- compact vertical nav spacing
+- each nav link `44px` tall (`13px` vertical padding), `50px` pitch
+
+Do not reintroduce negative margins on `.header-menu-nav-item`. They shrink tap targets to about 18px.
 
 Do not change mobile navigation while solving a page-section problem.
 
 ---
 
-## 66. Navigation dropdown
+## 74. Navigation dropdown
 
 The desktop folder dropdown uses:
 
@@ -1275,14 +1467,15 @@ The desktop folder dropdown uses:
 - subtle border
 - 5px radius
 - restrained shadow
-- hover gold wash
-- focus outline
+- `8px 12px` item padding
+- hover gold wash with `--ar-gold-border`
+- teal focus outline
 
 Preserve the current interaction and focus behavior.
 
 ---
 
-## 67. Newsletter
+## 75. Newsletter
 
 At `640px` and below, newsletter form controls are forced to full width.
 
@@ -1290,17 +1483,49 @@ Do not override this locally without testing mobile form usability.
 
 ---
 
-## 68. Footer
+## 76. Footer
 
-Footer anchors remove text-decoration and background-image styling globally.
+The global CSS:
+
+- removes text-decoration and background-image from footer anchors
+- underlines footer text links on hover and keyboard focus
+- sets Paragraph 3 in footer text blocks to `14px` / `22px`
+- gives footer text links and all `tel:` links `5px` vertical padding for a larger hit area
+
+Footer content rules:
+
+- Footer column headings follow the heading hierarchy. Use a visually hidden H2 ("Site footer" with `ar-sr`) above the column H3s, or use `<p class="ar-label">` for the column titles.
+- Crisis numbers are always `tel:` links: `<a href="tel:988">988</a>`, `<a href="tel:911">911</a>`.
+- Legal links are a list, not a line of text joined with `&nbsp;`:
+
+```html
+<ul class="ar-footer__legal" aria-label="Legal">
+  <li><a href="/privacy-policy">Privacy</a></li>
+  <li><a href="/terms-and-conditions">Terms</a></li>
+  <li><a href="/disclaimer">Disclaimer</a></li>
+  <li><a href="/no-surprises-act">Good Faith Estimate</a></li>
+</ul>
+```
+
+- Never put prose inside `<pre>` or `<code>`. Screen readers may announce it as code.
 
 Do not add a site-wide link underline rule that unintentionally changes the footer.
 
 ---
 
-## 69. Native Squarespace buttons
+## 77. Cookie banner
 
-Native list and carousel buttons are globally normalized for full-width left-aligned content in the current design.
+The global CSS sets cookie banner text to `14px` / `22px` and banner buttons to `14px`, `44px` tall, with `.02em` tracking.
+
+Keep Site Styles primary and secondary button letter-spacing equal. The banner uses both, and unequal tracking makes the two buttons look unrelated.
+
+---
+
+## 78. Native Squarespace buttons
+
+Native list and carousel buttons are globally normalized for full-width left-aligned content.
+
+The global CSS also forces `.sqs-block-button-container--center` and `--right` to left alignment. A centered button set in the editor will render left-aligned. That is intentional; do not report it as a bug, and do not fight it with local CSS.
 
 Do not assume every visible button uses the custom `ar-btn` system.
 
@@ -1312,9 +1537,9 @@ Before editing a button, identify whether it is:
 
 ---
 
-## 70. Lists and quotes
+## 79. Lists and quotes
 
-Current list cards use:
+List cards use:
 
 - teal translucent border
 - 5px radius
@@ -1335,7 +1560,7 @@ Preserve these global styles unless the user asks for a redesign.
 
 # Part XI: CSS Architecture
 
-## 71. Global vs local CSS
+## 80. Global vs local CSS
 
 Put a rule in **Design > Custom CSS** when it is:
 
@@ -1359,7 +1584,7 @@ Do not duplicate a global component inside section CSS.
 
 ---
 
-## 72. Specificity
+## 81. Specificity
 
 Prefer predictable, scoped selectors.
 
@@ -1381,7 +1606,7 @@ Do not use `!important` between AtReef's own component rules.
 
 ---
 
-## 73. Reset specificity
+## 82. Reset specificity
 
 A local reset can accidentally override component classes because an ID selector is strong.
 
@@ -1393,9 +1618,7 @@ Avoid broad rules such as:
 
 when the section contains global components that depend on paragraph margins.
 
-If necessary, exclude system classes with `:where()` to keep specificity controlled.
-
-Example:
+If necessary, exclude system classes with `:where()` to keep specificity controlled:
 
 ```css
 #ar-example :is(h2,p):not(:where(.ar-label)){
@@ -1405,7 +1628,7 @@ Example:
 
 ---
 
-## 74. Do not duplicate system values
+## 83. Do not duplicate system values
 
 Do not locally redefine:
 
@@ -1418,12 +1641,13 @@ Do not locally redefine:
 - standard disclosure typography
 - label typography
 - card-grid behavior
+- heading font family
 
 unless the section intentionally departs from the system.
 
 ---
 
-## 75. Safe cleanup
+## 84. Safe cleanup
 
 Safe cleanup includes:
 
@@ -1438,9 +1662,19 @@ Do not perform a design-system migration as a side effect of a small requested c
 
 ---
 
+## 85. Global selectors that touch links
+
+A global rule that targets `a` inside a container will also hit `a.ar-btn`. Always exclude buttons:
+
+```css
+footer .sqs-html-content a:not(.ar-btn){...}
+```
+
+---
+
 # Part XII: Squarespace Custom CSS Compiler
 
-## 76. Compiler model
+## 86. Compiler model
 
 Squarespace Design > Custom CSS is processed by a legacy LESS compiler.
 
@@ -1448,9 +1682,11 @@ Code Block `<style>` tags are normal browser CSS and do not pass through that co
 
 This distinction is critical.
 
+To test locally, LESS `1.4.2` reproduces Squarespace's output for this stylesheet, including the escaped `clamp()` values, `min()` inside `minmax()`, `mask` shorthand with `center/contain`, and data URI icons. Newer LESS (1.7 and later) rejects `min()` and is not a valid stand-in.
+
 ---
 
-## 77. Verified compiler rules
+## 87. Verified compiler rules
 
 | Construct in Design > Custom CSS | Result | Rule |
 |---|---|---|
@@ -1471,11 +1707,9 @@ This distinction is critical.
 
 ---
 
-## 78. Arithmetic rule
+## 88. Arithmetic rule
 
 In Custom CSS, escape expressions that trigger LESS arithmetic.
-
-Good:
 
 ```css
 --ar-fs-h2:~'clamp(1.75rem,1.409rem + 1.455vw,2.5rem)';
@@ -1485,7 +1719,7 @@ Do not escape simple CSS functions merely because they contain different units i
 
 ---
 
-## 79. Numeric slash rule
+## 89. Numeric slash rule
 
 Do not use numeric slash syntax in Design > Custom CSS for:
 
@@ -1497,7 +1731,7 @@ Use explicit longhands, an escaped value where appropriate, or keep the rule ins
 
 ---
 
-## 80. Asset URL rule
+## 90. Asset URL rule
 
 In **Design > Custom CSS**, use a full AtReef URL for uploaded assets:
 
@@ -1507,13 +1741,11 @@ url("https://www.atreef.com/s/file.svg")
 
 A root-relative `/s/file.svg` can resolve against the Squarespace static CSS origin and fail.
 
-Inside a **Code Block**, normal root-relative website paths such as `/s/file.svg` are acceptable when the browser resolves them against `atreef.com`.
-
-When reliability matters, a full `https://www.atreef.com/s/...` URL is also acceptable inside Code Blocks.
+Inside a **Code Block**, root-relative website paths such as `/s/file.svg` are acceptable. When reliability matters, a full `https://www.atreef.com/s/...` URL is also acceptable.
 
 ---
 
-## 81. Token collision rule
+## 91. Token collision rule
 
 Do not create a new global token with the same name as a section-local token.
 
@@ -1532,9 +1764,92 @@ Prefer canonical global `--ar-*` names already defined in the current system.
 
 ---
 
-# Part XIII: HTML and Semantics
+# Part XIII: Accessibility
 
-## 82. Semantic HTML
+## 92. Accessibility floor
+
+Target WCAG 2.2 AA behavior.
+
+Do not remove working accessibility features to achieve a visual effect.
+
+### Targets
+
+| Control | Minimum |
+|---|---|
+| Buttons, standalone links, form fields, menu items | `44px` tall |
+| Inline text links, footer links, legal links, icon links | `24px` hit area (WCAG 2.5.8) |
+| Segmented controls and pills | `48px` |
+
+Inline padding on an `<a>` enlarges the hit area without changing layout. Use it to reach 24px.
+
+Do not shrink button or control hit areas just to make a layout visually tighter.
+
+---
+
+## 93. Focus visibility
+
+The global focus system is a two-color ring:
+
+- `2px` solid `--ar-focus` (teal) outline, `2px` offset
+- `2px` `--ar-paper` halo drawn by `box-shadow` inside the offset
+
+The teal ring is visible on light surfaces. The paper halo is visible on dark surfaces. Together they satisfy 3:1 on every AtReef surface.
+
+On known dark surfaces (`.dark`, `.dark-bold`, `.black`, `.ar-surface-dark`, dark system cards, card bands), the outline switches to `--ar-focus-dark` (gold).
+
+Rules:
+
+- Do not suppress `outline` without providing an equal or better visible focus state.
+- Do not set a translucent focus color. Focus rings need 3:1 against the surface.
+- A component that sets its own `box-shadow` on focus replaces the halo. Include the halo in that shadow.
+
+---
+
+## 94. Decorative media
+
+For decorative images and icons:
+
+```html
+<img src="..." alt="" aria-hidden="true">
+```
+
+Do not write keyword-heavy alt text for decorative assets.
+
+Meaningful images need concise, accurate alt text that explains the content or function. The therapist portrait is meaningful: "Dr. Ehsan Adib Shabahang".
+
+---
+
+## 95. Reduced motion
+
+Preserve `prefers-reduced-motion:reduce` handling.
+
+Do not introduce essential information that is available only through animation.
+
+Auto-moving content (marquees, carousels) must have a pause control and must stop under reduced motion.
+
+Use motion sparingly and intentionally.
+
+---
+
+## 96. Forced colors
+
+The global system includes `forced-colors:active` fallbacks for buttons, controls, cards, ratings, and scroll controls.
+
+When creating a new custom interactive component, add a forced-colors fallback when the custom visuals would otherwise disappear.
+
+---
+
+## 97. Accessible names and ARIA
+
+- `aria-labelledby` must point at the element that is the section's actual heading.
+- `aria-label` works on interactive elements, landmarks, and elements with a role. On a plain `<span>` or `<div>`, add a role or use visually hidden text.
+- `role="listitem"` requires a parent with `role="list"`. Prefer real `<ul>` and `<li>`.
+
+---
+
+# Part XIV: HTML and Semantics
+
+## 98. Semantic HTML
 
 Prefer meaningful elements when they match the content:
 
@@ -1553,7 +1868,7 @@ Do not replace a working structure with semantic elements solely for theoretical
 
 ---
 
-## 83. Anchors vs buttons
+## 99. Anchors vs buttons
 
 Use `<a>` for navigation to another URL.
 
@@ -1563,19 +1878,28 @@ Do not convert one to the other for visual reasons.
 
 ---
 
-## 84. Heading hierarchy
+## 100. Heading hierarchy
 
-Use one logical page hierarchy.
+Use one logical page hierarchy: one H1, then H2 sections, then H3 subsections.
 
-Do not choose H3 because it visually resembles the desired size.
+- The visually largest headline on the page is the H1. Do not style the H1 as a small eyebrow while the display headline is a `<p>`.
+- If the SEO phrase ("Couples therapy in Cambridge, Massachusetts") and the display headline differ, put both in the H1 and style the parts:
 
-If a group heading is semantically a subsection under an H2, an H3 is appropriate even if its typography is controlled by Miscellaneous Site Styles.
+```html
+<h1 id="ar-couples-title">
+  <span class="ar-label">Couples therapy in Cambridge, Massachusetts</span>
+  <span class="ar-display">Change the pattern and find your way back.</span>
+</h1>
+```
+
+- Do not choose H3 because it visually resembles the desired size.
+- If a group heading is semantically a subsection under an H2, an H3 is appropriate even if its typography is controlled by Miscellaneous Site Styles.
 
 Styling and semantics are separate decisions.
 
 ---
 
-## 85. IDs and ARIA linkage
+## 101. IDs and ARIA linkage
 
 When a section has a visible heading, prefer:
 
@@ -1589,71 +1913,9 @@ IDs must be unique on the page.
 
 ---
 
-# Part XIV: Accessibility
-
-## 86. Accessibility floor
-
-Target WCAG 2.2 AA behavior.
-
-Do not remove working accessibility features to achieve a visual effect.
-
----
-
-## 87. Focus visibility
-
-Links, buttons, and summaries must have visible keyboard focus.
-
-The global focus system uses a 2px outline and 2px offset.
-
-Dark sections use the gold focus token.
-
-Do not suppress outline without providing an equal or better visible focus state.
-
----
-
-## 88. Decorative media
-
-For decorative images and icons:
-
-```html
-<img src="..." alt="" aria-hidden="true">
-```
-
-Do not write keyword-heavy alt text for decorative assets.
-
-Meaningful images need concise, accurate alt text that explains the content or function.
-
----
-
-## 89. Reduced motion
-
-Preserve `prefers-reduced-motion:reduce` handling.
-
-Do not introduce essential information that is available only through animation.
-
-Use motion sparingly and intentionally.
-
----
-
-## 90. Forced colors
-
-The global system includes `forced-colors:active` fallbacks for buttons, controls, cards, and scroll controls.
-
-When creating a new custom interactive component, add a forced-colors fallback when the custom visuals would otherwise disappear.
-
----
-
-## 91. Touch targets
-
-Interactive controls should generally maintain a practical minimum target around the existing 44px to 48px system sizes.
-
-Do not shrink button or control hit areas just to make a layout visually tighter.
-
----
-
 # Part XV: SEO and LLM-Friendly Structure
 
-## 92. Semantic SEO
+## 102. Semantic SEO
 
 Preserve:
 
@@ -1668,7 +1930,7 @@ Do not create headings solely for keywords.
 
 ---
 
-## 93. FAQ structure
+## 103. FAQ structure
 
 For FAQs, prefer native HTML:
 
@@ -1687,7 +1949,7 @@ Do not add FAQ schema merely because a FAQ section exists. Structured data must 
 
 ---
 
-## 94. Answer construction
+## 104. Answer construction
 
 When writing or revising FAQ content for search and AI retrieval:
 
@@ -1703,7 +1965,7 @@ Coding tasks should not rewrite existing FAQ copy unless copy optimization is re
 
 ---
 
-## 95. Entity consistency
+## 105. Entity consistency
 
 When content mentions the practice, provider, location, services, fees, or credentials, preserve the site's canonical wording and current facts.
 
@@ -1711,9 +1973,9 @@ Do not invent alternate business names, addresses, credentials, prices, or servi
 
 ---
 
-## 96. Structured data
+## 106. Structured data
 
-Do not duplicate JSON-LD already present in Squarespace or another code block.
+Do not duplicate JSON-LD already present in Squarespace or another code block. The homepage currently carries four JSON-LD blocks; check them before adding another.
 
 When schema is requested:
 
@@ -1725,9 +1987,33 @@ When schema is requested:
 
 ---
 
-# Part XVI: JavaScript and Interaction
+# Part XVI: Clinical Content Compliance
 
-## 97. JavaScript threshold
+## 107. Testimonials and outcome claims
+
+AtReef is a licensed mental health practice. Marketing content is subject to professional ethics codes and state licensing rules, not only to design standards.
+
+When code touches testimonials, reviews, ratings, or outcome language:
+
+- Do not add, invent, edit, or paraphrase a testimonial. Use only text the user supplies.
+- Do not add review schema for testimonials.
+- Do not write outcome guarantees or implied results ("unrecognizable", "saved our marriage", "guaranteed").
+- Before publishing a testimonial section, remind the user in one line to confirm consent and that no testimonial was solicited from a current client (ACA Code of Ethics C.3.b) and that it meets current Massachusetts licensing board rules.
+- Third-party ratings must name their source and must match what that source currently shows.
+
+This part flags issues for the user. It does not decide them. The user owns clinical and legal judgment.
+
+---
+
+## 108. Crisis information
+
+The crisis notice ("In an emergency, do not use this site.") and the 988 and 911 links appear on every page. Do not remove, shorten, restyle to low contrast, or hide them behind interaction.
+
+---
+
+# Part XVII: JavaScript and Interaction
+
+## 109. JavaScript threshold
 
 Do not add JavaScript when CSS or native HTML can solve the requirement.
 
@@ -1743,7 +2029,7 @@ Use JavaScript for behavior that genuinely requires state, measurement, scrollin
 
 ---
 
-## 98. Existing scripts
+## 110. Existing scripts
 
 If a section already contains working JavaScript:
 
@@ -1756,19 +2042,19 @@ If a section already contains working JavaScript:
 
 ---
 
-## 99. Motion
+## 111. Motion
 
 The AtReef visual system favors restrained motion.
 
-Existing global transitions are typically around `160ms` with subtle movement.
+Existing global transitions are typically around `160ms` with subtle movement. Reveals use `320ms` at most.
 
 Do not add widespread entrance animations, parallax, bouncing, or large scaling as a default modernization technique.
 
 ---
 
-# Part XVII: Assets and URLs
+# Part XVIII: Assets and URLs
 
-## 100. Preserve assets
+## 112. Preserve assets
 
 Do not change:
 
@@ -1784,7 +2070,7 @@ unless the task requests it or the current value is demonstrably broken.
 
 ---
 
-## 101. Uploaded SVGs
+## 113. Uploaded SVGs
 
 In Code Blocks, decorative uploaded SVGs commonly use:
 
@@ -1794,9 +2080,11 @@ In Code Blocks, decorative uploaded SVGs commonly use:
 
 If the icon fails to load, confirm the path and use the full AtReef URL rather than inventing a new asset.
 
+Icons follow the palette. Do not use multicolor icons or emoji where the system uses monochrome icons.
+
 ---
 
-## 102. No placeholders
+## 114. No placeholders
 
 Never replace a known AtReef URL with:
 
@@ -1810,9 +2098,9 @@ unless `#` is intentionally part of a real in-page interaction and semantically 
 
 ---
 
-# Part XVIII: Building New Sections
+# Part XIX: Building New Sections
 
-## 103. New-section workflow
+## 115. New-section workflow
 
 1. Identify the section's single job.
 2. Determine its semantic heading level.
@@ -1823,13 +2111,13 @@ unless `#` is intentionally part of a real in-page interaction and semantically 
 7. Use intrinsic layout first.
 8. Use container queries only if needed.
 9. Add JavaScript only if needed.
-10. Test desktop, intermediate width, tablet, and narrow mobile.
-11. Check keyboard focus and reduced motion.
+10. Test at 320, 390, 820, 1024, and 1440px.
+11. Check keyboard focus on every interactive element, reduced motion, and the type size floor.
 12. Return complete production code.
 
 ---
 
-## 104. New-section template
+## 116. New-section template
 
 ```html
 <style>
@@ -1883,7 +2171,7 @@ This is a structural template, not a visual requirement. Use the system classes 
 
 ---
 
-## 105. Reusing global card grids
+## 117. Reusing global card grids
 
 If a section only needs two or three responsive cards, prefer:
 
@@ -1901,9 +2189,9 @@ Do not add a custom grid unless it adds real section-specific behavior.
 
 ---
 
-# Part XIX: Fixing Existing Sections
+# Part XX: Fixing Existing Sections
 
-## 106. Troubleshooting table
+## 118. Troubleshooting table
 
 | Symptom | Likely cause | First fix |
 |---|---|---|
@@ -1912,25 +2200,30 @@ Do not add a custom grid unless it adds real section-specific behavior.
 | Container query fails globally | `@container` placed in Custom CSS | move it into Code Block CSS |
 | Icon missing only from global CSS | root-relative asset URL | use full `https://www.atreef.com/s/...` URL |
 | Heading wraps much too early | local `max-width` in `ch` | remove or increase the intentional measure |
+| Section title renders in Karla | local `font-family` on the heading | remove it; Site Styles heading font applies |
 | Miscellaneous Site Style changes do not affect text | local typography overrides | remove hardcoded properties or bind meta variables |
 | Card grid does not respond to available width | local grid or fixed viewport breakpoint | use global intrinsic `ar-card-grid` |
 | Card is too tall | base `.ar-card` is `height:100%` | add `ar-card--auto` when intended |
+| Wide card has empty right half | `46ch` copy cap | add `ar-card__copy--wide` |
 | Global component class seems ineffective | stronger section ID reset | narrow the reset or exclude the system class |
 | Background texture disappears | `background:` shorthand overwrote image | separate `background-color` and `background-image` |
 | Section has excess vertical space | Fluid Engine rows or section setting | fix editor layout before CSS hacks |
 | Internal button styling changes unexpectedly | local selector overrides global component | remove duplicate local button declarations |
 | Disclosure loses keyboard behavior | custom JS replaced native `<details>` | restore native disclosure markup |
-| Text clips on mobile | fixed width or missing `min-width:0` | make layout flexible and test wrapping |
+| Text clips on mobile | fixed width, `&nbsp;` runs, or missing `min-width:0` | make layout flexible and test wrapping |
+| Text below 12px | Squarespace scaled text or Paragraph 3 size | turn off scaled text; raise Paragraph 3 in Site Styles |
+| Focus ring invisible | translucent focus color or dark local surface | use the global ring; add `ar-surface-dark` |
+| Stars look empty | gold on a light surface | use `ar-stars` (gold ink) |
 
 ---
 
-## 107. Heading issue workflow
+## 119. Heading issue workflow
 
 When a heading looks wrong:
 
 1. inspect local `max-width`
 2. inspect `white-space`
-3. inspect local font-size and line-height overrides
+3. inspect local `font-family`, font-size, and line-height overrides
 4. inspect the section's available width
 5. inspect global `text-wrap:balance`
 6. inspect Site Styles
@@ -1939,7 +2232,7 @@ Do not immediately add a smaller font size.
 
 ---
 
-## 108. Site Styles issue workflow
+## 120. Site Styles issue workflow
 
 When changing Squarespace Site Styles does not affect an element:
 
@@ -1953,9 +2246,26 @@ Do not solve a Site Styles inheritance problem by adding more hardcoded local va
 
 ---
 
-# Part XX: Deployment and Verification
+# Part XXI: Required Site Styles Settings
 
-## 109. Deployment order
+## 121. Settings the CSS depends on
+
+These are editor settings, not code. The AI cannot change them; it must tell the user when a task depends on them.
+
+| Setting | Required value | Why |
+|---|---|---|
+| Fonts > Headings | `pogonia-q6ye39` | heading font rule (§25) |
+| Fonts > Paragraph | `Karla` | body font |
+| Fonts > Paragraph 3 size | `0.875rem` or larger | type size floor (§22) |
+| Animations | None, or the shortest fade | motion rule (§70) |
+| Buttons > letter-spacing | same value for primary and secondary | cookie banner and native buttons (§77) |
+| Text blocks > scaled text | off for body, links, legal | type size floor (§22) |
+
+---
+
+# Part XXII: Deployment and Verification
+
+## 122. Deployment order
 
 When replacing the system:
 
@@ -1972,21 +2282,22 @@ Do not replace every section at once when only one section changed.
 
 ---
 
-## 110. Custom CSS verification
+## 123. Custom CSS verification
 
 After editing Design > Custom CSS:
 
-- confirm the beginning of the compiled stylesheet exists
-- confirm the final rules exist
+- confirm the beginning of the compiled stylesheet exists (the version marker comment)
+- confirm the final rules exist (`.ar-sr`)
 - look for compiler error text
 - test at least one shared component from the beginning and end of the stylesheet
 - verify mobile media rules
+- tab through the homepage and confirm a visible ring on every stop, including inside dark cards
 
 A compiler problem can remove or corrupt large parts of the site even when the editor appears to accept the save.
 
 ---
 
-## 111. Code Block verification
+## 124. Code Block verification
 
 After editing a section:
 
@@ -1995,19 +2306,38 @@ After editing a section:
 - confirm no duplicate IDs
 - confirm assets load
 - confirm system classes still work
-- confirm mobile layout
+- confirm mobile layout at 320px and 390px
+- confirm no text below the type size floor
 - confirm FAQ/disclosure keyboard access when applicable
 - confirm no console errors if JavaScript exists
 
 ---
 
-# Part XXI: Release Map
+## 125. Drift check
 
-## 112. Current v8.1 map
+Run this before every release and once a month. Search the page source (View Source, or a saved copy) for:
+
+| Pattern | Violation |
+|---|---|
+| `max-width:\s*1[0-9]ch` on headings | heading cap (§28) |
+| `900px` | section viewport breakpoint (§35) |
+| `font-family` inside `#ar-* h1`, `#ar-* h2` rules | heading font override (§25) |
+| `sqsrte-scaled-text` | scaled text (§22) |
+| `&nbsp;&nbsp;` | unwrappable runs (§38) |
+| `<pre>` or `<code>` outside technical content | misused code markup (§76) |
+| `aria-label` on `<span>` without `role` | ignored accessible name (§97) |
+
+Add every hit to Part XXV until it is fixed.
+
+---
+
+# Part XXIII: Release Map
+
+## 126. Current v8.2 map
 
 | File | Destination |
 |---|---|
-| `atreef-custom-css-v8.1.css` | Design > Custom CSS |
+| `atreef-custom-css.css` (v8.2) | Design > Custom CSS |
 | `atreef_block-hero_v8.html` | `#ar-couples-hero` Code Block |
 | `atreef_block-conversation_v8.html` | `#ar-conversation` Code Block |
 | `atreef_block-services_v8.html` | `#ar-services` Code Block |
@@ -2019,66 +2349,32 @@ After editing a section:
 | `atreef_block-faq_v8.html` | `#ar-home-faq` Code Block |
 | `atreef_block-footer-consult_v8.html` | `#ar-footer-consultation` Footer Code Block |
 
-Do not assume every block must be re-released when the global CSS changes. Test dependencies and update only what needs to change.
+v8.2 is backward compatible with every v8 block. No block needs re-release for the CSS update alone. Blocks listed in Part XXV need their own fixes.
 
 ---
 
-# Part XXII: Global CSS Component Catalog
+## 127. v8.2 changes from v8.1
 
-## 113. Global sections currently defined
-
-The current global CSS is organized into these functional groups:
-
-1. Tokens
-2. Fonts
-3. Platform
-4. Sections
-5. Typography
-6. Focus
-7. Forms
-8. Blog
-9. Mobile menu
-10. Navigation dropdown
-11. Newsletter
-12. Footer
-13. Native buttons
-14. Lists
-15. Quotes
-16. AtReef buttons
-17. Button icons
-18. Primary button
-19. Secondary button
-20. Tertiary button
-21. Compact button
-22. Icon utilities
-23. Dark variants
-24. Width variants
-25. States
-26. Button groups
-27. Button notes
-28. Narrow behavior
-29. Controls
-30. Pills
-31. Segmented controls
-32. Disclosures
-33. Control hover behavior
-34. Control responsive behavior
-35. Containers
-36. Cards
-37. Card bands
-38. Tiles
-39. Labels
-40. Card typography
-41. Card grids
-42. Heading utilities
-43. Scroll buttons
-44. Utilities
-
-When a new section needs functionality already represented here, reuse it.
+- Focus: solid teal and gold rings, plus a paper halo that keeps focus visible on any surface; focus also covers inputs; dark system cards and `ar-surface-dark` switch to gold
+- Nav dropdown focus: teal instead of gold on white
+- Forms: `--ar-field-border`, 44px fields, 5px radius
+- Mobile menu: 44px links, no negative margins
+- Footer: 14px Paragraph 3 links, 24px+ hit areas, hover and focus underline
+- `tel:` links: larger hit area site-wide
+- Cookie banner: 14px text and buttons, 44px buttons, even tracking
+- Reduced motion: Squarespace block animations shown immediately
+- Buttons: pressed state for touch, focus radius only on transparent variants, labels wrap below 640px
+- `ar-btn-note`: 14px / 22px
+- Pills and segments: 14px
+- Cards: dark cards set light title and copy automatically; `ar-card__copy--wide`, `ar-card__title--wide`
+- New: `ar-stars`, `ar-stars--on-dark`, `--ar-gold-ink`, `--ar-gold-border`, `--ar-field-border`, `--ar-target`, `--ar-target-min`, `--ar-fs-note`, `--ar-lh-small`, `--ar-lh-body`
+- Blog read-more: 24px horizontal padding, touch pressed state
 
 ---
 
-## 114. Class reference
+# Part XXIV: Class Reference
+
+## 128. Class reference
 
 ### Buttons
 
@@ -2146,15 +2442,17 @@ When a new section needs functionality already represented here, reuse it.
 - `.ar-card__body`
 - `.ar-card__title`
 - `.ar-card__title--lead`
+- `.ar-card__title--wide`
 - `.ar-card__title--on-dark`
 - `.ar-card__copy`
+- `.ar-card__copy--wide`
 - `.ar-card__copy--on-dark`
 - `.ar-card__footer`
 - `.ar-card-grid`
 - `.ar-card-grid--2`
 - `.ar-card-grid--3`
 
-### Tiles and labels
+### Tiles, labels, and ratings
 
 - `.ar-tile`
 - `.ar-tile--ghost`
@@ -2165,9 +2463,12 @@ When a new section needs functionality already represented here, reuse it.
 - `.ar-label--tight`
 - `.ar-label--pill`
 - `.ar-label__icon`
+- `.ar-stars`
+- `.ar-stars--on-dark`
 
-### Utilities
+### Surfaces and utilities
 
+- `.ar-surface-dark`
 - `.ar-hl`
 - `.ar-line`
 - `.ar-scroll-nav`
@@ -2180,140 +2481,119 @@ Do not create near-duplicate classes with different names unless a new component
 
 ---
 
-# Part XXIII: AI Output Rules
+# Part XXV: Known Violations Register
 
-## 115. When the user asks for a design revision
+## 129. How to use the register
 
-The AI must:
+This register lists live issues found in the homepage audit of September 26, 2026. It is a to-do list, not a style to copy.
 
-- inspect the existing code first
-- preserve current tokens and components
-- make the requested visual change
-- correct small related bugs when safe
-- return the complete section
-- avoid unrelated redesign
+- When a task touches a listed section, fix the entries inside the requested scope.
+- Report the rest in one line after the code.
+- Remove an entry only after the fix is live and verified.
 
----
+## 130. Register
 
-## 116. When the user asks to recreate a reference
-
-Match:
-
-- hierarchy
-- alignment
-- proportion
-- spacing logic
-- responsive behavior
-- interaction pattern
-
-Do not blindly copy:
-
-- another site's branding
-- arbitrary colors
-- fonts that conflict with AtReef
-- unnecessary decoration
-
-Translate the reference into the AtReef system.
-
----
-
-## 117. When the user asks to improve a section
-
-"Improve" does not mean unlimited redesign.
-
-Prioritize:
-
-1. clarity
-2. hierarchy
-3. alignment
-4. spacing consistency
-5. responsive behavior
-6. accessibility
-7. consistency with AtReef components
-8. performance
-
-Avoid adding extra visual effects without a clear reason.
+| Section | Issue | Rule |
+|---|---|---|
+| Site Styles | Paragraph 3 size is `0.7` (renders 10.3px to 12.5px) | §22, §121 |
+| Site Styles | Animations fade every block over about 0.8s | §70 |
+| Site Styles | primary and secondary button letter-spacing differ | §77 |
+| `#ar-couples-hero` | H1 is the 12px eyebrow; the display headline is a `<p>`; `aria-labelledby` points at the `<p>` | §100, §97 |
+| `#ar-couples-hero` | on mobile the portrait comes first; H1 starts at 634px and the CTA at 947px on a 390×844 screen | §34 |
+| `#ar-couples-hero` | blue `verified.svg` badge on the practice pill; pill and eyebrow stacked | §15, §59 |
+| `#ar-couples-hero` | colored calendar image in the CTA chip | §41 |
+| `#ar-services` | local `900px` viewport breakpoint | §35 |
+| `#ar-services` | stars gold on cream (1.2:1); `aria-label` on a `<span>` without role | §62, §97 |
+| `#ar-services` | CTA label "Schedule a consultation" | §49 |
+| `#ar-services` | dark card lacks `ar-surface-dark` | §63 |
+| `#ar-about` | local `900px` breakpoint; narrow `ch` cap on title | §35, §28 |
+| `#ar-about` | H2 set to Karla locally | §25 |
+| `#ar-approach` | H2 set to Karla locally | §25 |
+| `#ar-telehealth` | local `900px` breakpoint; narrow `ch` caps on title and card titles | §35, §28 |
+| `#ar-telehealth` | H2 set to Karla locally; wide card copy capped, leaving empty right half | §25, §18 |
+| `#ar-client-proof` | local `900px` breakpoint | §35 |
+| `#ar-client-proof` | testimonial body 12.5px; card titles in Title Case | §22, §27 |
+| `#ar-client-proof` | outcome language in testimonials; consent not documented here | §107 |
+| `#ar-final-cta` | narrow `ch` cap on title; CTA label wording | §28, §49 |
+| Footer | legal links in scaled text with `&nbsp;` runs; "Good Faith Estimat" linked with the final "e" outside the link | §22, §38, §76 |
+| Footer | "Couples and individual therapy" inside `<pre><code>` | §76 |
+| Footer | "START HERE" typed in capitals; column H3s without an H2 | §27, §76 |
+| Footer | "Free Consultation" in Title Case | §49 |
+| Footer | footer logo mark differs from the header logo mark | brand review with the user |
 
 ---
 
-## 118. When the user asks for CSS only
+# Part XXVI: Final Preflight
 
-Return CSS only if explicitly requested.
-
-Otherwise, for a revised section, return the entire HTML/CSS/JS block.
-
----
-
-## 119. When the user asks for a small change
-
-Make the smallest implementation that solves it.
-
-Do not rewrite the whole design system.
-
-Still return the complete affected section unless the user asks for a snippet.
-
----
-
-# Part XXIV: Final Preflight
-
-## 120. Scope
+## 131. Scope
 
 - [ ] Only requested behavior changed.
 - [ ] Unrelated content and design remain intact.
 - [ ] Existing classes and IDs were preserved unless change was necessary.
 
-## 121. Squarespace
+## 132. Squarespace
 
 - [ ] The code is appropriate for Squarespace 7.1.
 - [ ] Global CSS rules are not duplicated in a Code Block.
 - [ ] `@container` is not placed in Design > Custom CSS.
 - [ ] Custom CSS arithmetic is escaped when required.
 - [ ] Asset URLs use the correct context.
+- [ ] Any required Site Styles change is listed for the user.
 
-## 122. Typography
+## 133. Typography
 
-- [ ] Semantic heading levels are correct.
+- [ ] Semantic heading levels are correct, and the largest headline is the H1.
+- [ ] Section titles use the Site Styles heading font.
 - [ ] Native Site Styles are used when appropriate.
 - [ ] Miscellaneous typography is not blocked by unnecessary local overrides.
 - [ ] Custom brand fonts are preserved.
 - [ ] Headings do not have accidental narrow `ch` caps.
-- [ ] No unnecessary hardcoded typography was added.
+- [ ] No text is below the type size floor.
+- [ ] Sentence case is used; no typed capitals.
 
-## 123. Layout
+## 134. Layout
 
 - [ ] Layout respects the 1220px site width and 4vw margins.
 - [ ] Standard card grids use `ar-card-grid` when appropriate.
 - [ ] Responsive behavior depends on available space where practical.
 - [ ] No unnecessary new viewport breakpoint was added.
 - [ ] Grid and flex children use `min-width:0` when needed.
-- [ ] No accidental overflow occurs at intermediate widths.
+- [ ] No accidental overflow occurs at 320px or intermediate widths.
+- [ ] On mobile, the hero H1 and primary CTA appear before the image.
 
-## 124. Components
+## 135. Components
 
 - [ ] Existing AtReef buttons are reused.
+- [ ] CTA labels follow §49.
 - [ ] Existing card variants are reused.
 - [ ] Existing labels and pills are reused.
 - [ ] Existing disclosure controls are reused.
+- [ ] Ratings use `ar-stars`.
+- [ ] Dark local surfaces carry `ar-surface-dark`.
 - [ ] No near-duplicate component was created unnecessarily.
 
-## 125. Accessibility
+## 136. Accessibility
 
-- [ ] Focus remains visible.
+- [ ] Every color pair is in §15 or was measured.
+- [ ] Focus is visible on every interactive element, on light and dark surfaces.
+- [ ] Targets meet §92.
 - [ ] Decorative icons are hidden from screen readers.
 - [ ] Meaningful images have appropriate alt text.
 - [ ] Reduced-motion behavior is preserved.
 - [ ] Forced-colors behavior is preserved where relevant.
 - [ ] Native controls remain keyboard accessible.
+- [ ] `aria-label` is only on elements that support it.
 
-## 126. SEO and content
+## 137. SEO and content
 
 - [ ] Heading hierarchy remains logical.
 - [ ] Important content remains visible in HTML.
 - [ ] URLs and link text are preserved unless intentionally changed.
 - [ ] Schema is valid and not duplicated if present.
 - [ ] No unsupported claims or invented business facts were added.
+- [ ] Testimonial and crisis content follow Part XVI.
 
-## 127. Code quality
+## 138. Code quality
 
 - [ ] Code is scoped.
 - [ ] No placeholder content remains.
@@ -2323,12 +2603,13 @@ Still return the complete affected section unless the user asks for a snippet.
 - [ ] No redundant local tokens or components were created.
 - [ ] No JavaScript was added unless necessary.
 
-## 128. Output
+## 139. Output
 
 - [ ] Complete revised section is returned unless a snippet was requested.
 - [ ] Code is formatted and production-ready.
 - [ ] No tutorial text is embedded inside code.
 - [ ] The result can be pasted directly into Squarespace.
+- [ ] Out-of-scope Part XXV items are reported in one line.
 
 ---
 
@@ -2336,7 +2617,7 @@ Still return the complete affected section unless the user asks for a snippet.
 
 When uncertain, apply this rule:
 
-> **Use the current AtReef system first. Preserve working code. Let Squarespace Site Styles control what they already control. Add the smallest scoped change needed. Keep the site responsive to the space it actually has. Do not create a second design system inside a section.**
+> **Use the current AtReef system first. Preserve working code. Let Squarespace Site Styles control what they already control. Add the smallest scoped change needed. Keep the site responsive to the space it actually has. Keep every word readable and every control reachable. Do not create a second design system inside a section.**
 
 ---
 
@@ -2344,6 +2625,6 @@ When uncertain, apply this rule:
 
 When this file is attached, the user can say:
 
-> **Follow the AtReef Therapy Squarespace 7.1 AI Coding Standards. Use the current global CSS and Site Styles as the source of truth, make only the requested change, preserve everything else, and return the complete production-ready section code.**
+> **Follow the AtReef Therapy Squarespace 7.1 AI Coding Standards v3.1. Use the current global CSS and Site Styles as the source of truth, make only the requested change, preserve everything else, and return the complete production-ready section code.**
 
 That instruction activates all rules in this document.
