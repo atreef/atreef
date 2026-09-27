@@ -1,0 +1,449 @@
+<style>
+#ar-conversation{
+  --ac-dur:var(--ar-reveal,320ms);
+  --ac-ease:var(--ar-ease,cubic-bezier(.22,1,.36,1));
+  container:ar-conversation / inline-size;
+  width:100%;
+}
+
+#ar-conversation,
+#ar-conversation *,
+#ar-conversation *::before,
+#ar-conversation *::after{
+  box-sizing:border-box;
+}
+
+#ar-conversation :is(h2,p,fieldset,legend):not(:where(.ar-label)){
+  margin:0;
+  padding:0;
+}
+
+#ar-conversation fieldset{
+  min-inline-size:0;
+  border:0;
+}
+
+/* Layout */
+
+#ar-conversation .ar-conversation__layout{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  align-items:stretch;
+  gap:var(--ar-gap-cols,64px);
+}
+
+#ar-conversation .ar-conversation__intro{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  min-width:0;
+}
+
+#ar-conversation .ar-conversation__examples{
+  min-width:0;
+}
+
+/* Copy */
+
+#ar-conversation .ar-lead{
+  margin-top:24px;
+}
+
+#ar-conversation .ar-conversation__agency{
+  margin-top:16px;
+}
+
+/* Controls */
+
+#ar-conversation .ar-conversation__controls{
+  display:grid;
+  gap:12px;
+  container:ar-conversation-controls / inline-size;
+}
+
+#ar-conversation .ar-pills{
+  row-gap:12px;
+}
+
+#ar-conversation .ar-conversation__mode--couples{
+  display:none;
+}
+
+#ar-conversation:has(#ar-conversation-couples:checked) .ar-conversation__mode--individual{
+  display:none;
+}
+
+#ar-conversation:has(#ar-conversation-couples:checked) .ar-conversation__mode--couples{
+  display:grid;
+}
+
+/* Panel */
+
+#ar-conversation .ar-conversation__scenes{
+  grid-column:1/-1;
+  display:grid;
+  grid-template-columns:minmax(0,1fr);
+  row-gap:8px;
+  min-width:0;
+  padding:8px;
+  background:var(--ar-paper,#FDFAF7);
+  border:1px solid var(--ar-border,#D6DFDA);
+  border-radius:var(--ar-r,5px);
+  box-shadow:var(--ar-shadow-hover,0 12px 32px rgba(0,70,67,.065));
+}
+
+#ar-conversation .ar-conversation__scene{
+  display:contents;
+  visibility:hidden;
+  pointer-events:none;
+}
+
+#ar-conversation :is(
+  .ar-conversation__topic--1:checked~.ar-conversation__scenes .ar-conversation__scene--1,
+  .ar-conversation__topic--2:checked~.ar-conversation__scenes .ar-conversation__scene--2,
+  .ar-conversation__topic--3:checked~.ar-conversation__scenes .ar-conversation__scene--3,
+  .ar-conversation__topic--4:checked~.ar-conversation__scenes .ar-conversation__scene--4
+){
+  visibility:visible;
+  pointer-events:auto;
+}
+
+/* Labels */
+
+#ar-conversation .ar-conversation__label{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-bottom:12px;
+  color:var(--ar-muted,#53635F);
+  font-size:var(--ar-fs-label,12px);
+  font-weight:700;
+  line-height:16px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+
+#ar-conversation .ar-conversation__label::before{
+  content:"";
+  width:6px;
+  height:6px;
+  flex:0 0 6px;
+  background:currentColor;
+  border-radius:50%;
+}
+
+/* Statement */
+
+#ar-conversation .ar-conversation__starting{
+  grid-row:1;
+  grid-column:1;
+  min-width:0;
+  padding:24px;
+  background:var(--ar-gold-tint,#FFF9EA);
+  border-radius:var(--ar-r-inner,2px);
+}
+
+#ar-conversation .ar-conversation__statement{
+  --ac-from:.35;
+  --ac-y:4px;
+  min-height:56px;
+  max-width:38ch;
+  color:var(--ar-teal,#004643);
+  font-size:20px;
+  font-weight:500;
+  line-height:28px;
+  text-indent:-.45em;
+  text-wrap:pretty;
+}
+
+/* Question */
+
+#ar-conversation .ar-conversation__reply{
+  grid-row:2;
+  grid-column:1;
+  min-width:0;
+  padding:24px;
+  background:var(--ar-teal,#004643);
+  border-radius:var(--ar-r-inner,2px);
+}
+
+#ar-conversation .ar-conversation__reply .ar-conversation__label{
+  color:var(--ar-gold,#FEDA6A);
+}
+
+#ar-conversation .ar-conversation__question{
+  --ac-delay:60ms;
+  --ac-y:8px;
+  max-width:36ch;
+  color:var(--ar-on-dark,#FAFAFA);
+  font-size:24px;
+  font-weight:600;
+  line-height:32px;
+  text-indent:-.45em;
+  text-wrap:pretty;
+}
+
+#ar-conversation .ar-conversation__purpose{
+  --ac-delay:120ms;
+  --ac-y:4px;
+  max-width:60ch;
+  margin-top:12px;
+  color:var(--ar-on-dark-muted,rgba(250,250,250,.74));
+  font-size:var(--ar-fs-body,16px);
+  line-height:var(--ar-lh-body,28px);
+  text-wrap:pretty;
+}
+
+/* Motion */
+
+@media (prefers-reduced-motion:no-preference){
+  #ar-conversation :is(
+    .ar-conversation__topic--1:checked~.ar-conversation__scenes .ar-conversation__scene--1,
+    .ar-conversation__topic--2:checked~.ar-conversation__scenes .ar-conversation__scene--2,
+    .ar-conversation__topic--3:checked~.ar-conversation__scenes .ar-conversation__scene--3,
+    .ar-conversation__topic--4:checked~.ar-conversation__scenes .ar-conversation__scene--4
+  ) :is(
+    .ar-conversation__statement,
+    .ar-conversation__question,
+    .ar-conversation__purpose
+  ){
+    animation:ar-conversation-in var(--ac-dur) var(--ac-delay,0ms) var(--ac-ease) both;
+  }
+}
+
+@keyframes ar-conversation-in{
+  from{
+    opacity:var(--ac-from,0);
+    transform:translateY(var(--ac-y,4px));
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+/* Desktop */
+
+@container ar-conversation (min-width:761px){
+  #ar-conversation .ar-conversation__agency{
+    margin-top:auto;
+    padding-top:16px;
+  }
+}
+
+/* Mobile */
+
+@container ar-conversation (max-width:760px){
+  #ar-conversation .ar-conversation__layout{
+    grid-template-columns:1fr;
+    gap:32px;
+  }
+
+  #ar-conversation .ar-conversation__statement{
+    min-height:0;
+    font-size:18px;
+  }
+
+  #ar-conversation .ar-conversation__question{
+    font-size:20px;
+    line-height:28px;
+  }
+}
+
+@container ar-conversation-controls (max-width:440px){
+  #ar-conversation .ar-pills{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+}
+
+@container ar-conversation-controls (max-width:320px){
+  #ar-conversation .ar-pills{
+    grid-template-columns:1fr;
+  }
+}
+</style>
+
+<section id="ar-conversation" aria-labelledby="ar-conversation-title">
+  <div class="ar-conversation__layout">
+
+    <div class="ar-conversation__intro">
+
+      <p class="ar-label ar-label--pill">
+        <img
+          class="ar-label__icon"
+          src="/s/landscape.svg"
+          alt=""
+          aria-hidden="true"
+          decoding="async"
+        >
+        <span>Working with Dr. Shabahang</span>
+      </p>
+
+      <h2 id="ar-conversation-title" class="ar-title">
+        <span class="ar-line">A therapist who</span>
+        <span class="ar-line"><span class="ar-hl">engages, challenges,</span></span>
+        <span class="ar-line">and moves with you.</span>
+      </h2>
+
+      <p class="sqsrte-large ar-lead">
+        In individual and couples therapy at AtReef Therapy, I ask direct questions, offer observations, and check whether they fit your experience.
+      </p>
+
+      <p class="ar-copy ar-conversation__agency">
+        You can disagree, ask why, or say something is not helping. Your perspective belongs in the conversation.
+      </p>
+
+    </div>
+
+    <fieldset class="ar-conversation__examples">
+      <legend class="ar-sr">Therapy conversation examples</legend>
+
+      <div class="ar-conversation__controls">
+
+        <div class="ar-seg" role="radiogroup" aria-label="Therapy type">
+          <input class="ar-seg__input" type="radio" name="ar-conversation-mode" id="ar-conversation-individual" value="individual" checked>
+          <label class="ar-seg__option" for="ar-conversation-individual">Individual</label>
+
+          <input class="ar-seg__input" type="radio" name="ar-conversation-mode" id="ar-conversation-couples" value="couples">
+          <label class="ar-seg__option" for="ar-conversation-couples">Couples</label>
+        </div>
+
+        <div class="ar-pills ar-conversation__mode ar-conversation__mode--individual" role="radiogroup" aria-label="Individual therapy topics">
+
+          <input class="ar-pill__input ar-conversation__topic--1" type="radio" name="ar-individual-topic" id="ar-individual-pressure" aria-controls="ar-individual-pressure-example" checked>
+          <label class="ar-pill__option" for="ar-individual-pressure">Pressure</label>
+
+          <input class="ar-pill__input ar-conversation__topic--2" type="radio" name="ar-individual-topic" id="ar-individual-worth" aria-controls="ar-individual-worth-example">
+          <label class="ar-pill__option" for="ar-individual-worth">Self-worth</label>
+
+          <input class="ar-pill__input ar-conversation__topic--3" type="radio" name="ar-individual-topic" id="ar-individual-patterns" aria-controls="ar-individual-patterns-example">
+          <label class="ar-pill__option" for="ar-individual-patterns">Patterns</label>
+
+          <input class="ar-pill__input ar-conversation__topic--4" type="radio" name="ar-individual-topic" id="ar-individual-direction" aria-controls="ar-individual-direction-example">
+          <label class="ar-pill__option" for="ar-individual-direction">Direction</label>
+
+          <div class="ar-conversation__scenes">
+
+            <div class="ar-conversation__scene ar-conversation__scene--1" id="ar-individual-pressure-example">
+              <div class="ar-conversation__starting">
+                <p class="ar-conversation__label">You might say</p>
+                <p class="ar-conversation__statement">&ldquo;I can handle a lot. I just cannot switch off.&rdquo;</p>
+              </div>
+              <div class="ar-conversation__reply">
+                <p class="ar-conversation__label">A question I might ask</p>
+                <p class="ar-conversation__question">&ldquo;What feels at risk when you let yourself stop?&rdquo;</p>
+                <p class="ar-conversation__purpose">We could explore what makes rest difficult, without assuming that ambition itself is the problem.</p>
+              </div>
+            </div>
+
+            <div class="ar-conversation__scene ar-conversation__scene--2" id="ar-individual-worth-example">
+              <div class="ar-conversation__starting">
+                <p class="ar-conversation__label">You might say</p>
+                <p class="ar-conversation__statement">&ldquo;I reach one goal, then immediately feel behind again.&rdquo;</p>
+              </div>
+              <div class="ar-conversation__reply">
+                <p class="ar-conversation__label">A question I might ask</p>
+                <p class="ar-conversation__question">&ldquo;What would make an achievement feel like enough?&rdquo;</p>
+                <p class="ar-conversation__purpose">We could explore how much of your self-worth rests on achievement, and what else matters to you.</p>
+              </div>
+            </div>
+
+            <div class="ar-conversation__scene ar-conversation__scene--3" id="ar-individual-patterns-example">
+              <div class="ar-conversation__starting">
+                <p class="ar-conversation__label">You might say</p>
+                <p class="ar-conversation__statement">&ldquo;I understand why I do this. I still end up doing it.&rdquo;</p>
+              </div>
+              <div class="ar-conversation__reply">
+                <p class="ar-conversation__label">A question I might ask</p>
+                <p class="ar-conversation__question">&ldquo;What happens just before you fall into the familiar response?&rdquo;</p>
+                <p class="ar-conversation__purpose">We could work with the moment insight becomes hard to use, then practice a response that fits your goals.</p>
+              </div>
+            </div>
+
+            <div class="ar-conversation__scene ar-conversation__scene--4" id="ar-individual-direction-example">
+              <div class="ar-conversation__starting">
+                <p class="ar-conversation__label">You might say</p>
+                <p class="ar-conversation__statement">&ldquo;My life looks right on paper. It does not feel like mine.&rdquo;</p>
+              </div>
+              <div class="ar-conversation__reply">
+                <p class="ar-conversation__label">A question I might ask</p>
+                <p class="ar-conversation__question">&ldquo;What do you want that has not had much room in your life?&rdquo;</p>
+                <p class="ar-conversation__purpose">We could explore identity, values, and choices without treating uncertainty as something you need to rush past.</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="ar-pills ar-conversation__mode ar-conversation__mode--couples" role="radiogroup" aria-label="Couples therapy topics">
+
+          <input class="ar-pill__input ar-conversation__topic--1" type="radio" name="ar-couples-topic" id="ar-couples-conflict" aria-controls="ar-couples-conflict-example" checked>
+          <label class="ar-pill__option" for="ar-couples-conflict">Conflict</label>
+
+          <input class="ar-pill__input ar-conversation__topic--2" type="radio" name="ar-couples-topic" id="ar-couples-intimacy" aria-controls="ar-couples-intimacy-example">
+          <label class="ar-pill__option" for="ar-couples-intimacy">Intimacy</label>
+
+          <input class="ar-pill__input ar-conversation__topic--3" type="radio" name="ar-couples-topic" id="ar-couples-trust" aria-controls="ar-couples-trust-example">
+          <label class="ar-pill__option" for="ar-couples-trust">Trust</label>
+
+          <input class="ar-pill__input ar-conversation__topic--4" type="radio" name="ar-couples-topic" id="ar-couples-crossroads" aria-controls="ar-couples-crossroads-example">
+          <label class="ar-pill__option" for="ar-couples-crossroads">Crossroads</label>
+
+          <div class="ar-conversation__scenes">
+
+            <div class="ar-conversation__scene ar-conversation__scene--1" id="ar-couples-conflict-example">
+              <div class="ar-conversation__starting">
+                <p class="ar-conversation__label">You might say</p>
+                <p class="ar-conversation__statement">&ldquo;We explain ourselves over and over. Neither of us feels heard.&rdquo;</p>
+              </div>
+              <div class="ar-conversation__reply">
+                <p class="ar-conversation__label">A question I might ask</p>
+                <p class="ar-conversation__question">&ldquo;What do you most want your partner to understand?&rdquo;</p>
+                <p class="ar-conversation__purpose">We could slow the exchange down and make room for both experiences rather than prepare a stronger argument for either side.</p>
+              </div>
+            </div>
+
+            <div class="ar-conversation__scene ar-conversation__scene--2" id="ar-couples-intimacy-example">
+              <div class="ar-conversation__starting">
+                <p class="ar-conversation__label">You might say</p>
+                <p class="ar-conversation__statement">&ldquo;We make a good team. I miss feeling close.&rdquo;</p>
+              </div>
+              <div class="ar-conversation__reply">
+                <p class="ar-conversation__label">A question I might ask</p>
+                <p class="ar-conversation__question">&ldquo;When do you feel closest, and what gets in the way now?&rdquo;</p>
+                <p class="ar-conversation__purpose">We could explore emotional and physical intimacy, including needs that have become difficult to name.</p>
+              </div>
+            </div>
+
+            <div class="ar-conversation__scene ar-conversation__scene--3" id="ar-couples-trust-example">
+              <div class="ar-conversation__starting">
+                <p class="ar-conversation__label">You might say</p>
+                <p class="ar-conversation__statement">&ldquo;I want to trust again. I keep looking for signs I should not.&rdquo;</p>
+              </div>
+              <div class="ar-conversation__reply">
+                <p class="ar-conversation__label">A question I might ask</p>
+                <p class="ar-conversation__question">&ldquo;What would help you tell the difference between reassurance and repair?&rdquo;</p>
+                <p class="ar-conversation__purpose">We could clarify what accountability and consistency would need to look like without putting pressure on forgiveness.</p>
+              </div>
+            </div>
+
+            <div class="ar-conversation__scene ar-conversation__scene--4" id="ar-couples-crossroads-example">
+              <div class="ar-conversation__starting">
+                <p class="ar-conversation__label">You might say</p>
+                <p class="ar-conversation__statement">&ldquo;We still care. We are not sure we want the same future.&rdquo;</p>
+              </div>
+              <div class="ar-conversation__reply">
+                <p class="ar-conversation__label">A question I might ask</p>
+                <p class="ar-conversation__question">&ldquo;What would each of you need to understand before deciding?&rdquo;</p>
+                <p class="ar-conversation__purpose">We could examine commitment, values, and the changes each person is willing to make without assuming the answer is to stay.</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </fieldset>
+
+  </div>
+</section>

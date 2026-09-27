@@ -1,0 +1,250 @@
+<style>
+#ar-services{
+  width:100%;
+}
+
+#ar-services,
+#ar-services *,
+#ar-services *::before,
+#ar-services *::after{
+  box-sizing:border-box;
+}
+
+/* Header */
+
+#ar-services .ar-services__header{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:16px;
+}
+
+#ar-services .ar-services__header .ar-label{
+  margin:0;
+}
+
+/* Copy */
+
+#ar-services .ar-card__title{
+  max-width:none;
+}
+
+#ar-services .ar-services__headline{
+  max-width:36ch;
+  margin:0 0 12px;
+  color:inherit;
+  font-size:18px;
+  font-weight:600;
+  line-height:28px;
+  text-wrap:pretty;
+}
+
+/* Focus list */
+
+#ar-services .ar-services__focus{
+  margin:24px 0 0;
+  padding:0;
+  list-style:none;
+  border-top:1px solid var(--ar-line,rgba(0,70,67,.12));
+}
+
+#ar-services .ar-services__focus-item{
+  display:grid;
+  grid-template-columns:24px minmax(0,1fr);
+  align-items:center;
+  gap:12px;
+  margin:0;
+  padding:12px 0;
+  border-bottom:1px solid var(--ar-divider,rgba(0,70,67,.08));
+}
+
+#ar-services .ar-services__focus-text{
+  color:var(--ar-muted,#53635F);
+  font-size:var(--ar-fs-small,14px);
+  font-weight:500;
+  line-height:24px;
+}
+
+/* Proof */
+
+#ar-services .ar-services__proof{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:8px;
+  margin:0 0 16px;
+}
+
+#ar-services .ar-services__proof-text{
+  color:var(--ar-muted,#53635F);
+  font-size:var(--ar-fs-small,14px);
+  line-height:var(--ar-lh-small,22px);
+}
+
+/* Actions */
+
+#ar-services .ar-services__actions{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));
+  gap:12px;
+}
+
+/* Dark card */
+
+#ar-services .ar-card--green .ar-services__focus{
+  border-color:var(--ar-line-dark,rgba(255,255,255,.14));
+}
+
+#ar-services .ar-card--green .ar-services__focus-item{
+  border-color:var(--ar-divider-dark,rgba(255,255,255,.08));
+}
+
+#ar-services .ar-card--green :is(.ar-services__focus-text,.ar-services__proof-text){
+  color:var(--ar-on-dark-muted,rgba(250,250,250,.74));
+}
+</style>
+
+<section id="ar-services" aria-label="Therapy services at AtReef Therapy">
+
+  <div class="ar-card-grid ar-card-grid--2">
+
+    <article class="ar-card ar-card--green ar-surface-dark" aria-labelledby="ar-couples-service-title">
+
+      <div class="ar-services__header">
+        <span class="ar-tile ar-tile--ghost" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <circle cx="8" cy="9" r="3"></circle>
+            <circle cx="16" cy="9" r="3"></circle>
+            <path d="M4 19C4.5 15.5 6 14 8 14"></path>
+            <path d="M20 19C19.5 15.5 18 14 16 14"></path>
+            <path d="M9.5 16C10.5 15 11.2 14.5 12 14.5C12.8 14.5 13.5 15 14.5 16"></path>
+          </svg>
+        </span>
+        <span class="ar-label ar-label--on-dark">Relationship work</span>
+      </div>
+
+      <h2 id="ar-couples-service-title" class="ar-card__title ar-card__title--lead">
+        Couples therapy
+      </h2>
+
+      <p class="ar-services__headline">
+        For couples caught in recurring conflict, distance, or disconnection.
+      </p>
+
+      <p class="ar-card__copy">
+        Structured therapy focused on the pattern beneath the argument, so you
+        can respond differently when it matters.
+      </p>
+
+      <ul class="ar-services__focus">
+        <li class="ar-services__focus-item">
+          <span class="ar-tile ar-tile--sm ar-tile--ghost" aria-hidden="true">✓</span>
+          <span class="ar-services__focus-text">Communication and recurring conflict</span>
+        </li>
+        <li class="ar-services__focus-item">
+          <span class="ar-tile ar-tile--sm ar-tile--ghost" aria-hidden="true">✓</span>
+          <span class="ar-services__focus-text">Trust, betrayal, and intimacy</span>
+        </li>
+        <li class="ar-services__focus-item">
+          <span class="ar-tile ar-tile--sm ar-tile--ghost" aria-hidden="true">✓</span>
+          <span class="ar-services__focus-text">Intercultural relationship patterns</span>
+        </li>
+      </ul>
+
+      <div class="ar-card__footer">
+
+        <p class="ar-services__proof">
+          <span class="ar-stars ar-stars--on-dark" role="img" aria-label="Rated 5 out of 5">★★★★★</span>
+          <span class="ar-services__proof-text">
+            <strong>5.0 Grow Therapy</strong> ·
+            <strong>4.84 Zocdoc</strong> ·
+            <strong>BBB A+</strong>
+          </span>
+        </p>
+
+        <div class="ar-services__actions">
+          <a class="ar-btn ar-btn--primary ar-btn--block" href="/consultation">
+            <span class="ar-btn__label">Book a free consultation</span>
+          </a>
+          <a class="ar-btn ar-btn--secondary ar-btn--on-dark ar-btn--block" href="/couples-therapy">
+            <span class="ar-btn__label">Couples therapy</span>
+            <span class="ar-btn__chip" aria-hidden="true">
+              <span class="ar-btn__icon"></span>
+            </span>
+          </a>
+        </div>
+
+      </div>
+
+    </article>
+
+    <article class="ar-card ar-card--cream ar-card--bordered" aria-labelledby="ar-individual-service-title">
+
+      <div class="ar-services__header">
+        <span class="ar-tile" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="8" r="3"></circle>
+            <path d="M6 20C6.5 15.5 8.5 13.5 12 13.5C15.5 13.5 17.5 15.5 18 20"></path>
+          </svg>
+        </span>
+        <span class="ar-label">Individual work</span>
+      </div>
+
+      <h2 id="ar-individual-service-title" class="ar-card__title ar-card__title--lead">
+        Individual therapy
+      </h2>
+
+      <p class="ar-services__headline">
+        For adults who understand the problem, but still feel stuck in the pattern.
+      </p>
+
+      <p class="ar-card__copy">
+        Focused therapy for anxiety, burnout, transitions, and relationship
+        patterns, with clear goals and practical change.
+      </p>
+
+      <ul class="ar-services__focus">
+        <li class="ar-services__focus-item">
+          <span class="ar-tile ar-tile--sm" aria-hidden="true">✓</span>
+          <span class="ar-services__focus-text">Anxiety, perfectionism, and burnout</span>
+        </li>
+        <li class="ar-services__focus-item">
+          <span class="ar-tile ar-tile--sm" aria-hidden="true">✓</span>
+          <span class="ar-services__focus-text">Relationship patterns and self-trust</span>
+        </li>
+        <li class="ar-services__focus-item">
+          <span class="ar-tile ar-tile--sm" aria-hidden="true">✓</span>
+          <span class="ar-services__focus-text">Identity and major life transitions</span>
+        </li>
+      </ul>
+
+      <div class="ar-card__footer">
+
+        <p class="ar-services__proof">
+          <span class="ar-stars" role="img" aria-label="Rated 5 out of 5">★★★★★</span>
+          <span class="ar-services__proof-text">
+            <strong>5.0 Grow Therapy</strong> ·
+            <strong>4.84 Zocdoc</strong> ·
+            <strong>BBB A+</strong>
+          </span>
+        </p>
+
+        <div class="ar-services__actions">
+          <a class="ar-btn ar-btn--primary ar-btn--block" href="/consultation">
+            <span class="ar-btn__label">Book a free consultation</span>
+          </a>
+          <a class="ar-btn ar-btn--secondary ar-btn--block" href="/individual-therapy">
+            <span class="ar-btn__label">Individual therapy</span>
+            <span class="ar-btn__chip" aria-hidden="true">
+              <span class="ar-btn__icon"></span>
+            </span>
+          </a>
+        </div>
+
+      </div>
+
+    </article>
+
+  </div>
+
+</section>

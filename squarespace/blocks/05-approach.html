@@ -1,0 +1,530 @@
+<style>
+#ar-approach{
+  container:ar-approach / inline-size;
+  width:100%;
+}
+
+#ar-approach,
+#ar-approach *,
+#ar-approach *::before,
+#ar-approach *::after{
+  box-sizing:border-box;
+}
+
+#ar-approach :where(h2,h3,p,article,aside,header,section){
+  min-width:0;
+  margin:0;
+  padding:0;
+}
+
+/* Header */
+
+#ar-approach .ar-ap__header .ar-label{
+  margin-bottom:12px;
+}
+
+/* Carousel */
+
+#ar-approach .ar-ap__carousel{
+  --ar-gap:24px;
+  --ar-peek:16px;
+  --ar-inset:calc(var(--ar-gap) + var(--ar-peek));
+  --ar-card-width:calc(100cqi - (2 * var(--ar-inset)));
+  width:100%;
+  min-width:0;
+  margin-top:48px;
+}
+
+#ar-approach .ar-ap__toolbar{
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:16px;
+  margin-bottom:16px;
+}
+
+#ar-approach .ar-ap__scroll-cue{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  margin:0;
+  white-space:nowrap;
+}
+
+#ar-approach .ar-ap__scroll-cue svg{
+  display:block;
+  width:16px;
+  height:16px;
+  flex:0 0 16px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.6;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+#ar-approach .ar-ap__viewport{
+  width:100%;
+  min-width:0;
+  padding:4px 0 8px;
+  overflow-x:auto;
+  overflow-y:hidden;
+  scroll-snap-type:x mandatory;
+  scroll-padding-inline:var(--ar-inset);
+  overscroll-behavior-x:contain;
+  scrollbar-width:none;
+}
+
+#ar-approach .ar-ap__viewport::-webkit-scrollbar{
+  display:none;
+}
+
+#ar-approach .ar-ap__viewport[data-ar-jump="1"]{
+  scroll-snap-type:none;
+}
+
+#ar-approach .ar-ap__track{
+  display:flex;
+  align-items:stretch;
+  gap:var(--ar-gap);
+  width:max-content;
+  min-width:100%;
+}
+
+#ar-approach .ar-ap__sentinel{
+  flex:0 0 var(--ar-peek);
+  width:var(--ar-peek);
+}
+
+/* Cards */
+
+#ar-approach .ar-ap__card{
+  display:grid;
+  grid-template-rows:var(--ar-band,48px) 1fr;
+  flex:0 0 var(--ar-card-width);
+  width:var(--ar-card-width);
+  min-width:0;
+  background:var(--ar-paper,#FDFAF7);
+  border:1px solid var(--ar-line-strong,rgba(0,70,67,.22));
+  border-radius:var(--ar-r,5px);
+  overflow:hidden;
+  scroll-snap-align:start;
+  scroll-snap-stop:always;
+  box-shadow:var(--ar-shadow,0 8px 24px rgba(0,70,67,.05));
+  transition:border-color var(--ar-fast,160ms) ease,box-shadow var(--ar-fast,160ms) ease;
+}
+
+#ar-approach .ar-ap__card[data-step="01"]{
+  background:var(--ar-gold-tint,#FFF9EA);
+}
+
+#ar-approach .ar-ap__band{
+  display:flex;
+  align-items:center;
+  padding:8px var(--ar-card-pad,24px);
+  color:var(--ar-cream,#F5F0EA);
+  background:var(--ar-teal,#004643);
+}
+
+#ar-approach .ar-ap__card[data-step="01"] .ar-ap__band{
+  color:var(--ar-text,#141414);
+  background:var(--ar-gold,#FEDA6A);
+}
+
+#ar-approach .ar-ap__number{
+  font-size:var(--ar-fs-small,14px);
+  font-weight:700;
+  line-height:20px;
+  letter-spacing:.04em;
+  font-variant-numeric:tabular-nums;
+}
+
+#ar-approach .ar-ap__card-body{
+  display:flex;
+  flex-direction:column;
+  padding:var(--ar-card-pad,24px);
+}
+
+#ar-approach .ar-ap__card-body .ar-label{
+  margin-bottom:8px;
+}
+
+#ar-approach .ar-card__title{
+  max-width:none;
+  margin-bottom:12px;
+}
+
+#ar-approach .ar-ap__card-body .ar-card__copy{
+  max-width:62ch;
+  color:var(--ar-muted,#53635F);
+}
+
+/* Details */
+
+#ar-approach .ar-ap__details{
+  display:grid;
+  grid-template-columns:minmax(0,1fr);
+  margin-top:32px;
+  padding:24px;
+  background-color:rgba(245,240,234,.42);
+  background-image:var(--ar-wave,none);
+  border:1px solid rgba(0,70,67,.16);
+  border-radius:var(--ar-r,5px);
+}
+
+#ar-approach .ar-ap__detail + .ar-ap__detail{
+  margin-top:24px;
+  padding-top:24px;
+  border-top:1px solid rgba(0,70,67,.18);
+}
+
+#ar-approach .ar-ap__detail .ar-copy{
+  max-width:70ch;
+  margin:0;
+}
+
+#ar-approach .ar-ap__detail .ar-copy strong{
+  color:var(--ar-teal,#004643);
+  font-weight:600;
+}
+
+@media (hover:hover) and (pointer:fine){
+  #ar-approach .ar-ap__card:hover{
+    border-color:rgba(0,70,67,.32);
+    box-shadow:var(--ar-shadow-hover,0 12px 32px rgba(0,70,67,.065));
+  }
+}
+
+@container ar-approach (min-width:760px){
+  #ar-approach .ar-ap__details{
+    grid-template-columns:minmax(0,9fr) minmax(0,11fr);
+    padding:24px 32px;
+  }
+
+  #ar-approach .ar-ap__detail:first-child{
+    padding-right:32px;
+  }
+
+  #ar-approach .ar-ap__detail + .ar-ap__detail{
+    margin-top:0;
+    padding-top:0;
+    padding-left:32px;
+    border-top:0;
+    border-left:1px solid rgba(0,70,67,.18);
+  }
+}
+
+@container ar-approach (min-width:980px){
+  #ar-approach .ar-ap__carousel{
+    --ar-gap:32px;
+    --ar-card-width:calc((100cqi - (2 * var(--ar-inset)) - var(--ar-gap)) / 2);
+  }
+}
+
+@container ar-approach (max-width:360px){
+  #ar-approach .ar-ap__carousel{
+    --ar-gap:16px;
+  }
+
+  #ar-approach .ar-ap__band{
+    padding-inline:16px;
+  }
+
+  #ar-approach :is(.ar-ap__card-body,.ar-ap__details){
+    padding:16px;
+  }
+}
+
+@media (prefers-reduced-motion:reduce){
+  #ar-approach .ar-ap__card{
+    transition:none;
+  }
+}
+
+@media (forced-colors:active){
+  #ar-approach :is(.ar-ap__card,.ar-ap__details){
+    border-color:CanvasText;
+    box-shadow:none;
+  }
+}
+</style>
+
+<section id="ar-approach" aria-labelledby="ar-ap-title">
+
+  <header class="ar-ap__header">
+    <p class="ar-label">Structured &middot; Active &middot; Collaborative</p>
+    <h2 id="ar-ap-title" class="ar-title">What therapy actually looks like here</h2>
+  </header>
+
+  <div class="ar-ap__carousel">
+
+    <div class="ar-ap__toolbar">
+      <p class="ar-label ar-label--tight ar-ap__scroll-cue" aria-hidden="true">
+        <span>Scroll to explore</span>
+        <svg viewBox="0 0 24 20" focusable="false" aria-hidden="true">
+          <path d="M8 4L3 10L8 16"></path>
+          <path d="M3 10H21"></path>
+          <path d="M16 4L21 10L16 16"></path>
+        </svg>
+      </p>
+      <div class="ar-scroll-nav">
+        <button class="ar-scroll-btn" type="button" data-ar-scroll="-1" aria-controls="ar-ap-viewport" aria-label="Previous step">
+          <svg viewBox="0 0 20 20" focusable="false" aria-hidden="true"><path d="M12 5L7 10L12 15"></path></svg>
+        </button>
+        <button class="ar-scroll-btn" type="button" data-ar-scroll="1" aria-controls="ar-ap-viewport" aria-label="Next step">
+          <svg viewBox="0 0 20 20" focusable="false" aria-hidden="true"><path d="M8 5L13 10L8 15"></path></svg>
+        </button>
+      </div>
+    </div>
+
+    <div
+      id="ar-ap-viewport"
+      class="ar-ap__viewport"
+      tabindex="0"
+      role="region"
+      aria-label="Five parts of individual and couples therapy at AtReef Therapy. Scroll left or right to explore."
+      aria-describedby="ar-ap-sequence-note"
+    >
+      <div class="ar-ap__track" role="list">
+
+        <div class="ar-ap__sentinel" aria-hidden="true"></div>
+
+        <article class="ar-ap__card" role="listitem" data-step="01">
+          <div class="ar-ap__band"><span class="ar-ap__number" aria-hidden="true">01</span></div>
+          <div class="ar-ap__card-body">
+            <p class="ar-label ar-label--tight">Direction</p>
+            <h3 class="ar-card__title">Set a direction</h3>
+            <p class="ar-card__copy">We decide what deserves attention, what you want to understand, and what you want to change, so the work has a clear direction from the start of therapy.</p>
+          </div>
+        </article>
+
+        <article class="ar-ap__card" role="listitem" data-step="02">
+          <div class="ar-ap__band"><span class="ar-ap__number" aria-hidden="true">02</span></div>
+          <div class="ar-ap__card-body">
+            <p class="ar-label ar-label--tight">Pattern</p>
+            <h3 class="ar-card__title">See what repeats</h3>
+            <p class="ar-card__copy">We look beneath the immediate problem for patterns that repeat within you, between partners, and across relationships, decisions, work, and daily life.</p>
+          </div>
+        </article>
+
+        <article class="ar-ap__card" role="listitem" data-step="03">
+          <div class="ar-ap__band"><span class="ar-ap__number" aria-hidden="true">03</span></div>
+          <div class="ar-ap__card-body">
+            <p class="ar-label ar-label--tight">Engagement</p>
+            <h3 class="ar-card__title">Work with what is happening</h3>
+            <p class="ar-card__copy">I do more than listen. I ask direct questions, offer observations, challenge assumptions, and help you examine what is happening as it unfolds in real time.</p>
+          </div>
+        </article>
+
+        <article class="ar-ap__card" role="listitem" data-step="04">
+          <div class="ar-ap__band"><span class="ar-ap__number" aria-hidden="true">04</span></div>
+          <div class="ar-ap__card-body">
+            <p class="ar-label ar-label--tight">Application</p>
+            <h3 class="ar-card__title">Take it outside the session</h3>
+            <p class="ar-card__copy">We translate insight into real changes in how you respond, communicate, decide, set boundaries, repair conflict, and relate differently in daily life.</p>
+          </div>
+        </article>
+
+        <article class="ar-ap__card" role="listitem" data-step="05">
+          <div class="ar-ap__band"><span class="ar-ap__number" aria-hidden="true">05</span></div>
+          <div class="ar-ap__card-body">
+            <p class="ar-label ar-label--tight">Review</p>
+            <h3 class="ar-card__title">Review and adjust</h3>
+            <p class="ar-card__copy">We regularly assess whether the work is creating meaningful change. If something is not moving, we name it directly, adjust the approach, and keep going.</p>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </div>
+
+  <aside class="ar-ap__details" aria-label="How to understand and integrate the five steps">
+    <section class="ar-ap__detail" aria-labelledby="ar-ap-read-title">
+      <h3 id="ar-ap-read-title" class="ar-card__title">How to read the five steps</h3>
+      <p id="ar-ap-sequence-note" class="ar-copy">These five steps are not a checklist or a fixed order. In individual and couples therapy, we may move back and forth between them as new patterns become clearer, circumstances change, or a different part of the work needs attention. The structure gives therapy direction without turning it into a script.</p>
+    </section>
+    <section class="ar-ap__detail" aria-labelledby="ar-ap-integrative-title">
+      <h3 id="ar-ap-integrative-title" class="ar-card__title">Integrative approach</h3>
+      <p class="ar-copy">The work may draw from <strong>Gottman Method Couples Therapy, CBT, DBT, relational and Jungian psychology, and Self-Reflective Relationship Therapy</strong> when they are useful to your goals.</p>
+    </section>
+  </aside>
+
+</section>
+
+<script>
+(function () {
+  'use strict';
+
+  function initArApproach() {
+    var root = document.getElementById('ar-approach');
+    if (!root || root.getAttribute('data-ar-loop-ready') === '1') {
+      return;
+    }
+
+    var carousel = root.querySelector('.ar-ap__carousel');
+    var viewport = root.querySelector('.ar-ap__viewport');
+    var track = root.querySelector('.ar-ap__track');
+    if (!carousel || !viewport || !track) {
+      return;
+    }
+
+    var existingClones = track.querySelectorAll('[data-ar-clone]');
+    var sentinel = track.querySelector('.ar-ap__sentinel');
+    var i;
+
+    if (sentinel && sentinel.parentNode) {
+      sentinel.parentNode.removeChild(sentinel);
+    }
+    for (i = existingClones.length - 1; i >= 0; i -= 1) {
+      if (existingClones[i].parentNode) {
+        existingClones[i].parentNode.removeChild(existingClones[i]);
+      }
+    }
+
+    var cards = track.querySelectorAll('.ar-ap__card');
+    var originals = [];
+    for (i = 0; i < cards.length; i += 1) {
+      originals.push(cards[i]);
+    }
+    if (originals.length < 2) {
+      return;
+    }
+
+    function cloneCard(card) {
+      var clone = card.cloneNode(true);
+      clone.setAttribute('data-ar-clone', '1');
+      clone.setAttribute('aria-hidden', 'true');
+      clone.setAttribute('role', 'presentation');
+      return clone;
+    }
+
+    var before = document.createDocumentFragment();
+    var after = document.createDocumentFragment();
+    for (i = 0; i < originals.length; i += 1) {
+      before.appendChild(cloneCard(originals[i]));
+      after.appendChild(cloneCard(originals[i]));
+    }
+    track.insertBefore(before, originals[0]);
+    track.appendChild(after);
+    root.setAttribute('data-ar-loop-ready', '1');
+
+    var count = originals.length;
+    var base = 0;
+    var stride = 0;
+    var cycle = 0;
+    var currentIndex = 0;
+    var jumping = false;
+    var settleTimer = 0;
+    var resizeTimer = 0;
+
+    function modulo(value) {
+      return ((value % count) + count) % count;
+    }
+
+    function readPixels(name) {
+      var value = window.getComputedStyle(carousel).getPropertyValue(name);
+      return parseFloat(value) || 0;
+    }
+
+    function getInset() {
+      return readPixels('--ar-gap') + readPixels('--ar-peek');
+    }
+
+    function jumpTo(position) {
+      jumping = true;
+      viewport.setAttribute('data-ar-jump', '1');
+      viewport.scrollLeft = position;
+      window.requestAnimationFrame(function () {
+        window.requestAnimationFrame(function () {
+          viewport.removeAttribute('data-ar-jump');
+          jumping = false;
+        });
+      });
+    }
+
+    function measure() {
+      if (viewport.clientWidth < 1) {
+        return;
+      }
+      stride = originals[1].offsetLeft - originals[0].offsetLeft;
+      if (stride <= 0) {
+        return;
+      }
+      cycle = stride * count;
+      base = originals[0].offsetLeft - getInset();
+      jumpTo(base + (currentIndex * stride));
+    }
+
+    function updateCurrentIndex() {
+      if (!stride) {
+        return;
+      }
+      currentIndex = modulo(Math.round((viewport.scrollLeft - base) / stride));
+    }
+
+    function normalizeLoop() {
+      if (jumping || !cycle) {
+        return;
+      }
+      var position = viewport.scrollLeft;
+      if (position < base) {
+        jumpTo(position + cycle);
+        return;
+      }
+      if (position >= base + cycle) {
+        jumpTo(position - cycle);
+      }
+    }
+
+    function onScroll() {
+      if (jumping) {
+        return;
+      }
+      window.clearTimeout(settleTimer);
+      settleTimer = window.setTimeout(function () {
+        if (!jumping) {
+          updateCurrentIndex();
+          normalizeLoop();
+        }
+      }, 120);
+    }
+
+    function onResize() {
+      window.clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(measure, 100);
+    }
+
+    viewport.addEventListener('scroll', onScroll, false);
+    window.addEventListener('resize', onResize, false);
+
+    var scrollButtons = root.querySelectorAll('[data-ar-scroll]');
+    var reduceMotion = window.matchMedia &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function onScrollButton(event) {
+      var direction = parseInt(event.currentTarget.getAttribute('data-ar-scroll'), 10) || 1;
+      if (!stride) {
+        measure();
+      }
+      viewport.scrollBy({
+        left: direction * stride,
+        behavior: reduceMotion ? 'auto' : 'smooth'
+      });
+    }
+
+    for (i = 0; i < scrollButtons.length; i += 1) {
+      scrollButtons[i].addEventListener('click', onScrollButton, false);
+    }
+
+    window.requestAnimationFrame(function () {
+      window.requestAnimationFrame(measure);
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initArApproach, false);
+  } else {
+    initArApproach();
+  }
+}());
+</script>

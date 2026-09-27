@@ -1,0 +1,258 @@
+<style>
+#ar-home-faq{
+  container:ar-home-faq / inline-size;
+  width:100%;
+}
+
+#ar-home-faq,
+#ar-home-faq *,
+#ar-home-faq *::before,
+#ar-home-faq *::after{
+  box-sizing:border-box;
+}
+
+/* Header */
+
+#ar-home-faq .ar-home-faq__header{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  margin:0 0 var(--ar-gap-header,48px);
+  text-align:center;
+}
+
+#ar-home-faq .ar-home-faq__lead{
+  margin:24px auto 0;
+  color:var(--ar-text,#141414);
+}
+
+/* Groups */
+
+#ar-home-faq .ar-home-faq__group-title{
+  margin:0 0 16px;
+}
+
+#ar-home-faq .ar-home-faq__items .ar-disclosure:first-child{
+  border-top:1px solid var(--ar-border,#D6DFDA);
+}
+
+/* Questions */
+
+#ar-home-faq .ar-disclosure__summary{
+  padding:16px 0;
+}
+
+#ar-home-faq .ar-disclosure__panel{
+  max-width:64ch;
+  padding:0 48px 20px 0;
+}
+
+#ar-home-faq .ar-disclosure__panel p{
+  margin:0;
+}
+
+#ar-home-faq .ar-disclosure__mark{
+  border-radius:var(--ar-r,5px);
+  transition:background-color var(--ar-fast,160ms) ease;
+}
+
+#ar-home-faq .ar-disclosure[open] .ar-disclosure__summary{
+  color:var(--ar-teal,#004643);
+}
+
+#ar-home-faq .ar-disclosure[open] .ar-disclosure__mark{
+  background-color:var(--ar-gold-wash,rgba(254,218,106,.22));
+}
+
+/* Action */
+
+#ar-home-faq .ar-home-faq__action{
+  display:flex;
+  justify-content:center;
+  margin-top:var(--ar-gap-cta,32px);
+}
+
+@media (hover:hover) and (pointer:fine){
+  #ar-home-faq .ar-disclosure__summary:hover .ar-disclosure__mark{
+    background-color:var(--ar-surface-hover,#EEF3F0);
+  }
+}
+
+/* Mobile */
+
+@container ar-home-faq (max-width:480px){
+  #ar-home-faq .ar-home-faq__header{
+    margin-bottom:32px;
+  }
+
+  #ar-home-faq .ar-home-faq__group{
+    padding:16px;
+  }
+
+  #ar-home-faq .ar-disclosure__summary{
+    gap:12px;
+  }
+
+  #ar-home-faq .ar-disclosure__panel{
+    padding-right:32px;
+  }
+}
+
+@media (prefers-reduced-motion:reduce){
+  #ar-home-faq .ar-disclosure__mark{
+    transition:none;
+  }
+}
+</style>
+
+<section id="ar-home-faq" aria-labelledby="ar-home-faq-title">
+
+  <div class="ar-home-faq__header">
+
+    <p class="ar-label ar-label--pill">
+      <img class="ar-label__icon" src="https://www.atreef.com/s/Streamline-Ultimate.svg" alt="" aria-hidden="true">
+      Frequently asked questions
+    </p>
+
+    <h2 id="ar-home-faq-title" class="ar-title">
+      Questions people usually ask before starting.
+    </h2>
+
+    <p class="ar-copy ar-home-faq__lead">
+      Clear answers about fees, insurance, online therapy in Massachusetts, couples therapy, and what to expect before you begin.
+    </p>
+
+  </div>
+
+  <div class="ar-card-grid ar-card-grid--2">
+
+    <div class="ar-card ar-card--white ar-card--auto ar-card--flat ar-home-faq__group">
+
+      <h3 class="ar-label ar-home-faq__group-title">Practical details</h3>
+
+      <div class="ar-home-faq__items">
+
+        <details class="ar-disclosure">
+          <summary class="ar-disclosure__summary">
+            <span>How much does therapy at AtReef Therapy cost?</span>
+            <span class="ar-disclosure__mark" aria-hidden="true"></span>
+          </summary>
+          <div class="ar-disclosure__panel">
+            <p>Couples therapy at AtReef Therapy is $350 per 60-minute session, and individual therapy is $300 per 60-minute session. Couples therapy is private pay. For current fees, insurance details, and out-of-network information, visit the <a href="/rates">rates page</a>.</p>
+          </div>
+        </details>
+
+        <details class="ar-disclosure">
+          <summary class="ar-disclosure__summary">
+            <span>Does AtReef Therapy accept insurance?</span>
+            <span class="ar-disclosure__mark" aria-hidden="true"></span>
+          </summary>
+          <div class="ar-disclosure__panel">
+            <p>Insurance may be available for individual therapy through select plans, depending on availability and eligibility. Couples therapy is private pay. For clients with out-of-network benefits, I can provide a superbill for possible reimbursement, but reimbursement depends on the terms of your plan and is not guaranteed.</p>
+          </div>
+        </details>
+
+        <details class="ar-disclosure">
+          <summary class="ar-disclosure__summary">
+            <span>Do you offer online couples therapy in Massachusetts?</span>
+            <span class="ar-disclosure__mark" aria-hidden="true"></span>
+          </summary>
+          <div class="ar-disclosure__panel">
+            <p>Yes. AtReef Therapy provides online couples therapy to clients who are physically located in Massachusetts at the time of the session. The practice is based in Cambridge, MA, and sessions take place by secure video rather than in person. Both partners must be in Massachusetts during the session.</p>
+          </div>
+        </details>
+
+        <details class="ar-disclosure">
+          <summary class="ar-disclosure__summary">
+            <span>How long are therapy sessions and how often do we meet?</span>
+            <span class="ar-disclosure__mark" aria-hidden="true"></span>
+          </summary>
+          <div class="ar-disclosure__panel">
+            <p>Therapy sessions are 60 minutes. Many couples begin with weekly sessions so there is enough continuity to understand and change recurring patterns. Frequency can change over time based on your goals, progress, availability, and what is most useful for the work.</p>
+          </div>
+        </details>
+
+        <details class="ar-disclosure">
+          <summary class="ar-disclosure__summary">
+            <span>How does the free 30-minute consultation work?</span>
+            <span class="ar-disclosure__mark" aria-hidden="true"></span>
+          </summary>
+          <div class="ar-disclosure__panel">
+            <p>The free 30-minute video consultation is a conversation about what brings you to therapy, what you want to change, and whether my approach feels like a good fit. There is no obligation to continue. If we decide to work together, we can then schedule your first therapy session. <a href="/consultation">Learn more about the consultation</a>.</p>
+          </div>
+        </details>
+
+      </div>
+    </div>
+
+    <div class="ar-card ar-card--white ar-card--auto ar-card--flat ar-home-faq__group">
+
+      <h3 class="ar-label ar-home-faq__group-title">About the work</h3>
+
+      <div class="ar-home-faq__items">
+
+        <details class="ar-disclosure">
+          <summary class="ar-disclosure__summary">
+            <span>Who is therapy at AtReef Therapy a good fit for?</span>
+            <span class="ar-disclosure__mark" aria-hidden="true"></span>
+          </summary>
+          <div class="ar-disclosure__panel">
+            <p>AtReef Therapy works with adults and couples across Massachusetts who may be doing well professionally while feeling stuck in anxiety, burnout, perfectionism, recurring conflict, emotional distance, intimacy concerns, betrayal, or major life and relationship decisions. Therapy can also focus on self-understanding, personal growth, and changing patterns that insight alone has not shifted.</p>
+          </div>
+        </details>
+
+        <details class="ar-disclosure">
+          <summary class="ar-disclosure__summary">
+            <span>What approach do you use for couples therapy?</span>
+            <span class="ar-disclosure__mark" aria-hidden="true"></span>
+          </summary>
+          <div class="ar-disclosure__panel">
+            <p>Couples therapy at AtReef Therapy integrates Gottman Method Couples Therapy with relational, depth-oriented, and evidence-informed approaches. The work is active and structured, with attention to recurring conflict patterns, emotional connection, communication, intimacy, trust, and the deeper dynamics shaping the relationship.</p>
+          </div>
+        </details>
+
+        <details class="ar-disclosure">
+          <summary class="ar-disclosure__summary">
+            <span>What if therapy has not helped before?</span>
+            <span class="ar-disclosure__mark" aria-hidden="true"></span>
+          </summary>
+          <div class="ar-disclosure__panel">
+            <p>Previous therapy not helping does not necessarily mean therapy cannot be useful now. We look at what helped, what felt missing, what stayed unchanged, and what you need from the work this time. My approach is active and relational, with an emphasis on understanding patterns while also working toward meaningful changes outside the session.</p>
+          </div>
+        </details>
+
+        <details class="ar-disclosure">
+          <summary class="ar-disclosure__summary">
+            <span>What if my partner is unsure about couples therapy?</span>
+            <span class="ar-disclosure__mark" aria-hidden="true"></span>
+          </summary>
+          <div class="ar-disclosure__panel">
+            <p>Both partners need to be willing to participate, but you do not have to begin couples therapy with the same level of certainty. A consultation can make room for each person's concerns, expectations, and hesitation. If one partner does not want to participate, individual therapy may be a more appropriate place to begin.</p>
+          </div>
+        </details>
+
+        <details class="ar-disclosure">
+          <summary class="ar-disclosure__summary">
+            <span>How will we know whether therapy is helping?</span>
+            <span class="ar-disclosure__mark" aria-hidden="true"></span>
+          </summary>
+          <div class="ar-disclosure__panel">
+            <p>Therapy should lead to meaningful changes outside the session, not only useful conversations during it. Depending on your goals, progress may look like less escalation, better repair after conflict, clearer boundaries, reduced anxiety, stronger emotional connection, or different decisions under pressure. We review what is changing and adjust the work when something remains stuck.</p>
+          </div>
+        </details>
+
+      </div>
+    </div>
+
+  </div>
+
+  <div class="ar-home-faq__action">
+    <a class="ar-btn ar-btn--tertiary" href="/faq">
+      <span class="ar-btn__label">More questions answered</span>
+      <span class="ar-btn__chip" aria-hidden="true">
+        <span class="ar-btn__icon ar-btn__icon--chevron"></span>
+      </span>
+    </a>
+  </div>
+
+</section>

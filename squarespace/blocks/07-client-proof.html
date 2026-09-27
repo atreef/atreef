@@ -1,0 +1,384 @@
+<style>
+#ar-client-proof{
+  container:ar-client-proof / inline-size;
+  width:100%;
+}
+
+#ar-client-proof,
+#ar-client-proof *,
+#ar-client-proof *::before,
+#ar-client-proof *::after{
+  box-sizing:border-box;
+}
+
+#ar-client-proof :where(h2,h3,p,blockquote,footer){
+  min-width:0;
+  margin:0;
+  padding:0;
+}
+
+/* Header */
+
+#ar-client-proof .ar-proof__header{
+  margin-bottom:32px;
+  text-align:center;
+}
+
+#ar-client-proof .ar-proof__header .ar-label{
+  margin-bottom:12px;
+}
+
+/* Toolbar */
+
+#ar-client-proof .ar-proof__toolbar{
+  display:flex;
+  justify-content:flex-end;
+  margin-bottom:16px;
+}
+
+/* Carousel */
+
+#ar-client-proof .ar-proof__carousel{
+  --ar-gap:24px;
+  --ar-peek:16px;
+  --ar-inset:calc(var(--ar-peek) + var(--ar-gap));
+  --ar-card-width:calc(100cqi - (2 * var(--ar-peek)) - (2 * var(--ar-gap)));
+  width:100%;
+  min-width:0;
+}
+
+#ar-client-proof .ar-proof__viewport{
+  width:100%;
+  min-width:0;
+  padding:4px 0 8px;
+  overflow-x:auto;
+  overflow-y:hidden;
+  scroll-snap-type:x mandatory;
+  scroll-padding-inline:var(--ar-inset);
+  overscroll-behavior-x:contain;
+  scrollbar-width:none;
+}
+
+#ar-client-proof .ar-proof__viewport::-webkit-scrollbar{
+  display:none;
+}
+
+#ar-client-proof .ar-proof__track{
+  display:flex;
+  align-items:stretch;
+  gap:var(--ar-gap);
+  width:max-content;
+  min-width:100%;
+}
+
+#ar-client-proof .ar-proof__edge{
+  flex:0 0 var(--ar-peek);
+  width:var(--ar-peek);
+}
+
+/* Cards */
+
+#ar-client-proof .ar-proof__card{
+  display:flex;
+  flex-direction:column;
+  flex:0 0 var(--ar-card-width);
+  width:var(--ar-card-width);
+  min-width:0;
+  padding:24px;
+  background-color:var(--ar-paper,#FDFAF7);
+  border:1px solid var(--ar-line-strong,rgba(0,70,67,.22));
+  border-radius:var(--ar-r,5px);
+  scroll-snap-align:start;
+  scroll-snap-stop:always;
+  box-shadow:var(--ar-shadow,0 8px 24px rgba(0,70,67,.05));
+  transition:border-color var(--ar-fast,160ms) ease,box-shadow var(--ar-fast,160ms) ease;
+}
+
+#ar-client-proof .ar-proof__card--peach{
+  background-image:linear-gradient(180deg,transparent 56%,#FFF0EC 100%);
+}
+
+#ar-client-proof .ar-proof__card--yellow{
+  background-image:linear-gradient(180deg,transparent 56%,#FFF8DF 100%);
+}
+
+#ar-client-proof .ar-proof__card--mint{
+  background-image:linear-gradient(180deg,transparent 56%,#EDF7F3 100%);
+}
+
+#ar-client-proof .ar-proof__top{
+  display:grid;
+  grid-template-columns:24px minmax(0,1fr);
+  grid-template-areas:"icon title" ". stars";
+  align-items:start;
+  gap:8px 12px;
+  margin-bottom:16px;
+}
+
+#ar-client-proof .ar-proof__quote-icon{
+  grid-area:icon;
+  display:block;
+  width:24px;
+  height:24px;
+  margin-top:2px;
+}
+
+#ar-client-proof .ar-proof__top .ar-card__title{
+  grid-area:title;
+  max-width:none;
+  margin:0;
+}
+
+#ar-client-proof .ar-proof__stars{
+  grid-area:stars;
+  display:block;
+  width:92px;
+  height:20px;
+}
+
+#ar-client-proof .ar-proof__quote-wrap{
+  flex:1 1 auto;
+  max-width:62ch;
+  quotes:none;
+}
+
+#ar-client-proof .ar-proof__quote{
+  color:var(--ar-text,#141414);
+  font-size:var(--ar-fs-body,16px);
+  line-height:var(--ar-lh-body,28px);
+  text-wrap:pretty;
+}
+
+#ar-client-proof .ar-proof__meta{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  margin-top:24px;
+  padding-top:16px;
+  border-top:1px solid var(--ar-line,rgba(0,70,67,.12));
+}
+
+#ar-client-proof .ar-proof__initials{
+  color:var(--ar-text,#141414);
+  font-size:var(--ar-fs-label,12px);
+  font-weight:700;
+  line-height:20px;
+  letter-spacing:.08em;
+}
+
+#ar-client-proof .ar-proof__meta-dot{
+  width:4px;
+  height:4px;
+  flex:0 0 4px;
+  background:var(--ar-gold-ink,#8A6A00);
+  border-radius:50%;
+}
+
+#ar-client-proof .ar-proof__type{
+  color:var(--ar-muted,#53635F);
+  font-size:var(--ar-fs-small,14px);
+  font-weight:500;
+  line-height:20px;
+}
+
+@media (hover:hover) and (pointer:fine){
+  #ar-client-proof .ar-proof__card:hover{
+    border-color:rgba(0,70,67,.32);
+    box-shadow:var(--ar-shadow-hover,0 12px 32px rgba(0,70,67,.065));
+  }
+}
+
+/* Two up */
+
+@container ar-client-proof (min-width:760px){
+  #ar-client-proof .ar-proof__carousel{
+    --ar-gap:32px;
+    --ar-peek:24px;
+    --ar-card-width:calc((100cqi - (2 * var(--ar-peek)) - (3 * var(--ar-gap))) / 2);
+  }
+
+  #ar-client-proof .ar-proof__card{
+    padding:32px;
+  }
+
+  #ar-client-proof .ar-proof__top{
+    grid-template-columns:28px minmax(0,1fr) auto;
+    grid-template-areas:"icon title stars";
+    align-items:center;
+    row-gap:0;
+  }
+
+  #ar-client-proof .ar-proof__quote-icon{
+    width:28px;
+    height:28px;
+    margin-top:0;
+  }
+}
+
+@media (prefers-reduced-motion:reduce){
+  #ar-client-proof .ar-proof__card{
+    transition:none;
+  }
+}
+
+@media (forced-colors:active){
+  #ar-client-proof .ar-proof__card{
+    border-color:CanvasText;
+    box-shadow:none;
+  }
+}
+</style>
+
+<section id="ar-client-proof" aria-labelledby="ar-proof-title">
+
+  <header class="ar-proof__header">
+    <p class="ar-label">Client experiences</p>
+    <h2 id="ar-proof-title" class="ar-title">What changes when the work is right.</h2>
+  </header>
+
+  <div class="ar-proof__carousel">
+
+    <div class="ar-proof__toolbar">
+      <div class="ar-scroll-nav">
+        <button class="ar-scroll-btn" type="button" data-ar-proof="-1" aria-controls="ar-proof-viewport" aria-label="Previous client experience">
+          <svg viewBox="0 0 20 20" focusable="false" aria-hidden="true"><path d="M12 5L7 10L12 15"></path></svg>
+        </button>
+        <button class="ar-scroll-btn" type="button" data-ar-proof="1" aria-controls="ar-proof-viewport" aria-label="Next client experience">
+          <svg viewBox="0 0 20 20" focusable="false" aria-hidden="true"><path d="M8 5L13 10L8 15"></path></svg>
+        </button>
+      </div>
+    </div>
+
+    <div
+      id="ar-proof-viewport"
+      class="ar-proof__viewport"
+      tabindex="0"
+      role="region"
+      aria-label="Client experiences. Swipe or scroll horizontally to read more."
+    >
+      <div class="ar-proof__track" role="list">
+
+        <div class="ar-proof__edge" aria-hidden="true"></div>
+
+        <article class="ar-proof__card ar-proof__card--peach" role="listitem">
+          <div class="ar-proof__top">
+            <img class="ar-proof__quote-icon" src="https://www.atreef.com/s/Quote.svg" alt="" aria-hidden="true">
+            <h3 class="ar-card__title">Depth with direction</h3>
+            <svg class="ar-proof__stars" viewBox="0 0 116 24" role="img" aria-label="Rated 5 out of 5">
+              <g fill="#FEDA6A" stroke="#8A6A00" stroke-width="0.8">
+                <path d="M12 2.75l2.85 5.78 6.38.93-4.62 4.5 1.09 6.35L12 17.31l-5.7 3 1.09-6.35-4.62-4.5 6.38-.93L12 2.75z"></path>
+                <path transform="translate(23 0)" d="M12 2.75l2.85 5.78 6.38.93-4.62 4.5 1.09 6.35L12 17.31l-5.7 3 1.09-6.35-4.62-4.5 6.38-.93L12 2.75z"></path>
+                <path transform="translate(46 0)" d="M12 2.75l2.85 5.78 6.38.93-4.62 4.5 1.09 6.35L12 17.31l-5.7 3 1.09-6.35-4.62-4.5 6.38-.93L12 2.75z"></path>
+                <path transform="translate(69 0)" d="M12 2.75l2.85 5.78 6.38.93-4.62 4.5 1.09 6.35L12 17.31l-5.7 3 1.09-6.35-4.62-4.5 6.38-.93L12 2.75z"></path>
+                <path transform="translate(92 0)" d="M12 2.75l2.85 5.78 6.38.93-4.62 4.5 1.09 6.35L12 17.31l-5.7 3 1.09-6.35-4.62-4.5 6.38-.93L12 2.75z"></path>
+              </g>
+            </svg>
+          </div>
+          <blockquote class="ar-proof__quote-wrap">
+            <p class="ar-proof__quote">
+              Working with Ehsan was genuinely different from every other therapist we tried. He didn't just recite techniques, he actually understood what was happening between us. Our relationship today is unrecognizable from where we started.
+            </p>
+          </blockquote>
+          <footer class="ar-proof__meta">
+            <span class="ar-proof__initials">ND</span>
+            <span class="ar-proof__meta-dot" aria-hidden="true"></span>
+            <span class="ar-proof__type">Couples therapy</span>
+          </footer>
+        </article>
+
+        <article class="ar-proof__card ar-proof__card--yellow" role="listitem">
+          <div class="ar-proof__top">
+            <img class="ar-proof__quote-icon" src="https://www.atreef.com/s/Quote.svg" alt="" aria-hidden="true">
+            <h3 class="ar-card__title">Progress you notice</h3>
+            <svg class="ar-proof__stars" viewBox="0 0 116 24" role="img" aria-label="Rated 5 out of 5">
+              <g fill="#FEDA6A" stroke="#8A6A00" stroke-width="0.8">
+                <path d="M12 2.75l2.85 5.78 6.38.93-4.62 4.5 1.09 6.35L12 17.31l-5.7 3 1.09-6.35-4.62-4.5 6.38-.93L12 2.75z"></path>
+                <path transform="translate(23 0)" d="M12 2.75l2.85 5.78 6.38.93-4.62 4.5 1.09 6.35L12 17.31l-5.7 3 1.09-6.35-4.62-4.5 6.38-.93L12 2.75z"></path>
+                <path transform="translate(46 0)" d="M12 2.75l2.85 5.78 6.38.93-4.62 4.5 1.09 6.35L12 17.31l-5.7 3 1.09-6.35-4.62-4.5 6.38-.93L12 2.75z"></path>
+                <path transform="translate(69 0)" d="M12 2.75l2.85 5.78 6.38.93-4.62 4.5 1.09 6.35L12 17.31l-5.7 3 1.09-6.35-4.62-4.5 6.38-.93L12 2.75z"></path>
+                <path transform="translate(92 0)" d="M12 2.75l2.85 5.78 6.38.93-4.62 4.5 1.09 6.35L12 17.31l-5.7 3 1.09-6.35-4.62-4.5 6.38-.93L12 2.75z"></path>
+              </g>
+            </svg>
+          </div>
+          <blockquote class="ar-proof__quote-wrap">
+            <p class="ar-proof__quote">
+              I'd been in therapy before and always felt like I was doing a warm-up that never ended. AtReef Therapy was the first place where I felt like the work was actually going somewhere and I could see it happening.
+            </p>
+          </blockquote>
+          <footer class="ar-proof__meta">
+            <span class="ar-proof__initials">MB</span>
+            <span class="ar-proof__meta-dot" aria-hidden="true"></span>
+            <span class="ar-proof__type">Individual therapy</span>
+          </footer>
+        </article>
+
+        <article class="ar-proof__card ar-proof__card--mint" role="listitem">
+          <div class="ar-proof__top">
+            <img class="ar-proof__quote-icon" src="https://www.atreef.com/s/Quote.svg" alt="" aria-hidden="true">
+            <h3 class="ar-card__title">Clarity after betrayal</h3>
+            <svg class="ar-proof__stars" viewBox="0 0 116 24" role="img" aria-label="Rated 5 out of 5">
+              <g fill="#FEDA6A" stroke="#8A6A00" stroke-width="0.8">
+                <path d="M12 2.75l2.85 5.78 6.38.93-4.62 4.5 1.09 6.35L12 17.31l-5.7 3 1.09-6.35-4.62-4.5 6.38-.93L12 2.75z"></path>
+                <path transform="translate(23 0)" d="M12 2.75l2.85 5.78 6.38.93-4.62 4.5 1.09 6.35L12 17.31l-5.7 3 1.09-6.35-4.62-4.5 6.38-.93L12 2.75z"></path>
+                <path transform="translate(46 0)" d="M12 2.75l2.85 5.78 6.38.93-4.62 4.5 1.09 6.35L12 17.31l-5.7 3 1.09-6.35-4.62-4.5 6.38-.93L12 2.75z"></path>
+                <path transform="translate(69 0)" d="M12 2.75l2.85 5.78 6.38.93-4.62 4.5 1.09 6.35L12 17.31l-5.7 3 1.09-6.35-4.62-4.5 6.38-.93L12 2.75z"></path>
+                <path transform="translate(92 0)" d="M12 2.75l2.85 5.78 6.38.93-4.62 4.5 1.09 6.35L12 17.31l-5.7 3 1.09-6.35-4.62-4.5 6.38-.93L12 2.75z"></path>
+              </g>
+            </svg>
+          </div>
+          <blockquote class="ar-proof__quote-wrap">
+            <p class="ar-proof__quote">
+              After a betrayal, I wasn't sure anything could bring us back. The SRRT process Ehsan uses gave us a completely different framework for understanding what happened and for deciding what we wanted to do next.
+            </p>
+          </blockquote>
+          <footer class="ar-proof__meta">
+            <span class="ar-proof__initials">SK</span>
+            <span class="ar-proof__meta-dot" aria-hidden="true"></span>
+            <span class="ar-proof__type">Couples therapy</span>
+          </footer>
+        </article>
+
+        <div class="ar-proof__edge" aria-hidden="true"></div>
+
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<script>
+(function () {
+  'use strict';
+
+  var root = document.getElementById('ar-client-proof');
+  if (!root || root.getAttribute('data-ar-ready') === '1') {
+    return;
+  }
+  root.setAttribute('data-ar-ready', '1');
+
+  var viewport = root.querySelector('.ar-proof__viewport');
+  var cards = root.querySelectorAll('.ar-proof__card');
+  var buttons = root.querySelectorAll('[data-ar-proof]');
+  if (!viewport || cards.length < 2) {
+    return;
+  }
+
+  var reduceMotion = window.matchMedia &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function onClick(event) {
+    var direction = parseInt(event.currentTarget.getAttribute('data-ar-proof'), 10) || 1;
+    var stride = cards[1].offsetLeft - cards[0].offsetLeft;
+    viewport.scrollBy({
+      left: direction * stride,
+      behavior: reduceMotion ? 'auto' : 'smooth'
+    });
+  }
+
+  for (var i = 0; i < buttons.length; i += 1) {
+    buttons[i].addEventListener('click', onClick, false);
+  }
+}());
+</script>

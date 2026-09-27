@@ -1,0 +1,169 @@
+<style>
+#ar-telehealth{
+  container:ar-telehealth / inline-size;
+  width:100%;
+}
+
+#ar-telehealth,
+#ar-telehealth *,
+#ar-telehealth *::before,
+#ar-telehealth *::after{
+  box-sizing:border-box;
+}
+
+/* Layout */
+
+#ar-telehealth .ar-telehealth__layout{
+  display:grid;
+  grid-template-columns:minmax(0,.82fr) minmax(0,1.58fr);
+  align-items:stretch;
+  gap:var(--ar-gap-cols,64px);
+}
+
+#ar-telehealth .ar-telehealth__intro{
+  display:flex;
+  flex-direction:column;
+  min-width:0;
+}
+
+#ar-telehealth .ar-title + .ar-copy{
+  margin-top:24px;
+}
+
+#ar-telehealth .ar-telehealth__cta{
+  margin-top:auto;
+  padding-top:32px;
+}
+
+/* Cards */
+
+#ar-telehealth .ar-telehealth__cards{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:var(--ar-gap-cards,24px);
+  min-width:0;
+}
+
+#ar-telehealth .ar-telehealth__card--primary{
+  grid-column:1/-1;
+}
+
+#ar-telehealth .ar-tile{
+  margin-bottom:24px;
+}
+
+#ar-telehealth .ar-card__title{
+  max-width:none;
+}
+
+#ar-telehealth .ar-telehealth__card--primary .ar-card__copy{
+  color:var(--ar-muted,#53635F);
+}
+
+/* Tablet */
+
+@container ar-telehealth (max-width:760px){
+  #ar-telehealth .ar-telehealth__layout{
+    grid-template-columns:1fr;
+    gap:32px;
+  }
+
+  #ar-telehealth .ar-telehealth__cta{
+    margin-top:0;
+  }
+}
+
+/* Mobile */
+
+@container ar-telehealth (max-width:560px){
+  #ar-telehealth .ar-telehealth__cards{
+    grid-template-columns:1fr;
+  }
+
+  #ar-telehealth .ar-tile{
+    margin-bottom:16px;
+  }
+}
+</style>
+
+<section id="ar-telehealth" aria-labelledby="ar-telehealth-title">
+  <div class="ar-telehealth__layout">
+
+    <header class="ar-telehealth__intro">
+
+      <p class="ar-label ar-label--on-dark">Telehealth &middot; Massachusetts</p>
+
+      <h2 id="ar-telehealth-title" class="ar-title ar-title--on-dark">
+        How does online therapy work at AtReef Therapy?
+      </h2>
+
+      <p class="ar-copy ar-copy--on-dark">
+        For those who are accustomed to in-person therapy, it can be difficult to imagine that online therapy, delivered through a screen, could be just as effective. However, research suggests that therapy delivered by video can be as effective as in-person treatment for a range of mental health concerns.
+      </p>
+
+      <p class="ar-copy ar-copy--on-dark">
+        AtReef Therapy, PLLC is an online therapy practice based in Cambridge with sessions that are conducted through secure video, allowing therapy to fit into real life without the commute or waiting room.
+      </p>
+
+      <div class="ar-telehealth__cta">
+        <a class="ar-btn ar-btn--secondary ar-btn--on-dark ar-btn--block" href="https://www.atreef.com/what-is-therapy">
+          <span class="ar-btn__label">What is therapy?</span>
+          <span class="ar-btn__chip" aria-hidden="true">
+            <span class="ar-btn__icon"></span>
+          </span>
+        </a>
+      </div>
+
+    </header>
+
+    <div class="ar-telehealth__cards">
+
+      <article class="ar-card ar-card--cream ar-telehealth__card--primary">
+        <span class="ar-tile" aria-hidden="true">
+          <svg viewBox="0 0 24 24" focusable="false">
+            <rect x="3" y="5" width="14" height="14" rx="2"></rect>
+            <path d="M17 10L21 8V16L17 14"></path>
+            <path d="M8 12H12"></path>
+            <path d="M10 10V14"></path>
+          </svg>
+        </span>
+        <h3 class="ar-card__title ar-card__title--lead">Secure video sessions</h3>
+        <p class="ar-card__copy ar-card__copy--wide">
+          Therapy at AtReef is online only. Sessions are held
+          through secure video and are not recorded.
+        </p>
+      </article>
+
+      <article class="ar-card ar-card--translucent">
+        <span class="ar-tile ar-tile--ghost" aria-hidden="true">
+          <svg viewBox="0 0 24 24" focusable="false">
+            <path d="M4 11L12 4L20 11"></path>
+            <path d="M6 10V20H18V10"></path>
+            <path d="M10 20V14H14V20"></path>
+          </svg>
+        </span>
+        <h3 class="ar-card__title">Private and discreet</h3>
+        <p class="ar-card__copy">
+          Meet without a waiting room, commute, or public office visit. AtReef Therapy provides secure video sessions, offering a more private and discreet way to access therapy from anywhere in Massachusetts.
+        </p>
+      </article>
+
+      <article class="ar-card ar-card--translucent">
+        <span class="ar-tile ar-tile--ghost" aria-hidden="true">
+          <svg viewBox="0 0 24 24" focusable="false">
+            <circle cx="8" cy="8" r="3"></circle>
+            <circle cx="17" cy="9" r="2.5"></circle>
+            <path d="M3 20C3.5 16.5 5.2 14.5 8 14.5C10.8 14.5 12.5 16.5 13 20"></path>
+            <path d="M14 15.5C14.8 14.7 15.8 14.3 17 14.3C19.3 14.3 20.7 16 21 19"></path>
+          </svg>
+        </span>
+        <h3 class="ar-card__title">Scheduling flexibility</h3>
+        <p class="ar-card__copy">
+          Scheduling is designed to work around demanding professional and personal lives, with secure video sessions and flexible appointment options. Therapy should fit into your week, not become another source of stress.
+        </p>
+      </article>
+
+    </div>
+
+  </div>
+</section>

@@ -1,0 +1,107 @@
+<style>
+#ar-couples-hero{
+  container:ar-couples-hero / inline-size;
+  width:100%;
+}
+
+#ar-couples-hero,
+#ar-couples-hero *,
+#ar-couples-hero *::before,
+#ar-couples-hero *::after{
+  box-sizing:border-box;
+}
+
+/* Headline */
+
+#ar-couples-hero .ar-couples-hero__title{
+  margin:0;
+}
+
+#ar-couples-hero .ar-couples-hero__location{
+  margin:0 0 16px;
+}
+
+#ar-couples-hero .ar-couples-hero__display{
+  display:block;
+  color:var(--ar-heading,#141414);
+  font-size:var(--ar-fs-hero,60px);
+  line-height:1.1;
+  letter-spacing:-.04em;
+  text-wrap:balance;
+}
+
+/* Lead */
+
+#ar-couples-hero .ar-lead{
+  margin-top:24px;
+}
+
+/* CTA */
+
+#ar-couples-hero .ar-couples-hero__cta{
+  margin-top:32px;
+}
+
+#ar-couples-hero .ar-couples-hero__alt{
+  margin-top:16px;
+}
+
+/* Mobile */
+
+@container ar-couples-hero (max-width:640px){
+  #ar-couples-hero .ar-couples-hero__display{
+    letter-spacing:-.03em;
+  }
+}
+
+@container ar-couples-hero (max-width:380px){
+  #ar-couples-hero .ar-couples-hero__display{
+    letter-spacing:-.02em;
+  }
+
+  #ar-couples-hero .ar-couples-hero__cta{
+    margin-top:24px;
+  }
+}
+</style>
+
+<section id="ar-couples-hero" aria-labelledby="ar-couples-title">
+
+  <h1 id="ar-couples-title" class="ar-couples-hero__title">
+    <span class="ar-label ar-couples-hero__location">Couples therapy in Cambridge, Massachusetts</span>
+    <span class="ar-couples-hero__display">
+      Change the pattern and find your
+      <span class="ar-hl ar-hl--script">way back.</span>
+    </span>
+  </h1>
+
+  <p class="sqsrte-large ar-lead">
+    Couples therapy with Dr. Ehsan Adib Shabahang, a licensed mental health
+    counselor in Cambridge. Private pay. Sessions by secure video across
+    Massachusetts.
+  </p>
+
+  <div class="ar-couples-hero__cta">
+    <a class="ar-btn ar-btn--primary" href="/consultation">
+      <span class="ar-btn__label">Book a free 30-minute consultation</span>
+      <span class="ar-btn__chip" aria-hidden="true">
+        <span class="ar-btn__icon ar-btn__icon--cal"></span>
+      </span>
+    </a>
+    <p class="ar-btn-note">
+      Free, thirty minutes, by secure video. You pick a time, then get a
+      private link. You will be speaking with Dr. Shabahang, not an intake
+      coordinator.
+    </p>
+  </div>
+
+  <div class="ar-couples-hero__alt">
+    <a class="ar-btn ar-btn--tertiary" href="/my-approach">
+      <span class="ar-btn__label">Read how the work is done first</span>
+      <span class="ar-btn__chip" aria-hidden="true">
+        <span class="ar-btn__icon"></span>
+      </span>
+    </a>
+  </div>
+
+</section>

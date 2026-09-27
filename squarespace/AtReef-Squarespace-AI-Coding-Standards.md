@@ -1,10 +1,10 @@
 # AtReef Therapy: Squarespace 7.1 AI Coding Standards
 
-**Version 3.1**  
-**AtReef design system:** v8.2  
+**Version 3.2**  
+**AtReef design system:** v8.3  
 **Website:** `https://www.atreef.com`  
 **Platform:** Squarespace 7.1, Fluid Engine  
-**Updated:** September 27, 2026
+**Updated:** September 28, 2026
 
 ---
 
@@ -30,7 +30,7 @@ If time or context is limited, read Part 0, the token tables (Part III), and the
 5. **Accessibility floor.** WCAG 2.2 AA. Every color pair must appear in the Verified Contrast Pairs table (§15) or be measured before use. Focus must stay visible on every surface.
 6. **Readable sizes.** No reading text below 14px. 12px is allowed only for uppercase labels and eyebrows (§22).
 7. **Targets.** Interactive controls are 44px tall when they stand alone. Inline links need at least a 24px hit area (§92).
-8. **Headings.** The largest text on a page is the H1. Headings never get a narrow `ch` cap unless the design names it. Section titles use the Site Styles heading font (§25).
+8. **Headings.** The largest text on a page is the H1. Headings never get a narrow `ch` cap unless the design names it. Code Blocks never set `font-family` on any heading; every H1 to H4 uses the Site Styles heading font (§25).
 9. **Case.** Sentence case everywhere. Uppercase comes only from CSS on label classes, never from typed capitals (§27).
 10. **Compiler.** In Design > Custom CSS, escape arithmetic, avoid numeric slash syntax, never use `@container`, and use full asset URLs (Part XII).
 11. **Regression.** Before returning code, compare against the original and revert any unrequested change.
@@ -606,9 +606,12 @@ The global CSS defines:
 
 ### Heading font rule
 
-- **H1 and H2 section titles** use the Site Styles heading font. Code Blocks must not set `font-family` on them.
-- **H3 and H4 inside components** (card titles, list titles) use the body font through system classes such as `ar-card__title`, which inherit.
-- A section title that renders in Karla is a violation of this rule, even if it looks acceptable in isolation.
+- **Every heading, H1 to H4,** uses the Site Styles heading font. Code Blocks never set `font-family` on a heading, and never set `font-family` on a section root (it cascades into headings).
+- **Section titles (H2)** use `ar-title` and take size, weight, line-height, and tracking from Site Styles. Change Heading 2 in Site Styles to resize every section at once.
+- **Component titles (H3)** use `ar-card__title`, which sets size only. Family, weight, and tracking come from Site Styles.
+- **Body text** inherits the Site Styles paragraph font. Leads use Paragraph 1 (`sqsrte-large`).
+- A heading that renders in Karla is a violation of this rule.
+- Labels styled as H3 (`<h3 class="ar-label">`) are the one exception: the label class sets the body font on purpose.
 
 ### Brand font rules
 
@@ -1241,6 +1244,22 @@ When an icon is decorative:
 ```
 
 Do not use a checkmark badge, seal, or "verified" mark unless a named third party actually issues that verification.
+
+---
+
+## 59a. Section text
+
+| Class | Use |
+|---|---|
+| `ar-title` | section H2; color from `--ar-heading`, everything else from Site Styles |
+| `ar-title--on-dark` | section H2 on dark sections (`--ar-heading-on-dark`) |
+| `ar-lead` | lead paragraph; pair with `sqsrte-large` so Paragraph 1 sets the size |
+| `ar-lead--on-dark` | lead on dark sections |
+| `ar-copy` | muted body paragraph, 16px / 28px, 64ch |
+| `ar-copy--on-dark` | muted body on dark sections |
+| `ar-hl--script` | script-font gold highlight for one phrase in a display headline; use with `ar-hl` |
+
+`--ar-heading` defaults to `--ar-text`. Set it to `var(--ar-teal)` in one place to make every light-section title teal.
 
 ---
 
@@ -2333,23 +2352,23 @@ Add every hit to Part XXV until it is fixed.
 
 # Part XXIII: Release Map
 
-## 126. Current v8.2 map
+## 126. Current v8.3 map
 
 | File | Destination |
 |---|---|
-| `atreef-custom-css.css` (v8.2) | Design > Custom CSS |
-| `atreef_block-hero_v8.html` | `#ar-couples-hero` Code Block |
-| `atreef_block-conversation_v8.html` | `#ar-conversation` Code Block |
-| `atreef_block-services_v8.html` | `#ar-services` Code Block |
-| `atreef_block-about_v8.html` | `#ar-about` Code Block |
-| `atreef_block-approach_v8.html` | `#ar-approach` Code Block |
-| `atreef_block-telehealth_v8.html` | `#ar-telehealth` Code Block |
-| `atreef_block-client-proof_v8.html` | `#ar-client-proof` Code Block |
-| `atreef_block-final-cta_v8.html` | `#ar-final-cta` Code Block |
-| `atreef_block-faq_v8.html` | `#ar-home-faq` Code Block |
-| `atreef_block-footer-consult_v8.html` | `#ar-footer-consultation` Footer Code Block |
+| `atreef-custom-css.css` (v8.3) | Design > Custom CSS |
+| `blocks/01-hero.html` | `#ar-couples-hero` Code Block |
+| `blocks/02-conversation.html` | `#ar-conversation` Code Block |
+| `blocks/03-services.html` | `#ar-services` Code Block |
+| `blocks/04-about.html` | `#ar-about` Code Block |
+| `blocks/05-approach.html` | `#ar-approach` Code Block |
+| `blocks/06-telehealth.html` | `#ar-telehealth` Code Block |
+| `blocks/07-client-proof.html` | `#ar-client-proof` Code Block |
+| `blocks/08-final-cta.html` | `#ar-final-cta` Code Block |
+| `blocks/09-faq.html` | `#ar-home-faq` Code Block |
+| `atreef_block-footer-consult_v8.html` | `#ar-footer-consultation` Footer Code Block (not yet revised) |
 
-v8.2 is backward compatible with every v8 block. No block needs re-release for the CSS update alone. Blocks listed in Part XXV need their own fixes.
+Paste the CSS first. The new blocks depend on v8.3 classes and look wrong on v8.2.
 
 ---
 
@@ -2369,6 +2388,14 @@ v8.2 is backward compatible with every v8 block. No block needs re-release for t
 - Cards: dark cards set light title and copy automatically; `ar-card__copy--wide`, `ar-card__title--wide`
 - New: `ar-stars`, `ar-stars--on-dark`, `--ar-gold-ink`, `--ar-gold-border`, `--ar-field-border`, `--ar-target`, `--ar-target-min`, `--ar-fs-note`, `--ar-lh-small`, `--ar-lh-body`
 - Blog read-more: 24px horizontal padding, touch pressed state
+
+## 127a. v8.3 changes from v8.2
+
+- New tokens: `--ar-heading`, `--ar-heading-on-dark`
+- New classes: `ar-title`, `ar-title--on-dark`, `ar-lead`, `ar-lead--on-dark`, `ar-copy`, `ar-copy--on-dark`, `ar-hl--script`
+- `ar-card__title` no longer sets `font-family`; Site Styles heading font applies
+- Light-section text color rule now skips `ar-` components and anything inside dark cards or `ar-surface-dark` (it was forcing ink text onto dark cards)
+- All nine homepage blocks rewritten on the shared system (`squarespace/blocks/`); they require v8.3
 
 ---
 
@@ -2466,6 +2493,16 @@ v8.2 is backward compatible with every v8 block. No block needs re-release for t
 - `.ar-stars`
 - `.ar-stars--on-dark`
 
+### Section text
+
+- `.ar-title`
+- `.ar-title--on-dark`
+- `.ar-lead`
+- `.ar-lead--on-dark`
+- `.ar-copy`
+- `.ar-copy--on-dark`
+- `.ar-hl--script`
+
 ### Surfaces and utilities
 
 - `.ar-surface-dark`
@@ -2493,33 +2530,28 @@ This register lists live issues found in the homepage audit of September 26, 202
 
 ## 130. Register
 
-| Section | Issue | Rule |
-|---|---|---|
-| Site Styles | Paragraph 3 size is `0.7` (renders 10.3px to 12.5px) | §22, §121 |
-| Site Styles | Animations fade every block over about 0.8s | §70 |
-| Site Styles | primary and secondary button letter-spacing differ | §77 |
-| `#ar-couples-hero` | H1 is the 12px eyebrow; the display headline is a `<p>`; `aria-labelledby` points at the `<p>` | §100, §97 |
-| `#ar-couples-hero` | on mobile the portrait comes first; H1 starts at 634px and the CTA at 947px on a 390×844 screen | §34 |
-| `#ar-couples-hero` | blue `verified.svg` badge on the practice pill; pill and eyebrow stacked | §15, §59 |
-| `#ar-couples-hero` | colored calendar image in the CTA chip | §41 |
-| `#ar-services` | local `900px` viewport breakpoint | §35 |
-| `#ar-services` | stars gold on cream (1.2:1); `aria-label` on a `<span>` without role | §62, §97 |
-| `#ar-services` | CTA label "Schedule a consultation" | §49 |
-| `#ar-services` | dark card lacks `ar-surface-dark` | §63 |
-| `#ar-about` | local `900px` breakpoint; narrow `ch` cap on title | §35, §28 |
-| `#ar-about` | H2 set to Karla locally | §25 |
-| `#ar-approach` | H2 set to Karla locally | §25 |
-| `#ar-telehealth` | local `900px` breakpoint; narrow `ch` caps on title and card titles | §35, §28 |
-| `#ar-telehealth` | H2 set to Karla locally; wide card copy capped, leaving empty right half | §25, §18 |
-| `#ar-client-proof` | local `900px` breakpoint | §35 |
-| `#ar-client-proof` | testimonial body 12.5px; card titles in Title Case | §22, §27 |
-| `#ar-client-proof` | outcome language in testimonials; consent not documented here | §107 |
-| `#ar-final-cta` | narrow `ch` cap on title; CTA label wording | §28, §49 |
-| Footer | legal links in scaled text with `&nbsp;` runs; "Good Faith Estimat" linked with the final "e" outside the link | §22, §38, §76 |
-| Footer | "Couples and individual therapy" inside `<pre><code>` | §76 |
-| Footer | "START HERE" typed in capitals; column H3s without an H2 | §27, §76 |
-| Footer | "Free Consultation" in Title Case | §49 |
-| Footer | footer logo mark differs from the header logo mark | brand review with the user |
+Status after the v8.3 block release (September 28, 2026). "Fixed in files" means the corrected code is in `squarespace/blocks/` and is live once pasted.
+
+| Section | Issue | Rule | Status |
+|---|---|---|---|
+| Site Styles | Paragraph 3 size is `0.7` | §22, §121 | open (editor) |
+| Site Styles | Animations fade every block over about 0.8s | §70 | open (editor) |
+| Site Styles | primary and secondary button letter-spacing differ | §77 | open (editor) |
+| `#ar-couples-hero` | H1 was the eyebrow; display headline was a `<p>` | §100 | fixed in files |
+| `#ar-couples-hero` | mobile gap under the text after moving the photo below | §34 | open (Fluid Engine, see blocks README) |
+| `#ar-couples-hero` | blue verified badge; colored calendar icon | §15, §41 | fixed in files |
+| `#ar-services` | duplicate grid, gold-on-cream stars, "Schedule" CTA, no dark-surface hook | §35, §62, §49, §63 | fixed in files |
+| `#ar-about` | narrow title cap; Karla heading override | §28, §25 | fixed in files |
+| `#ar-approach` | Karla heading override; hardcoded colors | §25, §15 | fixed in files |
+| `#ar-telehealth` | narrow caps; Karla override; wide-card dead space; aria-label differs from visible label | §28, §25, §18, §97 | fixed in files |
+| `#ar-client-proof` | 12.5px quotes; Title Case; blocked vertical page swipe; no way for mouse users to reach card three | §22, §27, §92 | fixed in files |
+| `#ar-client-proof` | outcome language in testimonials; consent not documented here | §107 | open (user decision) |
+| `#ar-final-cta` | narrow title cap; non-standard CTA label; colored icon | §28, §49, §41 | fixed in files |
+| `#ar-final-cta` | links to the booking portal while the hero links to `/consultation` | §49 | open (user decision) |
+| `#ar-home-faq` | invalid `calc(--meta-font-font-size)`; script group titles at 14px | §24, §22 | fixed in files |
+| Footer | legal row in scaled text with `&nbsp;` runs; "Good Faith Estimat" link split | §22, §38, §76 | open |
+| Footer | `<pre><code>` script line; typed "START HERE"; H3s without H2; "Free Consultation" | §76, §27, §49 | open |
+| Footer | footer logo mark differs from header logo mark | brand review | open |
 
 ---
 

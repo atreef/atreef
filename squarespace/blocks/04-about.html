@@ -1,0 +1,215 @@
+<style>
+#ar-about{
+  container:ar-about / inline-size;
+  width:100%;
+}
+
+#ar-about,
+#ar-about *,
+#ar-about *::before,
+#ar-about *::after{
+  box-sizing:border-box;
+}
+
+/* Layout */
+
+#ar-about .ar-about__layout{
+  display:grid;
+  grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);
+  align-items:stretch;
+  gap:var(--ar-gap-cols,64px);
+}
+
+#ar-about .ar-about__story{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  min-width:0;
+}
+
+/* Copy */
+
+#ar-about .ar-lead{
+  margin-top:24px;
+}
+
+#ar-about .ar-copy{
+  max-width:54ch;
+}
+
+#ar-about .ar-about__cta{
+  margin-top:auto;
+  padding-top:32px;
+}
+
+/* Credentials */
+
+#ar-about .ar-about__list{
+  display:grid;
+  margin:12px 0 0;
+  padding:0;
+  list-style:none;
+}
+
+#ar-about .ar-about__item{
+  display:grid;
+  grid-template-columns:40px minmax(0,1fr);
+  align-items:start;
+  gap:16px;
+  margin:0;
+  padding:16px 0;
+  border-top:1px solid var(--ar-line-dark,rgba(255,255,255,.14));
+}
+
+#ar-about .ar-about__item:first-child{
+  padding-top:0;
+  border-top:0;
+}
+
+#ar-about .ar-about__item:last-child{
+  padding-bottom:0;
+}
+
+#ar-about .ar-about__item-title{
+  display:block;
+  margin-bottom:4px;
+  color:var(--ar-on-dark,#FAFAFA);
+  font-size:var(--ar-fs-small,14px);
+  font-weight:600;
+  line-height:24px;
+}
+
+#ar-about .ar-about__item-text{
+  display:block;
+  color:var(--ar-on-dark-muted,rgba(250,250,250,.74));
+  font-size:var(--ar-fs-small,14px);
+  line-height:24px;
+  text-wrap:pretty;
+}
+
+/* Mobile */
+
+@container ar-about (max-width:760px){
+  #ar-about .ar-about__layout{
+    grid-template-columns:1fr;
+    gap:32px;
+  }
+
+  #ar-about .ar-about__cta{
+    margin-top:0;
+  }
+}
+</style>
+
+<section id="ar-about" aria-labelledby="ar-about-title">
+  <div class="ar-about__layout">
+
+    <div class="ar-about__story">
+
+      <p class="ar-label ar-label--on-dark">
+        Your therapist &middot; Cambridge, Massachusetts
+      </p>
+
+      <h2 id="ar-about-title" class="ar-title ar-title--on-dark">
+        Meet Dr. Ehsan Adib Shabahang
+      </h2>
+
+      <p class="sqsrte-large ar-lead ar-lead--on-dark">
+        I am a licensed mental health counselor and the founder of
+        AtReef Therapy, a Cambridge-based psychotherapy practice
+        for couples and adults.
+      </p>
+
+      <p class="ar-copy ar-copy--on-dark">
+        My work is shaped by clinical training, doctoral research
+        in social psychology, and years spent working across
+        cultures in roles where communication, trust, and
+        misunderstanding had real consequences. That background
+        still informs how I listen for what is said, what is
+        avoided, and the patterns underneath both.
+      </p>
+
+      <div class="ar-about__cta">
+        <a class="ar-btn ar-btn--secondary ar-btn--on-dark" href="/about">
+          <span class="ar-btn__label">More about Dr. Shabahang</span>
+          <span class="ar-btn__chip" aria-hidden="true">
+            <span class="ar-btn__icon"></span>
+          </span>
+        </a>
+      </div>
+
+    </div>
+
+    <aside class="ar-card ar-card--translucent" aria-labelledby="ar-about-credentials-title">
+
+      <p class="ar-label ar-label--on-dark ar-label--tight">Credentials</p>
+
+      <h3 id="ar-about-credentials-title" class="ar-card__title">
+        Clinical training and professional background
+      </h3>
+
+      <ul class="ar-about__list" role="list">
+
+        <li class="ar-about__item">
+          <span class="ar-tile ar-tile--ghost" aria-hidden="true">
+            <svg viewBox="0 0 24 24" focusable="false">
+              <path d="M12 3L19 6V11C19 15.5 16.2 19 12 21C7.8 19 5 15.5 5 11V6L12 3Z"></path>
+              <path d="M9 12L11 14L15 10"></path>
+            </svg>
+          </span>
+          <span>
+            <span class="ar-about__item-title">Licensed in Massachusetts</span>
+            <span class="ar-about__item-text">Licensed Mental Health Counselor (LMHC)</span>
+          </span>
+        </li>
+
+        <li class="ar-about__item">
+          <span class="ar-tile ar-tile--ghost" aria-hidden="true">
+            <svg viewBox="0 0 24 24" focusable="false">
+              <path d="M4 8L12 4L20 8L12 12L4 8Z"></path>
+              <path d="M7 10V15C9.8 17 14.2 17 17 15V10"></path>
+              <path d="M20 8V14"></path>
+            </svg>
+          </span>
+          <span>
+            <span class="ar-about__item-title">Doctoral training</span>
+            <span class="ar-about__item-text">PhD in Psychology, Social Psychology concentration</span>
+          </span>
+        </li>
+
+        <li class="ar-about__item">
+          <span class="ar-tile ar-tile--ghost" aria-hidden="true">
+            <svg viewBox="0 0 24 24" focusable="false">
+              <path d="M5 5H19V19H5Z"></path>
+              <path d="M8 9H16"></path>
+              <path d="M8 13H16"></path>
+              <path d="M8 17H12"></path>
+            </svg>
+          </span>
+          <span>
+            <span class="ar-about__item-title">Clinical counseling</span>
+            <span class="ar-about__item-text">MS in Clinical Mental Health Counseling, CACREP-accredited program</span>
+          </span>
+        </li>
+
+        <li class="ar-about__item">
+          <span class="ar-tile ar-tile--ghost" aria-hidden="true">
+            <svg viewBox="0 0 24 24" focusable="false">
+              <circle cx="8" cy="9" r="3"></circle>
+              <circle cx="16" cy="9" r="3"></circle>
+              <path d="M4 19C4.5 15.5 6 14 8 14"></path>
+              <path d="M20 19C19.5 15.5 18 14 16 14"></path>
+              <path d="M9.5 16C10.5 15 11.2 14.5 12 14.5C12.8 14.5 13.5 15 14.5 16"></path>
+            </svg>
+          </span>
+          <span>
+            <span class="ar-about__item-title">Relationship specialization</span>
+            <span class="ar-about__item-text">Gottman Method Couples Therapy training and creator of Self-Reflective Relationship Therapy</span>
+          </span>
+        </li>
+
+      </ul>
+    </aside>
+
+  </div>
+</section>

@@ -1,4 +1,4 @@
-/* AtReef v8.2 */
+/* AtReef v8.3 */
 
 /* Tokens */
 
@@ -22,6 +22,8 @@
   --ar-surface-hover:#EEF3F0;
   --ar-on-dark:#FAFAFA;
   --ar-on-dark-muted:rgba(250,250,250,.74);
+  --ar-heading:var(--ar-text);
+  --ar-heading-on-dark:var(--ar-on-dark);
 
   --ar-line:rgba(0,70,67,.12);
   --ar-line-strong:rgba(0,70,67,.22);
@@ -183,7 +185,7 @@ p{text-wrap:pretty}
 
 .page-section:not(.dark):not(.dark-bold):not(.black)
   :where(.sqs-html-content,.sqs-block-content)
-  :is(h1,h2,h3,h4,p,li){
+  :is(h1,h2,h3,h4,p,li):not([class*="ar-"]):not(:where(.ar-card--green,.ar-card--green-alt,.ar-card--translucent,.ar-surface-dark) *){
   color:var(--ar-text);
 }
 
@@ -1310,7 +1312,6 @@ a.ar-btn--hug,button.ar-btn--hug{width:fit-content}
   max-width:24ch;
   margin:0 0 var(--ark-3);
   color:var(--ar-text);
-  font-family:inherit;
   font-size:var(--ar-fs-h4);
   font-weight:600;
   line-height:1.27;
@@ -1397,6 +1398,34 @@ a.ar-btn--hug,button.ar-btn--hug{width:fit-content}
 }
 
 
+/* Section text */
+
+.ar-title{
+  margin:0;
+  color:var(--ar-heading);
+  text-wrap:balance;
+}
+.ar-title--on-dark{color:var(--ar-heading-on-dark)}
+
+.ar-lead{
+  max-width:var(--ar-measure);
+  margin:var(--ar-gap-heading) 0 0;
+  color:var(--ar-text);
+  text-wrap:pretty;
+}
+.ar-lead--on-dark{color:var(--ar-on-dark)}
+
+.ar-copy{
+  max-width:var(--ar-measure);
+  margin:var(--ar-gap-para) 0 0;
+  color:var(--ar-muted);
+  font-size:var(--ar-fs-body);
+  line-height:var(--ar-lh-body);
+  text-wrap:pretty;
+}
+.ar-copy--on-dark{color:var(--ar-on-dark-muted)}
+
+
 /* Headings */
 
 .ar-hl{
@@ -1404,6 +1433,15 @@ a.ar-btn--hug,button.ar-btn--hug{width:fit-content}
   background:linear-gradient(to bottom,transparent 18%,var(--ar-gold) 18%,var(--ar-gold) 88%,transparent 88%);
   -webkit-box-decoration-break:clone;
   box-decoration-break:clone;
+}
+
+.ar-hl--script{
+  padding:0 .08em;
+  background:linear-gradient(to bottom,transparent 52%,var(--ar-gold) 52%,var(--ar-gold) 84%,transparent 84%);
+  font-family:var(--ar-font-script);
+  font-size:1.1em;
+  font-weight:400;
+  letter-spacing:0;
 }
 
 @media (min-width:768px){
