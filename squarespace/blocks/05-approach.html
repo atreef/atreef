@@ -11,28 +11,21 @@
   box-sizing:border-box;
 }
 
-#ar-approach :where(h2,h3,p,article,aside,header,section){
+#ar-approach :where(h2,h3,article,aside,section){
   min-width:0;
   margin:0;
   padding:0;
 }
 
-/* Header */
-
-#ar-approach .ar-ap__header .ar-label{
-  margin-bottom:12px;
-}
-
 /* Carousel */
 
 #ar-approach .ar-ap__carousel{
-  --ar-gap:24px;
-  --ar-peek:16px;
-  --ar-inset:calc(var(--ar-gap) + var(--ar-peek));
-  --ar-card-width:calc(100cqi - (2 * var(--ar-inset)));
+  --ar-gap:16px;
+  --ar-peek:32px;
+  --ar-inset:0px;
+  --ar-card-width:calc(100cqi - var(--ar-gap) - var(--ar-peek));
   width:100%;
   min-width:0;
-  margin-top:48px;
 }
 
 #ar-approach .ar-ap__toolbar{
@@ -64,13 +57,14 @@
 }
 
 #ar-approach .ar-ap__viewport{
+  position:relative;
   width:100%;
   min-width:0;
   padding:4px 0 8px;
   overflow-x:auto;
   overflow-y:hidden;
   scroll-snap-type:x mandatory;
-  scroll-padding-inline:var(--ar-inset);
+  scroll-padding-inline:0;
   overscroll-behavior-x:contain;
   scrollbar-width:none;
 }
@@ -89,11 +83,6 @@
   gap:var(--ar-gap);
   width:max-content;
   min-width:100%;
-}
-
-#ar-approach .ar-ap__sentinel{
-  flex:0 0 var(--ar-peek);
-  width:var(--ar-peek);
 }
 
 /* Cards */
@@ -165,7 +154,7 @@
   display:grid;
   grid-template-columns:minmax(0,1fr);
   margin-top:32px;
-  padding:24px;
+  padding:var(--ar-card-pad,24px);
   background-color:rgba(245,240,234,.42);
   background-image:var(--ar-wave,none);
   border:1px solid rgba(0,70,67,.16);
@@ -198,7 +187,6 @@
 @container ar-approach (min-width:760px){
   #ar-approach .ar-ap__details{
     grid-template-columns:minmax(0,9fr) minmax(0,11fr);
-    padding:24px 32px;
   }
 
   #ar-approach .ar-ap__detail:first-child{
@@ -214,24 +202,11 @@
   }
 }
 
-@container ar-approach (min-width:980px){
+@container ar-approach (min-width:700px){
   #ar-approach .ar-ap__carousel{
-    --ar-gap:32px;
-    --ar-card-width:calc((100cqi - (2 * var(--ar-inset)) - var(--ar-gap)) / 2);
-  }
-}
-
-@container ar-approach (max-width:360px){
-  #ar-approach .ar-ap__carousel{
-    --ar-gap:16px;
-  }
-
-  #ar-approach .ar-ap__band{
-    padding-inline:16px;
-  }
-
-  #ar-approach :is(.ar-ap__card-body,.ar-ap__details){
-    padding:16px;
+    --ar-gap:24px;
+    --ar-peek:64px;
+    --ar-card-width:calc((100cqi - (2 * var(--ar-gap)) - var(--ar-peek)) / 2);
   }
 }
 
@@ -251,15 +226,15 @@
 
 <section id="ar-approach" aria-labelledby="ar-ap-title">
 
-  <header class="ar-ap__header">
-    <p class="ar-label">Structured &middot; Active &middot; Collaborative</p>
+  <header class="ar-head">
+    <p class="ar-label">Structured, active, collaborative</p>
     <h2 id="ar-ap-title" class="ar-title">What therapy actually looks like here</h2>
   </header>
 
   <div class="ar-ap__carousel">
 
     <div class="ar-ap__toolbar">
-      <p class="ar-label ar-label--tight ar-ap__scroll-cue" aria-hidden="true">
+      <p class="ar-label ar-label--plain ar-ap__scroll-cue" aria-hidden="true">
         <span>Scroll to explore</span>
         <svg viewBox="0 0 24 20" focusable="false" aria-hidden="true">
           <path d="M8 4L3 10L8 16"></path>
@@ -286,8 +261,6 @@
       aria-describedby="ar-ap-sequence-note"
     >
       <div class="ar-ap__track" role="list">
-
-        <div class="ar-ap__sentinel" aria-hidden="true"></div>
 
         <article class="ar-ap__card" role="listitem" data-step="01">
           <div class="ar-ap__band"><span class="ar-ap__number" aria-hidden="true">01</span></div>
@@ -369,12 +342,7 @@
     }
 
     var existingClones = track.querySelectorAll('[data-ar-clone]');
-    var sentinel = track.querySelector('.ar-ap__sentinel');
     var i;
-
-    if (sentinel && sentinel.parentNode) {
-      sentinel.parentNode.removeChild(sentinel);
-    }
     for (i = existingClones.length - 1; i >= 0; i -= 1) {
       if (existingClones[i].parentNode) {
         existingClones[i].parentNode.removeChild(existingClones[i]);
@@ -427,7 +395,7 @@
     }
 
     function getInset() {
-      return readPixels('--ar-gap') + readPixels('--ar-peek');
+      return readPixels('--ar-inset');
     }
 
     function jumpTo(position) {

@@ -1,7 +1,7 @@
 # AtReef Therapy: Squarespace 7.1 AI Coding Standards
 
-**Version 3.3**  
-**AtReef design system:** v8.4  
+**Version 3.4**  
+**AtReef design system:** v8.5  
 **Website:** `https://www.atreef.com`  
 **Platform:** Squarespace 7.1, Fluid Engine  
 **Updated:** September 28, 2026
@@ -31,10 +31,11 @@ If time or context is limited, read Part 0, the token tables (Part III), and the
 6. **Readable sizes.** No reading text below 14px. 12px is allowed only for uppercase labels and eyebrows (§22).
 7. **Targets.** Interactive controls are 44px tall when they stand alone. Inline links need at least a 24px hit area (§92).
 8. **Headings.** The largest text on a page is the H1. Headings never get a narrow `ch` cap unless the design names it. Code Blocks never set `font-family` on any heading; every H1 to H4 uses the Site Styles heading font (§25).
-9. **Case.** Sentence case everywhere. Uppercase comes only from CSS on label classes, never from typed capitals (§27).
+9. **Case.** Sentence case everywhere, including labels. No all-caps labels and no middle-dot strings ("A · B · C") (§27).
 10. **Compiler.** In Design > Custom CSS, escape arithmetic, avoid numeric slash syntax, never use `@container`, and use full asset URLs (Part XII).
 11. **Regression.** Before returning code, compare against the original and revert any unrequested change.
-12. **Known violations.** If the section you are editing appears in the Known Violations Register (Part XXV), fix only the entries that fall inside the requested scope, and report the others in one line after the code.
+12. **Owner preference.** The owner wants the whole site to feel smooth, balanced, and full of personality. When asked, rewrite the CSS and sections completely rather than patching, keep every brand decoration (§59b), and fix size and spacing misalignment on sight using the rhythm in §17a.
+13. **Known violations.** If the section you are editing appears in the Known Violations Register (Part XXV), fix only the entries that fall inside the requested scope, and report the others in one line after the code.
 
 ---
 
@@ -430,7 +431,22 @@ Do not retype these formulas inside Code Blocks when the token exists.
 | `--ar-section-y` | `clamp(56px,7vw,96px)` |
 | `--ar-section-y-footer` | `clamp(48px,5vw,64px)` |
 
-### Spacing rhythm
+### Spacing rhythm (§17a)
+
+One rhythm for every section. Measure it after every change.
+
+| Relationship | Value |
+|---|---|
+| label to title | 12px (`--ar-gap-label`) |
+| pill to title | 16px (`--ar-gap-pill`) |
+| icon tile row to title | 16px |
+| title to lead or first paragraph | 24px |
+| paragraph to paragraph | 16px |
+| section header to content | 48px (`ar-head`) |
+| card padding | `--ar-card-pad` (32px desktop, 24px mobile, 16px under 380px); never set locally |
+| carousel first card | flush with the section heading's left edge; the next card peeks in on the right |
+
+### Spacing rhythm, legacy notes
 
 Default relationships:
 
@@ -642,8 +658,9 @@ Do not fight `text-wrap:balance` with arbitrary narrow widths.
 
 - Use sentence case for headings, buttons, labels, card titles, and navigation: "Free consultation", not "Free Consultation".
 - Proper nouns keep their capitals: "Gottman Method", "Cambridge", "AtReef Therapy".
-- Uppercase is a style, not content. Type labels in sentence case and let `ar-label` apply `text-transform:uppercase`. Never type "START HERE".
-- Do not use uppercase for anything longer than about five words.
+- Labels are sentence case, 14px, weight 600, with a small dot in the label color (`ar-label`). Use `ar-label--plain` where an icon tile or pill already marks the line.
+- Never type capitals for emphasis ("START HERE").
+- Do not join phrases with middle dots. Write them as a phrase: "Online therapy in Massachusetts", "Structured, active, collaborative".
 
 ---
 
@@ -1281,6 +1298,24 @@ Consistency rules:
 - Button images: 20px, centered in the chip, slight scale on hover (off under reduced motion).
 - Pills sit only on light surfaces. On dark sections use a plain `ar-label--on-dark`.
 - One pill per section at most.
+
+---
+
+## 59c. Two voices (signature motif)
+
+The site's signature is the two-voice panel from the conversation section: the client's words on gold tint, the therapist's response on teal, inside one framed card.
+
+| Class | Use |
+|---|---|
+| `ar-voices` | the frame: paper, 8px inset, 8px gap, border, soft shadow |
+| `ar-voice` | the client voice: gold tint, card padding |
+| `ar-voice ar-voice--reply` | the response or outcome: teal, light text |
+
+Used in the conversation examples and the client experiences carousel. Use it where content is genuinely a statement and a response. Do not use it as a generic card.
+
+## 59d. Section head
+
+`ar-head` stacks label, title, and lead with the §17a rhythm and adds 48px before the content. `ar-head--center` centers it. Closing sections (client experiences, final CTA, FAQ) are centered; content sections are left-aligned.
 
 ---
 
@@ -2417,6 +2452,15 @@ Paste the CSS first. The new blocks depend on v8.3 classes and look wrong on v8.
 - `ar-card__title` no longer sets `font-family`; Site Styles heading font applies
 - Light-section text color rule now skips `ar-` components and anything inside dark cards or `ar-surface-dark` (it was forcing ink text onto dark cards)
 - All nine homepage blocks rewritten on the shared system (`squarespace/blocks/`); they require v8.3
+
+## 127c. v8.5 changes from v8.4
+
+- Labels: sentence case, 14px, dot marker, `ar-label--plain`; no more all-caps labels
+- New `ar-head` section header and `ar-voices` / `ar-voice` / `ar-voice--reply` signature components
+- Client experiences rebuilt as two-voice cards; conversation uses the shared components
+- Carousels align with their heading; approach carousel script reads `--ar-inset`
+- Unified card padding and label-to-title spacing; removed local padding overrides
+- Middle-dot eyebrows rewritten as plain phrases
 
 ## 127b. v8.4 changes from v8.3
 

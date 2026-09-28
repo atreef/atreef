@@ -1,4 +1,4 @@
-# AtReef homepage blocks (v8.4)
+# AtReef homepage blocks (v8.5)
 
 ## Order of work
 
@@ -18,6 +18,13 @@
 | `07-client-proof.html` | Client experiences |
 | `08-final-cta.html` | "If something here felt familiar" |
 | `09-faq.html` | Homepage FAQ |
+
+## v8.5 design pass (frontend-design)
+
+- One spacing rhythm: label to title 12px (pill 16px), title to text 24px, header to content 48px, one card padding token.
+- Labels are sentence case with a small dot, not all caps. Middle-dot phrases rewritten.
+- Both carousels start flush with their heading; the next card peeks in on the right.
+- Signature "two voices" panels now shared by the conversation section and client experiences.
 
 ## What changed, by section
 

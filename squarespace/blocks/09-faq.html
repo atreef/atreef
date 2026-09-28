@@ -13,16 +13,7 @@
 
 /* Header */
 
-#ar-home-faq .ar-home-faq__header{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  margin:0 0 var(--ar-gap-header,48px);
-  text-align:center;
-}
-
 #ar-home-faq .ar-home-faq__lead{
-  margin:24px auto 0;
   color:var(--ar-text,#141414);
 }
 
@@ -81,14 +72,6 @@
 /* Mobile */
 
 @container ar-home-faq (max-width:480px){
-  #ar-home-faq .ar-home-faq__header{
-    margin-bottom:32px;
-  }
-
-  #ar-home-faq .ar-home-faq__group{
-    padding:16px;
-  }
-
   #ar-home-faq .ar-disclosure__summary{
     gap:12px;
   }
@@ -107,7 +90,7 @@
 
 <section id="ar-home-faq" aria-labelledby="ar-home-faq-title">
 
-  <div class="ar-home-faq__header">
+  <div class="ar-head ar-head--center">
 
     <p class="ar-label ar-label--pill">
       <img class="ar-label__icon" src="https://www.atreef.com/s/Streamline-Ultimate.svg" alt="" aria-hidden="true">
