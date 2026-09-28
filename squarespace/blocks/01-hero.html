@@ -31,14 +31,14 @@
 }
 
 @media (prefers-reduced-motion:no-preference){
-  #ar-couples-hero .ar-hl--script{
-    animation:ar-hero-draw 700ms var(--ar-ease,cubic-bezier(.22,1,.36,1)) 350ms both;
+  #ar-couples-hero .ar-hl--script::before{
+    animation:ar-hero-draw 650ms cubic-bezier(.3,.7,.4,1) 400ms both;
   }
 }
 
 @keyframes ar-hero-draw{
-  from{background-size:0% .36em}
-  to{background-size:100% .36em}
+  from{clip-path:inset(0 100% 0 0)}
+  to{clip-path:inset(0 0 0 0)}
 }
 
 /* Lead */
