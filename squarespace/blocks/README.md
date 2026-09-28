@@ -1,4 +1,4 @@
-# AtReef homepage blocks (v8.8)
+# AtReef homepage blocks (v8.9)
 
 ## Order of work
 
@@ -22,7 +22,7 @@
 ## v8.5 design pass (frontend-design)
 
 - One spacing rhythm: label to title 12px (pill 16px), title to text 24px, header to content 48px, one card padding token.
-- Labels are sentence case with the brand diamond marker (v8.8), not all caps. Middle-dot phrases rewritten.
+- Labels are sentence case with the brand diamond marker (v8.9), not all caps. Middle-dot phrases rewritten.
 - Both carousels start flush with their heading; the next card peeks in on the right.
 - Signature "two voices" panels now shared by the conversation section and client experiences.
 

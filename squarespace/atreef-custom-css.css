@@ -1,4 +1,4 @@
-/* AtReef v8.8 */
+/* AtReef v8.9 */
 
 /* Tokens */
 
@@ -1396,21 +1396,28 @@ a.ar-btn--hug,button.ar-btn--hug{width:fit-content}
 }
 
 
-/* Ratings */
+/* Ratings: five Star.svg icons from one image, 16px (lg 20px), 2-3px apart.
+   Markup is an empty span with role="img" and an aria-label. */
 
 .ar-stars{
-  display:inline-flex;
-  align-items:center;
-  gap:2px;
-  color:var(--ar-gold-ink);
-  font-size:var(--ar-fs-small);
-  line-height:1;
-  letter-spacing:0;
+  display:inline-block;
+  flex:0 0 auto;
+  width:88px;
+  height:16px;
+  overflow:hidden;
+  vertical-align:middle;
+  background:url("https://www.atreef.com/s/Star.svg") left center/16px 16px;
+  background-repeat:space no-repeat;
+  color:transparent;
+  font-size:0;
+  line-height:0;
+  text-indent:100%;
+  white-space:nowrap;
 }
-.ar-stars--on-dark{color:var(--ar-gold)}
-
-@media (forced-colors:active){
-  .ar-stars{color:CanvasText}
+.ar-stars--lg{
+  width:112px;
+  height:20px;
+  background-size:20px 20px;
 }
 
 

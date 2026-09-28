@@ -1367,12 +1367,12 @@ Classes:
 - `ar-stars--on-dark`
 
 ```html
-<span class="ar-stars" role="img" aria-label="Rated 5 out of 5">★★★★★</span>
+<span class="ar-stars" role="img" aria-label="Rated 5 out of 5"></span>
 ```
 
 Rules:
 
-- On light surfaces stars use `--ar-gold-ink`. On dark surfaces use `ar-stars--on-dark`.
+- Stars are five copies of the brand `/s/Star.svg`, drawn by the CSS from one background image. The span stays empty; `role="img"` and the aria-label carry the rating. Default 16px (88px row); `ar-stars--lg` is 20px (112px row). The star has its own fill and outline, so it reads on light and dark surfaces alike; `ar-stars--on-dark` is kept as a harmless alias. Never type star characters or inline star SVGs.
 - `aria-label` on a plain `<span>` is ignored by many screen readers. Always add `role="img"`.
 - Show the rating source next to the stars in text ("5.0 on Grow Therapy").
 
@@ -2288,7 +2288,7 @@ Do not add a custom grid unless it adds real section-specific behavior.
 | Text clips on mobile | fixed width, `&nbsp;` runs, or missing `min-width:0` | make layout flexible and test wrapping |
 | Text below 12px | Squarespace scaled text or Paragraph 3 size | turn off scaled text; raise Paragraph 3 in Site Styles |
 | Focus ring invisible | translucent focus color or dark local surface | use the global ring; add `ar-surface-dark` |
-| Stars look empty | gold on a light surface | use `ar-stars` (gold ink) |
+| Stars look empty or mismatched | text stars or inline SVG | use an empty `ar-stars` span (Star.svg) |
 
 ---
 
@@ -2476,6 +2476,11 @@ Paste the CSS first. The new blocks depend on v8.3 classes and look wrong on v8.
 ## 127d. v8.8 changes from v8.7
 
 - Label marker: the 6px round dot is replaced by the brand Diamond-Dot (14px, original colors, full `https://www.atreef.com/s/` URL). It centers on the first line box instead of using a 7px top margin.
+
+## 127e. v8.9 changes from v8.8
+
+- Ratings: `ar-stars` now repeats the brand Star.svg five times (16px, `ar-stars--lg` 20px). Hero, services and client experiences all use the same class; the inline SVG stars in client experiences are gone.
+- Client experiences: on cards under 700px the stars sit under the title instead of beside it.
 
 ## 128. Class reference
 
