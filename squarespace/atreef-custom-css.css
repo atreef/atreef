@@ -1,4 +1,4 @@
-/* AtReef v8.5 */
+/* AtReef v8.6 */
 
 /* Tokens */
 
@@ -1264,7 +1264,7 @@ a.ar-btn--hug,button.ar-btn--hug{width:fit-content}
 
 .ar-label{
   display:flex;
-  align-items:center;
+  align-items:flex-start;
   gap:8px;
   width:fit-content;
   max-width:100%;
@@ -1282,6 +1282,7 @@ a.ar-btn--hug,button.ar-btn--hug{width:fit-content}
   flex:0 0 6px;
   width:6px;
   height:6px;
+  margin-top:7px;
   background:currentColor;
   border-radius:50%;
 }
@@ -1494,15 +1495,20 @@ a.ar-btn--hug,button.ar-btn--hug{width:fit-content}
 /* Headings */
 
 .ar-hl{
-  padding:0 .055em;
-  background:linear-gradient(to bottom,transparent 18%,var(--ar-gold) 18%,var(--ar-gold) 88%,transparent 88%);
+  padding:0 .1em;
+  background-image:linear-gradient(100deg,rgba(254,218,106,0) 0,rgba(254,218,106,.9) 2%,var(--ar-gold) 50%,rgba(254,218,106,.9) 98%,rgba(254,218,106,0) 100%);
+  background-repeat:no-repeat;
+  background-position:0 82%;
+  background-size:100% .62em;
+  border-radius:.12em;
   -webkit-box-decoration-break:clone;
   box-decoration-break:clone;
 }
 
 .ar-hl--script{
-  padding:0 .08em;
-  background:linear-gradient(to bottom,transparent 52%,var(--ar-gold) 52%,var(--ar-gold) 84%,transparent 84%);
+  padding:0 .12em;
+  background-position:0 86%;
+  background-size:100% .36em;
   font-family:var(--ar-font-script);
   font-size:1.1em;
   font-weight:400;

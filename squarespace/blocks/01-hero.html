@@ -23,11 +23,22 @@
 
 #ar-couples-hero .ar-couples-hero__display{
   display:block;
-  color:var(--ar-heading,#141414);
+  color:#004744;
   font-size:var(--ar-fs-hero,60px);
   line-height:1.1;
   letter-spacing:-.04em;
   text-wrap:balance;
+}
+
+@media (prefers-reduced-motion:no-preference){
+  #ar-couples-hero .ar-hl--script{
+    animation:ar-hero-draw 700ms var(--ar-ease,cubic-bezier(.22,1,.36,1)) 350ms both;
+  }
+}
+
+@keyframes ar-hero-draw{
+  from{background-size:0% .36em}
+  to{background-size:100% .36em}
 }
 
 /* Lead */
@@ -42,8 +53,24 @@
   margin-top:32px;
 }
 
+#ar-couples-hero .ar-couples-hero__proof{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:4px 16px;
+  margin:16px 0 0;
+  color:var(--ar-muted,#53635F);
+  font-size:var(--ar-fs-small,14px);
+  line-height:var(--ar-lh-small,22px);
+}
+
+#ar-couples-hero .ar-couples-hero__proof strong{
+  color:var(--ar-text,#141414);
+  font-weight:700;
+}
+
 #ar-couples-hero .ar-couples-hero__alt{
-  margin-top:16px;
+  margin-top:24px;
 }
 
 /* Mobile */
@@ -94,9 +121,13 @@
       </span>
     </a>
     <p class="ar-btn-note">
-      Free, thirty minutes, by secure video. You pick a time, then get a
-      private link. You will be speaking with Dr. Shabahang, not an intake
-      coordinator.
+      Free, 30 minutes, by secure video. You'll speak with Dr. Shabahang directly.
+    </p>
+    <p class="ar-couples-hero__proof">
+      <span class="ar-stars" role="img" aria-label="Rated 5 out of 5">★★★★★</span>
+      <span><strong>5.0</strong> Grow Therapy</span>
+      <span><strong>4.84</strong> Zocdoc</span>
+      <span><strong>A+</strong> BBB</span>
     </p>
   </div>
 
