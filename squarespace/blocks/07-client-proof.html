@@ -66,25 +66,78 @@
   grid-template-rows:1fr auto;
   margin:0;
   scroll-snap-align:start;
+  transition:transform var(--ar-fast,160ms) ease,box-shadow var(--ar-fast,160ms) ease;
 }
 
+@media (hover:hover) and (pointer:fine){
+  #ar-client-proof .ar-proof__card:hover{
+    transform:translateY(-3px);
+    box-shadow:var(--ar-shadow-lift,0 16px 32px rgba(0,70,67,.08));
+  }
+}
+
+@media (prefers-reduced-motion:reduce){
+  #ar-client-proof .ar-proof__card{transition:none}
+  #ar-client-proof .ar-proof__card:hover{transform:none}
+}
+
+/* Tones */
+
+#ar-client-proof .ar-proof__card--peach{--tone:#FDEDE7;--tone-deep:#F6CFC2}
+#ar-client-proof .ar-proof__card--butter{--tone:#FFF4D1;--tone-deep:#F7DF94}
+#ar-client-proof .ar-proof__card--mint{--tone:#E4F3EC;--tone-deep:#BFE0D1}
+
 #ar-client-proof .ar-proof__voice{
+  position:relative;
   display:flex;
   flex-direction:column;
-  gap:16px;
+  gap:20px;
+  overflow:hidden;
+  background-color:var(--tone,var(--ar-gold-tint));
+  background-image:radial-gradient(120% 90% at 100% 0%,rgba(255,255,255,.7),rgba(255,255,255,0) 60%);
+}
+
+#ar-client-proof .ar-proof__voice::after{
+  content:"";
+  position:absolute;
+  right:-72px;
+  bottom:-72px;
+  width:168px;
+  height:168px;
+  background:var(--tone-deep,var(--ar-gold));
+  border-radius:50%;
+  opacity:.45;
+  pointer-events:none;
+}
+
+#ar-client-proof .ar-proof__mark{
+  position:relative;
+  z-index:1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:48px;
+  height:48px;
+  background:var(--ar-white,#FFFFFF);
+  border-radius:50%;
+  box-shadow:0 1px 2px rgba(0,70,67,.06),0 6px 16px rgba(0,70,67,.08);
 }
 
 #ar-client-proof .ar-proof__quote-icon{
   display:block;
-  width:28px;
-  height:28px;
+  width:24px;
+  height:24px;
 }
 
 #ar-client-proof .ar-proof__quote{
-  max-width:62ch;
+  position:relative;
+  z-index:1;
+  max-width:52ch;
   margin:0;
-  font-size:var(--ar-fs-body,16px);
-  line-height:var(--ar-lh-body,28px);
+  color:var(--ar-text,#141414);
+  font-size:18px;
+  font-weight:500;
+  line-height:30px;
   text-wrap:pretty;
 }
 
@@ -129,6 +182,11 @@
     --ar-peek:64px;
     --ar-card-width:calc((100cqi - (2 * var(--ar-gap)) - var(--ar-peek)) / 2);
   }
+
+  #ar-client-proof .ar-proof__quote{
+    font-size:20px;
+    line-height:32px;
+  }
 }
 </style>
 
@@ -161,9 +219,11 @@
     >
       <ul class="ar-proof__track">
 
-        <li class="ar-voices ar-proof__card">
+        <li class="ar-voices ar-proof__card ar-proof__card--peach">
           <blockquote class="ar-voice ar-proof__voice">
-            <img class="ar-proof__quote-icon" src="https://www.atreef.com/s/Quote.svg" alt="" aria-hidden="true">
+            <span class="ar-proof__mark" aria-hidden="true">
+              <img class="ar-proof__quote-icon" src="https://www.atreef.com/s/Quote.svg" alt="">
+            </span>
             <p class="ar-proof__quote">Working with Ehsan was genuinely different from every other therapist we tried. He didn't just recite techniques, he actually understood what was happening between us. Our relationship today is unrecognizable from where we started.</p>
           </blockquote>
           <div class="ar-voice ar-voice--reply ar-proof__outcome">
@@ -181,9 +241,11 @@
           </div>
         </li>
 
-        <li class="ar-voices ar-proof__card">
+        <li class="ar-voices ar-proof__card ar-proof__card--butter">
           <blockquote class="ar-voice ar-proof__voice">
-            <img class="ar-proof__quote-icon" src="https://www.atreef.com/s/Quote.svg" alt="" aria-hidden="true">
+            <span class="ar-proof__mark" aria-hidden="true">
+              <img class="ar-proof__quote-icon" src="https://www.atreef.com/s/Quote.svg" alt="">
+            </span>
             <p class="ar-proof__quote">I'd been in therapy before and always felt like I was doing a warm-up that never ended. AtReef Therapy was the first place where I felt like the work was actually going somewhere and I could see it happening.</p>
           </blockquote>
           <div class="ar-voice ar-voice--reply ar-proof__outcome">
@@ -201,9 +263,11 @@
           </div>
         </li>
 
-        <li class="ar-voices ar-proof__card">
+        <li class="ar-voices ar-proof__card ar-proof__card--mint">
           <blockquote class="ar-voice ar-proof__voice">
-            <img class="ar-proof__quote-icon" src="https://www.atreef.com/s/Quote.svg" alt="" aria-hidden="true">
+            <span class="ar-proof__mark" aria-hidden="true">
+              <img class="ar-proof__quote-icon" src="https://www.atreef.com/s/Quote.svg" alt="">
+            </span>
             <p class="ar-proof__quote">After a betrayal, I wasn't sure anything could bring us back. The SRRT process Ehsan uses gave us a completely different framework for understanding what happened and for deciding what we wanted to do next.</p>
           </blockquote>
           <div class="ar-voice ar-voice--reply ar-proof__outcome">
