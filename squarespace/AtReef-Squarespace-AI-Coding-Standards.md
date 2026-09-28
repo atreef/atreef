@@ -658,7 +658,7 @@ Do not fight `text-wrap:balance` with arbitrary narrow widths.
 
 - Use sentence case for headings, buttons, labels, card titles, and navigation: "Free consultation", not "Free Consultation".
 - Proper nouns keep their capitals: "Gottman Method", "Cambridge", "AtReef Therapy".
-- Labels are sentence case, 14px, weight 600, with a small dot in the label color (`ar-label`). Use `ar-label--plain` where an icon tile or pill already marks the line.
+- Labels are sentence case, 14px, weight 600, marked with the brand diamond (`/s/Diamond-Dot.svg`, 14px, set in `.ar-label::before`). The marker box is 20px tall, equal to the label line-height, so the diamond centers on the first line; never offset it with a margin. Use `ar-label--plain` where an icon tile or pill already marks the line.
 - Never type capitals for emphasis ("START HERE").
 - Do not join phrases with middle dots. Write them as a phrase: "Online therapy in Massachusetts", "Structured, active, collaborative".
 
@@ -2472,6 +2472,10 @@ Paste the CSS first. The new blocks depend on v8.3 classes and look wrong on v8.
 ---
 
 # Part XXIV: Class Reference
+
+## 127d. v8.8 changes from v8.7
+
+- Label marker: the 6px round dot is replaced by the brand Diamond-Dot (14px, original colors, full `https://www.atreef.com/s/` URL). It centers on the first line box instead of using a 7px top margin.
 
 ## 128. Class reference
 

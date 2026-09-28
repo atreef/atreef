@@ -1,4 +1,4 @@
-/* AtReef v8.7 */
+/* AtReef v8.8 */
 
 /* Tokens */
 
@@ -1278,14 +1278,14 @@ a.ar-btn--hug,button.ar-btn--hug{width:fit-content}
   letter-spacing:.01em;
   text-transform:none;
 }
+/* Diamond marker: box height equals the label line-height, so the
+   icon centers on the first line and stays there when a label wraps. */
 .ar-label::before{
   content:"";
-  flex:0 0 6px;
-  width:6px;
-  height:6px;
-  margin-top:7px;
-  background:currentColor;
-  border-radius:50%;
+  flex:0 0 14px;
+  width:14px;
+  height:20px;
+  background:url("https://www.atreef.com/s/Diamond-Dot.svg") center/14px 14px no-repeat;
 }
 .ar-label--plain::before,
 .ar-label--pill::before{display:none}
