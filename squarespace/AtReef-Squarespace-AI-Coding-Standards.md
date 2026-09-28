@@ -2482,6 +2482,11 @@ Paste the CSS first. The new blocks depend on v8.3 classes and look wrong on v8.
 - Ratings: `ar-stars` now repeats the brand Star.svg five times (16px, `ar-stars--lg` 20px). Hero, services and client experiences all use the same class; the inline SVG stars in client experiences are gone.
 - Client experiences: on cards under 700px the stars sit under the title instead of beside it.
 
+## 127f. v8.9.1 client experiences, compact
+
+- Values reduced, no new components: quote 16/26 at every width (the 700px 20/32 override is removed), quote mark 36px with an 18px icon, panel gap 12px, reply panel 20px top and bottom, standard 16px stars, decorative circle 140px.
+- Section height drops about 100px (desktop 609 to 509, phone 770 to 672). The Fluid Engine Code Block must be shortened in the editor to match.
+
 ## 128. Class reference
 
 ### Buttons

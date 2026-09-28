@@ -91,7 +91,7 @@
   position:relative;
   display:flex;
   flex-direction:column;
-  gap:20px;
+  gap:12px;
   overflow:hidden;
   background-color:var(--tone,var(--ar-gold-tint));
   background-image:radial-gradient(120% 90% at 100% 0%,rgba(255,255,255,.7),rgba(255,255,255,0) 60%);
@@ -102,8 +102,8 @@
   position:absolute;
   right:-72px;
   bottom:-72px;
-  width:168px;
-  height:168px;
+  width:140px;
+  height:140px;
   background:var(--tone-deep,var(--ar-gold));
   border-radius:50%;
   opacity:.45;
@@ -116,17 +116,17 @@
   display:flex;
   align-items:center;
   justify-content:center;
-  width:48px;
-  height:48px;
+  width:36px;
+  height:36px;
   background:var(--ar-white,#FFFFFF);
   border-radius:50%;
-  box-shadow:0 1px 2px rgba(0,70,67,.06),0 6px 16px rgba(0,70,67,.08);
+  box-shadow:0 1px 2px rgba(0,70,67,.06),0 4px 10px rgba(0,70,67,.06);
 }
 
 #ar-client-proof .ar-proof__quote-icon{
   display:block;
-  width:24px;
-  height:24px;
+  width:18px;
+  height:18px;
 }
 
 #ar-client-proof .ar-proof__quote{
@@ -135,9 +135,9 @@
   max-width:52ch;
   margin:0;
   color:var(--ar-text,#141414);
-  font-size:18px;
+  font-size:16px;
   font-weight:500;
-  line-height:30px;
+  line-height:26px;
   text-wrap:pretty;
 }
 
@@ -146,6 +146,7 @@
   grid-template-columns:minmax(0,1fr) auto;
   align-items:center;
   gap:4px 16px;
+  padding-block:20px;
 }
 
 #ar-client-proof .ar-proof__outcome .ar-card__title{
@@ -188,11 +189,6 @@
     --ar-peek:64px;
     --ar-card-width:calc((100cqi - (2 * var(--ar-gap)) - var(--ar-peek)) / 2);
   }
-
-  #ar-client-proof .ar-proof__quote{
-    font-size:20px;
-    line-height:32px;
-  }
 }
 </style>
 
@@ -234,7 +230,7 @@
           </blockquote>
           <div class="ar-voice ar-voice--reply ar-proof__outcome">
             <h3 class="ar-card__title">Depth with direction</h3>
-            <span class="ar-stars ar-stars--lg ar-proof__stars" role="img" aria-label="Rated 5 out of 5"></span>
+            <span class="ar-stars ar-proof__stars" role="img" aria-label="Rated 5 out of 5"></span>
             <p class="ar-proof__meta"><span class="ar-proof__initials">ND</span>Couples therapy</p>
           </div>
         </li>
@@ -248,7 +244,7 @@
           </blockquote>
           <div class="ar-voice ar-voice--reply ar-proof__outcome">
             <h3 class="ar-card__title">Progress you notice</h3>
-            <span class="ar-stars ar-stars--lg ar-proof__stars" role="img" aria-label="Rated 5 out of 5"></span>
+            <span class="ar-stars ar-proof__stars" role="img" aria-label="Rated 5 out of 5"></span>
             <p class="ar-proof__meta"><span class="ar-proof__initials">MB</span>Individual therapy</p>
           </div>
         </li>
@@ -262,7 +258,7 @@
           </blockquote>
           <div class="ar-voice ar-voice--reply ar-proof__outcome">
             <h3 class="ar-card__title">Clarity after betrayal</h3>
-            <span class="ar-stars ar-stars--lg ar-proof__stars" role="img" aria-label="Rated 5 out of 5"></span>
+            <span class="ar-stars ar-proof__stars" role="img" aria-label="Rated 5 out of 5"></span>
             <p class="ar-proof__meta"><span class="ar-proof__initials">SK</span>Couples therapy</p>
           </div>
         </li>
